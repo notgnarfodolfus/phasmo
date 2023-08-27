@@ -17,7 +17,7 @@ export class CheckboxComponent {
   @Output() public changed = new EventEmitter<{ checked: boolean, strike: boolean }>();
 
   public get imgsrc(): string {
-    const name = (this.checked && !this.disabled) ? 'square_check' : 'square';
+    const name = this.checked ? 'square_check' : 'square';
     return `../../../assets/${name}.png`;
   }
 

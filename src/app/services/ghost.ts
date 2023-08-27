@@ -64,9 +64,3 @@ export const Ghosts: Ghost[] = [
   { name: "Deogen", evidence: [Evidence.DotsProjector, Evidence.GhostWriting, Evidence.SpiritBox] },
   { name: "Thaye", evidence: [Evidence.DotsProjector, Evidence.GhostOrb, Evidence.GhostWriting] }
 ];
-
-@Injectable({
-  providedIn: 'root'
-})
-export class GhostService {
-}

@@ -15,9 +15,9 @@
       <div *ngFor="let e of evidence" class="col col-6">
         <app-checkbox
           [label]="e"
-          [disabled]="!evidencePossible.has(e) || ghostExcludedEvidence.has(e)"
-          [checked]="evidencePositive.has(e)"
-          [strike]="evidenceNegative.has(e)"
+          [checked]="evidenceConfirm.has(e)"
+          [strike]="evidenceExclude.has(e)"
+          [disabled]="!evidenceEnabled.has(e)"
           (changed)="onEvidenceUpdate(e, $event.checked, $event.strike)"
         ></app-checkbox>
       </div>
@@ -27,9 +27,9 @@
       <div *ngFor="let g of ghosts" class="col col-4">
         <app-checkbox
           [label]="g.name"
-          [disabled]="!ghostPossible.has(g)"
-          [checked]="ghostPositive === g"
-          [strike]="ghostNegative.has(g)"
+          [checked]="ghostConfirm === g"
+          [strike]="ghostExclude.has(g)"
+          [disabled]="!ghostEnabled.has(g)"
           (changed)="onGhostUpdate(g, $event.checked, $event.strike)"
         ></app-checkbox>
       </div>

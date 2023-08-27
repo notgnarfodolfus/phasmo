@@ -15,7 +15,6 @@ body {
 .clickable {
 
   &.disabled {
-    cursor: not-allowed;
     filter: opacity(50%);
   }
 
