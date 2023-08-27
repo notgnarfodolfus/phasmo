@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'Lazy Dog';
+  src: url('lazy_dog.ttf');
+}
+
+@font-face {
+  font-family: 'October Crow';
+  src: url('october_crow.ttf');
+}
+
+body {
+  font-family: 'Lazy Dog';
+}
+
+.clickable {
+
+  &.disabled {
+    cursor: not-allowed;
+    filter: opacity(50%);
+  }
+
+  &:not(.disabled) {
+    cursor: pointer;
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
+}

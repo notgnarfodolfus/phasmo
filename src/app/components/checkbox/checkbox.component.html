@@ -1,0 +1,11 @@
+<div
+  class="d-flex align-items-start checkbox clickable"
+  [class.disabled]="disabled"
+  [class.strikethrough]="strike"
+  (click)="toggle()"
+>
+  <img class="align-self-center me-1 box" [src]="imgsrc" /><img />
+  <div class="align-self-center ms-1" #labelContainer>
+    <span class="align-middle"> {{ label }} </span>
+  </div>
+</div>
