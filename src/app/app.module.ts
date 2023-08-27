@@ -4,16 +4,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { GhostPickerComponent } from './components/ghost-picker/ghost-picker.component';
 import { SelectorComponent } from './pages/selector/selector.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
+import { GhostSelectorComponent } from './components/ghost-selector/ghost-selector.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GhostPickerComponent,
     SelectorComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    TagSelectorComponent,
+    GhostSelectorComponent
   ],
   imports: [
     BrowserModule,

@@ -17,8 +17,13 @@ export class CheckboxComponent {
   @Output() public changed = new EventEmitter<{ checked: boolean, strike: boolean }>();
 
   public get imgsrc(): string {
-    const name = this.checked ? 'square_check' : 'square';
-    return `../../../assets/${name}.png`;
+    return `../../../assets/${this.imgfile}.png`;
+  }
+
+  public get imgfile(): string {
+    if (this.checked) return 'square_check';
+    else if (this.strike && !this.label) return 'square_line';
+    else return 'square';
   }
 
   public toggle(): void {

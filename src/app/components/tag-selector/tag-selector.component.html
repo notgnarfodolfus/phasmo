@@ -1,0 +1,28 @@
+<div class="card bg-journal">
+  <div class="card-body">
+    <div class="row">
+      <div class="col col-8">
+        <h3 class="card-title align-middle mb-0">Behavior</h3>
+      </div>
+      <div class="col col-4 text-end">
+        <span class="clickable align-middle mx-2" (click)="reset()">
+          [ Reset ]
+        </span>
+      </div>
+    </div>
+    <hr />
+    <div class="row" *ngFor="let tag of tags">
+      <div class="col-3 text-start" style="font-weight: bold">
+        {{ tag.name }}
+      </div>
+      <div class="col-3" *ngFor="let opt of tag.options; let index = index">
+        <app-checkbox
+          [label]="opt.name"
+          [checked]="this.active.has(opt.tag)"
+          [strike]="null"
+          (checkedChanged)="onTagUpdate(opt.tag, $event)"
+        ></app-checkbox>
+      </div>
+    </div>
+  </div>
+</div>

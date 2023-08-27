@@ -1,11 +1,11 @@
 <div
   class="d-flex align-items-start checkbox clickable"
   [class.disabled]="disabled"
-  [class.strikethrough]="strike"
+  [class.strikethrough]="strike && !!label"
   (click)="toggle()"
 >
   <img class="align-self-center me-1 box" [src]="imgsrc" /><img />
-  <div class="align-self-center ms-1" #labelContainer>
+  <div class="align-self-center ms-1" *ngIf="label">
     <span class="align-middle"> {{ label }} </span>
   </div>
 </div>
