@@ -1,8 +1,14 @@
 <div class="row">
   <div class="col-md-12 col-lg-6 mb-4">
-    <app-ghost-selector [disable]="disable"></app-ghost-selector>
+    <app-ghost-selector
+      [disable]="disable"
+      (options)="options = $event"
+    ></app-ghost-selector>
   </div>
   <div class="col-md-12 col-lg-6 mb-4">
-    <app-tag-selector (valueChange)="onTagsUpdate($event)"></app-tag-selector>
+    <app-tag-selector
+      [ghosts]="options"
+      (valueChange)="onTagsUpdate($event)"
+    ></app-tag-selector>
   </div>
 </div>

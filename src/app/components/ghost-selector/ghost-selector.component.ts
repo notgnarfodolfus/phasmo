@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Evidence, Ghost, Ghosts } from 'src/app/services/ghost';
 
 @Component({
@@ -13,6 +13,7 @@ export class GhostSelectorComponent implements OnInit, OnChanges {
 
   // --- Component Parameter ---
   @Input() public disable?: string[];
+  @Output() public options = new EventEmitter<Ghost[]>();
 
   // --- User Inputs ---
   public ghostConfirm: Ghost | null = null;
@@ -30,7 +31,7 @@ export class GhostSelectorComponent implements OnInit, OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    this.compute();
+    this.compute(false);
   }
 
   public reset() {
@@ -45,12 +46,16 @@ export class GhostSelectorComponent implements OnInit, OnChanges {
     this.compute();
   }
 
-  private compute() {
+  private compute(suppressEvent: boolean = false) {
     this.findPossibleGhosts();
     this.findPossibleEvidence();
     if (this.ghostConfirm && !this.isPossible(this.ghostConfirm)) {
       // Reset selected ghost
       this.ghostConfirm = null;
+    }
+    if (!suppressEvent) {
+      if (this.ghostConfirm) this.options.emit([this.ghostConfirm]);
+      else this.options.emit([...this.ghostEnabled]);
     }
   }
 

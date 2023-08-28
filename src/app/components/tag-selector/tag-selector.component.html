@@ -12,17 +12,39 @@
     </div>
     <hr />
     <div class="row" *ngFor="let tag of tags">
-      <div class="col-3 text-start" style="font-weight: bold">
+      <div class="col-3" style="font-weight: bold">
         {{ tag.name }}
       </div>
-      <div class="col-3" *ngFor="let opt of tag.options; let index = index">
-        <app-checkbox
-          [label]="opt.name"
-          [checked]="this.active.has(opt.tag)"
-          [strike]="null"
-          (checkedChanged)="onTagUpdate(opt.tag, $event)"
-        ></app-checkbox>
+      <div class="col-9">
+        <div class="row">
+          <div
+            *ngFor="let opt of tag.options; let index = index"
+            class="col-md-auto"
+          >
+            <app-checkbox
+              [label]="opt.name"
+              [checked]="this.active.has(opt.tag)"
+              [strike]="null"
+              (checkedChanged)="onTagUpdate(tag, opt.tag, $event)"
+            ></app-checkbox>
+          </div>
+        </div>
       </div>
     </div>
+    <ng-container *ngIf="ghosts.length > 0 && ghosts.length <= 10">
+      <hr />
+      <div class="row" *ngFor="let ghost of ghosts">
+        <ng-container *ngIf="ghost.hints">
+          <div class="col-3" style="font-weight: bold">
+            {{ ghost.name }}
+          </div>
+          <div class="col-9">
+            <div class="row" *ngFor="let hint of ghost.hints | keyvalue">
+              <div class="col">{{ hint.value }}</div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
   </div>
 </div>
