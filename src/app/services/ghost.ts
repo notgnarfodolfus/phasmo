@@ -3,7 +3,7 @@ export type Tag =
   'speed_slow' | 'speed_medium' | 'speed_fast' |
   'los_accelerate' | 'los_constant' |
   'threshold_low' | 'threshold_medium' | 'threshold_high' | 'threshold_very_high' |
-  'special_hunt_visible' | 'special_hunt_invisible' | 'special_hunt_shapeshift' | 'special_hunt_breath' | 'special_hunt_throws' | 'special_hunt_deaf' | 'special_hunt_navi' |
+  'special_hunt_visible' | 'special_hunt_invisible' | 'special_hunt_shapeshift' | 'special_hunt_breath' | 'special_hunt_deaf' | 'special_hunt_silent' | 'special_hunt_throws' | 'special_hunt_navi' |
   'special_mist_event' | 'special_digital_dots'
   ;
 
@@ -11,7 +11,7 @@ export interface TagInfo {
   key?: string; // for hints
   name: string;
   exclusive: boolean;
-  options: { tag: Tag, name: string }[];
+  options: { tag: Tag, name: string, hint?: string }[];
 }
 
 export const Tags: TagInfo[] = [
@@ -38,8 +38,8 @@ export const Tags: TagInfo[] = [
     name: 'Line of Sight',
     exclusive: false,
     options: [
-      { tag: 'los_accelerate', name: 'accelerate' },
-      { tag: 'los_constant', name: 'constant' }
+      { tag: 'los_accelerate', name: 'accelerate', hint: 'The ghost accelerates by 65% over 13sec when seeing a player' },
+      { tag: 'los_constant', name: 'constant', hint: 'The ghost has constent speed or special speed rules while chasing the player' }
     ]
   },
   {
@@ -58,13 +58,22 @@ export const Tags: TagInfo[] = [
     name: 'Hunt Specials',
     exclusive: true,
     options: [
-      { tag: 'special_hunt_invisible', name: 'Shorter visible' },
-      { tag: 'special_hunt_visible', name: 'Longer visible' },
-      { tag: 'special_hunt_shapeshift', name: 'Shapeshift' },
-      { tag: 'special_hunt_breath', name: 'Visible breath' },
-      { tag: 'special_hunt_deaf', name: 'Short hearing range' },
-      { tag: 'special_hunt_throws', name: 'Strong/frequent throws' },
-      { tag: 'special_hunt_navi', name: 'Finds player' }
+      { tag: 'special_hunt_invisible', name: 'Shorter visible', hint: 'A Phantom is only visible every 1 to 2 sec (instead of 0.3 to 1s) during hunts' },
+      { tag: 'special_hunt_visible', name: 'Longer visible', hint: 'Oni has shorter invisibility phases during hunt and is better visible' },
+      { tag: 'special_hunt_shapeshift', name: 'Shapeshift', hint: 'Obake can temporary shapeshift to another ghost model on each blink during hunts (6.67%)' },
+      { tag: 'special_hunt_breath', name: 'Visible breath', hint: 'The breath is visible on Hantu models when the breaker is off'},
+      { tag: 'special_hunt_deaf', name: 'Short hearing range', hint: 'A Yokai can only hear players and sense electronics within 2.5m (insted of 9 and 7m)' },
+      { tag: 'special_hunt_silent', name: 'Less audible', hint: 'Myling footsteps can be heared within 12m (instead of 20m)' },
+      { tag: 'special_hunt_throws', name: 'Strong/frequent throws', hint: 'During hunts a Poltergeist always throws a nearby item (instead of 50%)' },
+      { tag: 'special_hunt_navi', name: 'Finds player', hint: 'Deogens always know where the players are' }
+    ]
+  },
+  {
+    key: 'traits',
+    name: 'Unique Traits',
+    exclusive: true,
+    options: [
+      { tag: 'special_digital_dots', name: 'DOTS only on video' }
     ]
   },
   {
@@ -72,8 +81,7 @@ export const Tags: TagInfo[] = [
     name: 'Abilities',
     exclusive: false,
     options: [
-      { tag: 'special_mist_event', name: 'Mist Orb' },
-      { tag: 'special_digital_dots', name: 'DOTS only on video' }
+      { tag: 'special_mist_event', name: 'Mist Orb' }
     ]
   }
 ];
@@ -232,6 +240,7 @@ export const Ghosts: Ghost[] = [
       'movement_normal',
       'los_accelerate',
       'threshold_medium',
+      'special_hunt_silent',
       'special_mist_event'
     ]
   },
@@ -257,7 +266,7 @@ export const Ghosts: Ghost[] = [
       'movement_normal',
       'los_accelerate',
       'threshold_medium',
-      'special_hunt_invisible'
+      'special_hunt_visible'
     ]
   },
   {
@@ -285,7 +294,7 @@ export const Ghosts: Ghost[] = [
       'movement_normal',
       'los_accelerate',
       'threshold_medium',
-      'special_hunt_visible',
+      'special_hunt_invisible',
       'special_mist_event'
     ]
   },

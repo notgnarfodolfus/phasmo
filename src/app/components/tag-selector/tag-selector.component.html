@@ -31,6 +31,17 @@
         </div>
       </div>
     </div>
+    <ng-container *ngIf="hints.length > 0">
+      <hr />
+      <div class="row" *ngFor="let hint of hints">
+        <div class="col-4">
+          <span class="me-1">{{ hint.tag }}: </span>
+          <span class="ms-1" style="font-weight: bold">{{ hint.option }}</span>
+        </div>
+        <div class="col-8">{{ hint.hint }}</div>
+      </div>
+    </ng-container>
+    <!--
     <ng-container *ngIf="ghosts.length > 0 && ghosts.length <= 10">
       <hr />
       <div class="row" *ngFor="let ghost of ghosts">
@@ -46,5 +57,6 @@
         </ng-container>
       </div>
     </ng-container>
+    -->
   </div>
 </div>
