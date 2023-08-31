@@ -17,7 +17,7 @@ export class CheckboxComponent {
   @Output() public changed = new EventEmitter<{ checked: boolean, strike: boolean }>();
 
   public get imgsrc(): string {
-    return `/assets/${this.imgfile}.png`;
+    return `assets/${this.imgfile}.png`;
   }
 
   public get imgfile(): string {
