@@ -3,7 +3,7 @@
   width: fit-content;
 
   &.strikethrough {
-    background-image: url("/assets/linethrough.png");
+    background-image: url('~src/assets/linethrough.png');
     background-repeat: no-repeat;
     background-size: 100% 0.35em;
     background-position-y: center;
