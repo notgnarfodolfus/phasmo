@@ -12,15 +12,15 @@ export type GhostName =
   'Banshee' | 'Demon' | 'Deogen' | 'Goryo' | 'Hantu' | 'Jinn' | 'Mare' | 'Moroi' | 'Myling' | 'Obake' | 'Oni' | 'Onryo' | 'Phantom' |
   'Poltergeist' | 'Raiju' | 'Revenant' | 'Shade' | 'Spirit' | 'Thaye' | 'The Mimic' | 'The Twins' | 'Wraith' | 'Yokai' | 'Yurei';
 
-export type Tag =
-  GhostName |
+export type Selector =
   'speed_slow' | 'speed_medium' | 'speed_fast' |
   'movement_normal' | 'movement_fuzzy' | 'movement_special' |
   'los_accelerate' | 'los_constant' |
   'threshold_low' | 'threshold_medium' | 'threshold_high' | 'threshold_very_high' |
   'sanity_below_40' | 'sanity_below_50' | 'sanity_below_60' | 'sanity_below_70' | 'sanity_below_80' |
-  'ability_mist_event' | 'ability_footprints' | 'ability_analog_dots' | 'ability_digital_dots'
-  ;
+  'ability_mist_event' | 'ability_footprints' | 'ability_analog_dots' | 'ability_digital_dots';
+
+export type Tag = GhostName | Evidence | Selector;
 
 export interface TagOption {
   tag: Tag,
@@ -109,16 +109,16 @@ export class Ghost {
   public readonly name: GhostName;
   public readonly order: number;
   public readonly evidence: Evidence[];
-  public readonly secondary: Tag[];
+  public readonly selectors: Tag[];
   public readonly tags: Tag[];
   public readonly hints: { [tag: string]: string };
 
-  constructor(name: GhostName, order: number, evidence: Evidence[], secondary: Tag[], hints: { [tag: string]: string }) {
+  constructor(name: GhostName, order: number, evidence: Evidence[], selectors: Selector[], hints: { [tag: string]: string }) {
     this.name = name;
     this.order = order;
     this.evidence = evidence;
-    this.secondary = secondary;
-    this.tags = [name, ...secondary];
+    this.selectors = selectors;
+    this.tags = [name, ...evidence, ...selectors];
     this.hints = hints;
   }
 }
