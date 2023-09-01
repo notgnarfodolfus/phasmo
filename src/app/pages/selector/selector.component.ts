@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Ghost, Ghosts, Tag } from "src/app/services/ghost";
 
 @Component({
@@ -13,10 +13,13 @@ export class SelectorComponent {
   public disable: string[] = [];
   public options: Ghost[] = [];
 
-  public onTagsUpdate(tags: Tag[]): void {
-    if (tags.length === 0) this.disable = [];
-    else this.disable = this.ghosts
-      .filter(ghost => !tags.every(tag => ghost.tags.includes(tag)))
+  public onTagsUpdate(event: { checked: Tag[], striked: Tag[] }): void {
+    const enable = this.ghosts
+      .filter(ghost => event.checked.every(tag => ghost.tags.includes(tag)))
+      .filter(ghost => event.striked.every(tag => !ghost.tags.includes(tag)))
       .map(ghost => ghost.name);
+    this.disable = this.ghosts
+      .map(ghost => ghost.name)
+      .filter(ghost => !enable.includes(ghost));
   }
 }

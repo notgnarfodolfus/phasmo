@@ -1,0 +1,41 @@
+<div class="card bg-journal">
+  <div class="card-body">
+    <div class="row">
+      <div class="col col-8">
+        <h3 class="card-title align-middle mb-0">Behavior</h3>
+      </div>
+      <div class="col col-4 text-end">
+        <span class="clickable align-middle mx-2" (click)="reset()">
+          [ Reset ]
+        </span>
+      </div>
+    </div>
+    <hr />
+    <div class="row" *ngFor="let tag of tags">
+      <div class="col-3 text-end">
+        <strong>{{ tag.name }}</strong>
+      </div>
+      <div class="col-9">
+        <div class="row">
+          <div *ngFor="let opt of tag.options" class="col-auto">
+            <app-checkbox
+              [label]="opt.name"
+              [checked]="checked.has(opt.tag)"
+              [strike]="isStriked(opt)"
+              (changed)="onTagUpdate(tag, opt, $event)"
+            ></app-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="hints.length > 0">
+      <hr />
+      <div class="row" *ngFor="let hint of hints">
+        <div class="col-3 text-end">
+          <strong>{{ hint.option }}</strong>
+        </div>
+        <div class="col-9">{{ hint.hint }}</div>
+      </div>
+    </ng-container>
+  </div>
+</div>

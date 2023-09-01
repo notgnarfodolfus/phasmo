@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SelectorComponent } from './pages/selector/selector.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
-import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
+import { BehaviorSelectorComponent } from './components/behavior-selector/behavior-selector.component';
 import { GhostSelectorComponent } from './components/ghost-selector/ghost-selector.component';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { GhostSelectorComponent } from './components/ghost-selector/ghost-select
     AppComponent,
     SelectorComponent,
     CheckboxComponent,
-    TagSelectorComponent,
+    BehaviorSelectorComponent,
     GhostSelectorComponent
   ],
   imports: [
