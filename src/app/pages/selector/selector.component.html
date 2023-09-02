@@ -17,18 +17,17 @@
         </div>
         <hr />
         <ng-container *ngIf="showConfig">
-        <div class="row animated swing infinite" *ngFor="let cnf of configs">
-          <div class="col-3 fw-bold">{{ cnf.name }}</div>
-          <div class="col-9">
-            <app-tag-selector
-              [group]="cnf"
-              [states]="config"
-              (statesChange)="update({})"
-            ></app-tag-selector>
+          <div class="row">
+            <div class="col">
+              <app-tag-selector
+                [group]="evidenceConfig"
+                [states]="config"
+                (statesChange)="update({})"
+              ></app-tag-selector>
+            </div>
           </div>
-        </div>
-        <hr />
-      </ng-container>
+          <hr />
+        </ng-container>
         <app-tag-selector
           col="col col-6"
           [group]="evidence"

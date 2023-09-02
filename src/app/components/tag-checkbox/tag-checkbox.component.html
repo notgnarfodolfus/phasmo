@@ -2,6 +2,7 @@
   *ngIf="tag"
   class="d-flex align-items-start checkbox clickable"
   [class.disabled]="disabled"
+  [class.clickable]="!required || state !== TagState.checked"
   [class.strikethrough]="state === TagState.striked && tag.name"
   (click)="toggle()"
 >

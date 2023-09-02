@@ -25,7 +25,7 @@ export type GhostSelector =
   'ability_mist_event' | 'ability_footprints' | 'ability_analog_dots' | 'ability_digital_dots' |
   'hunt_ability_deogen' | 'hunt_ability_hantu' | 'hunt_ability_myling' | 'hunt_ability_obake' | 'hunt_ability_oni' | 'hunt_ability_phantom' | 'hunt_ability_poltergeist' | 'hunt_ability_yokai';
 
-export type Config = 'config_evidence_hidden_1' | 'config_evidence_hidden_2' | 'config_evidence_hidden_3';
+export type Config = 'config_evidence_hidden_0' | 'config_evidence_hidden_1' | 'config_evidence_hidden_2' | 'config_evidence_hidden_3';
 
 export type TagId = GhostName | GhostEvidence | GhostSelector | Config;
 
@@ -62,14 +62,16 @@ export class TagGroup {
    */
   public readonly multiple: { positive: boolean, negative: boolean } | null;
   public readonly options: Tag[];
+  public readonly required: boolean;
 
-  constructor(id: string, name: string, multiple: { positive: boolean, negative: boolean } | true | false | null, options: Tag[]) {
+  constructor(id: string, name: string, multiple: { positive: boolean, negative: boolean } | true | false | null, options: Tag[], required: boolean = false) {
     this.id = id;
     this.name = name;
     this.multiple = (multiple === true) ? { positive: true, negative: true }
       : (multiple === false) ? { positive: false, negative: false }
         : multiple;
     this.options = options;
+    this.required = required;
   }
 }
 
@@ -384,13 +386,13 @@ export const EvidenceGroup: TagGroup = new TagGroup(
 
 export const SelectorGroups: TagGroup[] = [
   new TagGroup('speed', 'Speed', true, [
-    new Tag('speed_slow', 'slow'),
-    new Tag('speed_medium', 'medium'),
-    new Tag('speed_fast', 'fast')
+    new Tag('speed_slow', 'Slow'),
+    new Tag('speed_medium', 'Medium'),
+    new Tag('speed_fast', 'Fast')
   ]),
   new TagGroup('los', 'Line of Sight', true, [
-    new Tag('los_accelerate', 'accelerate', null, 'The ghost accelerates by 65% over 13sec when seeing a player'),
-    new Tag('los_constant', 'constant / special', null, 'The ghost has constant speed or special speed rules while chasing the player')
+    new Tag('los_accelerate', 'Accelerate', null, 'The ghost accelerates by 65% over 13sec when seeing a player'),
+    new Tag('los_constant', 'Constant / Special', null, 'The ghost has constant speed or special speed rules while chasing the player')
   ]),
   new TagGroup('sanity', 'Sanity', null, [
     new Tag('sanity_below_40', '40%'),
@@ -423,14 +425,13 @@ export const SelectorGroups: TagGroup[] = [
 ];
 
 export const ConfigEvidence: TagGroup = new TagGroup(
-  'config_evidence_hidden', 'Evidence Hidden', null, [
-  new Tag('config_evidence_hidden_1', 'One (Nightmare)'),
-  new Tag('config_evidence_hidden_2', 'Two (Insanity)'),
-  new Tag('config_evidence_hidden_3', 'All (Custom)')
-])
+  'config_evidence_hidden', 'Evidence', null,
+  [
+    new Tag('config_evidence_hidden_0', 'All Evidence'),
+    new Tag('config_evidence_hidden_1', 'One Hidden (Nightmare)'),
+    new Tag('config_evidence_hidden_2', 'Two Hidden (Insanity)'),
+    new Tag('config_evidence_hidden_3', 'No Evidence (Custom)')
+  ], true);
 
-export const ConfigGroups: TagGroup[] = [ConfigEvidence];
-
-
-export const AllGroups: TagGroup[] = [GhostGroup, EvidenceGroup, ...SelectorGroups, ...ConfigGroups];
+export const AllGroups: TagGroup[] = [GhostGroup, EvidenceGroup, ...SelectorGroups, ConfigEvidence];
 export const AllTagsById: { [key: string]: Tag } = AllGroups.flatMap(grp => grp.options).reduce((tags, tag) => { tags[tag.tag] = tag; return tags }, {} as { [key: string]: Tag });

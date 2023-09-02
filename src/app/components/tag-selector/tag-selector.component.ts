@@ -26,9 +26,15 @@ export class TagSelectorComponent implements OnInit {
     this.multiChecked = this.multi && (this.group.multiple?.positive ?? false);
     this.multiStriked = this.multi && (this.group.multiple?.negative ?? false);
 
+    // Setup default values
     this.group.options
       .filter(opt => this.states[opt.tag] == null)
       .forEach(opt => this.states[opt.tag] = TagState.off);
+
+    // Ensure a value is checked if required
+    if (this.group.required && this.group.options.length > 0 && Object.values(this.states).every(v => v !== TagState.checked)) {
+      this.states[this.group.options[0].tag] = TagState.checked;
+    }
   }
 
   public onChange(tag: Tag, value: TagState) {
@@ -48,6 +54,11 @@ export class TagSelectorComponent implements OnInit {
     const inverseTag = (tag.inverse === true) ? null : tag.inverse as TagId;
     if (inverseTag) {
       this.states[inverseTag] = TagSelectorComponent.inverse(value);
+    }
+
+    // Ensure a value is checked if required
+    if (this.group.required && this.group.options.length > 0 && Object.values(this.states).every(v => v !== TagState.checked)) {
+      this.states[this.group.options[0].tag] = TagState.checked;
     }
 
     this.statesChange.emit(this.states);

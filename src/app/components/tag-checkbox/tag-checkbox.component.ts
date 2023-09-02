@@ -12,6 +12,7 @@ export class TagCheckboxComponent {
 
   @Input() public tag?: Tag;
   @Input() public state: TagState = TagState.off;
+  @Input() public required: boolean = false;
   @Input() public disabled: boolean = false;
 
   @Output() public stateChange = new EventEmitter<TagState>();
@@ -26,7 +27,7 @@ export class TagCheckboxComponent {
   }
 
   public toggle(): void {
-    if (this.disabled || !this.tag) {
+    if (this.disabled || !this.tag || (this.required && this.state === TagState.checked)) {
       return;
     }
     switch (this.state) {

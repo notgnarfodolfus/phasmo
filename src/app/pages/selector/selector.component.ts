@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { EvidenceGroup, GhostGroup, TagGroup, TagId, TagState, TagStates, Ghosts, SelectorGroups, AllGroups, AllTagsById, Tag, ConfigGroups, ConfigEvidence } from "src/app/services/ghost";
+import { EvidenceGroup, GhostGroup, TagGroup, TagId, TagState, TagStates, Ghosts, SelectorGroups, AllGroups, AllTagsById, ConfigEvidence } from "src/app/services/ghost";
 
 @Component({
   selector: 'app-selector',
@@ -15,11 +15,11 @@ export class SelectorComponent {
   public ghosts: TagGroup = GhostGroup;
   public evidence: TagGroup = EvidenceGroup;
   public selectors: TagGroup[] = SelectorGroups;
-  public configs: TagGroup[] = ConfigGroups;
 
   public hints: { [tag: string]: string } = {};
 
   public showConfig: boolean = true;
+  public evidenceConfig: TagGroup = ConfigEvidence;
 
   public get showHints(): boolean {
     const count = Object.keys(this.hints).length;
@@ -29,7 +29,8 @@ export class SelectorComponent {
   public get evidenceHidden(): number {
     const opt = ConfigEvidence.options.find(opt => this.config[opt.tag] === TagState.checked);
     switch (opt?.tag) {
-      default: return 0;
+      default:
+      case 'config_evidence_hidden_0': return 1;
       case 'config_evidence_hidden_1': return 1;
       case 'config_evidence_hidden_2': return 2;
       case 'config_evidence_hidden_3': return 3;
