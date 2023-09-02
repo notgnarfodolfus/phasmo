@@ -8,7 +8,7 @@ import { Tag, TagState } from 'src/app/services/ghost';
 })
 export class TagCheckboxComponent {
 
-  public readonly GhostTagState = TagState;
+  public readonly TagState = TagState;
 
   @Input() public tag?: Tag;
   @Input() public state: TagState = TagState.off;
