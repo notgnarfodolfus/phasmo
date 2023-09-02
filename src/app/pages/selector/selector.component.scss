@@ -1,0 +1,7 @@
+.config-icon {
+  transition: transform .5s ease-in-out;
+
+  &:hover {
+    transform: rotate(60deg);
+  }
+}

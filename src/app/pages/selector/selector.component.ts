@@ -19,6 +19,8 @@ export class SelectorComponent {
 
   public hints: { [tag: string]: string } = {};
 
+  public showConfig: boolean = true;
+
   public get showHints(): boolean {
     const count = Object.keys(this.hints).length;
     return count > 0 && count <= 10;
