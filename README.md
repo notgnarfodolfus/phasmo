@@ -1,5 +1,11 @@
 # Phasmo
 
+A small web app that helps investigators find the right type of ghost.
+
+Check it out at https://notgnarfodolfus.github.io/phasmo
+
+## Angular
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.1.
 
 ## Development server
