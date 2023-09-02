@@ -108,6 +108,21 @@ export class Ghost {
       return false;
     }
 
+    // HACK: Special handling for no evidence runs: striked evidence can be ignored, checked evidence disables all ghosts
+    if (evidenceHidden >= 3) {
+      const evidenceStates = Object.entries(states).filter(e => !!GhostEvidenceReverse[e[0]]);
+      const evidenceChecked = evidenceStates.filter(e => e[1] === TagState.checked);
+      const evidenceStriked = evidenceStates.filter(e => e[1] === TagState.striked);
+      if (evidenceChecked.length > 0) {
+        // Checked evidence should not be possible and will disable all ghosts; Exception: Mimics must still have ghost orbs
+        return this.name === 'The Mimic' && evidenceChecked.every(e => GhostEvidenceReverse[e[0]] === GhostEvidence.GhostOrb);
+      }
+      if (evidenceStriked.length > 0) {
+        // Striked evidence can be ignored with zero evidence; Exception: Mimics must still have ghost orbs
+        return this.name !== 'The Mimic' || !evidenceStriked.some(e => GhostEvidenceReverse[e[0]] === GhostEvidence.GhostOrb);
+      }
+    }
+
     // In case a matching tag is STRIKED we need some aditional checks for hidden evidence
     const strikeMismatch = Object.entries(states).filter(e => e[1] === TagState.striked && this.tags.has(e[0] as TagId));
 
@@ -122,7 +137,7 @@ export class Ghost {
     }
 
     // Rule out ghosts whith forced evidence
-    if (strikeMismatch.some(e => e[0] === this.config.forcedEvidence)) {
+    if (evidenceHidden < 3 && strikeMismatch.some(e => e[0] === this.config.forcedEvidence)) {
       return false;
     }
 

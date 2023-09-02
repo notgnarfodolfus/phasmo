@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { EvidenceGroup, GhostGroup, TagGroup, TagId, TagState, TagStates, Ghosts, SelectorGroups, AllGroups, AllTagsById, ConfigEvidence } from "src/app/services/ghost";
+import { EvidenceGroup, GhostGroup, TagGroup, TagId, TagState, TagStates, Ghosts, SelectorGroups, AllGroups, AllTagsById, ConfigEvidence, GhostEvidence } from "src/app/services/ghost";
 
 @Component({
   selector: 'app-selector',
@@ -18,7 +18,7 @@ export class SelectorComponent {
 
   public hints: { [tag: string]: string } = {};
 
-  public showConfig: boolean = true;
+  public showConfig: boolean = false;
   public evidenceConfig: TagGroup = ConfigEvidence;
 
   public get showHints(): boolean {
@@ -26,15 +26,14 @@ export class SelectorComponent {
     return count > 0 && count <= 10;
   }
 
-  public get evidenceHidden(): number {
-    const opt = ConfigEvidence.options.find(opt => this.config[opt.tag] === TagState.checked);
-    switch (opt?.tag) {
-      default:
-      case 'config_evidence_hidden_0': return 0;
-      case 'config_evidence_hidden_1': return 1;
-      case 'config_evidence_hidden_2': return 2;
-      case 'config_evidence_hidden_3': return 3;
+  public get title(): string {
+    if (!this.showConfig) {
+      const opt = ConfigEvidence.options.find(opt => this.config[opt.tag] === TagState.checked);
+      if (opt != null && opt.tag != 'config_evidence_hidden_0') {
+        return 'Evidence - ' + opt.name;
+      }
     }
+    return 'Evidence';
   }
 
   public reset() {
@@ -48,10 +47,10 @@ export class SelectorComponent {
     // Merge new value into full states tracker
     Object.assign(this.states, value);
 
+    const evidenceHidden = this.getEvidenceHidden();
+
     // Find ghosts and selectors that are still available in this configuration
     const enabled = new Set<TagId>();
-    const evidenceHidden = this.evidenceHidden;
-
     Ghosts.filter(ghost => ghost.isPossible(this.states, evidenceHidden)).forEach(ghost => {
       enabled.add(ghost.name);
       ghost.evidence.forEach(e => enabled.add(e));
@@ -71,5 +70,16 @@ export class SelectorComponent {
     // Map enabled -> disabled
     this.disabled.clear();
     AllGroups.forEach(grp => grp.options.filter(opt => !enabled.has(opt.tag)).forEach(opt => this.disabled.add(opt.tag)));
+  }
+
+  private getEvidenceHidden(): number {
+    const opt = ConfigEvidence.options.find(opt => this.config[opt.tag] === TagState.checked);
+    switch (opt?.tag) {
+      default:
+      case 'config_evidence_hidden_0': return 0;
+      case 'config_evidence_hidden_1': return 1;
+      case 'config_evidence_hidden_2': return 2;
+      case 'config_evidence_hidden_3': return 3;
+    }
   }
 }
