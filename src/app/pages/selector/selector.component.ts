@@ -30,7 +30,7 @@ export class SelectorComponent {
     const opt = ConfigEvidence.options.find(opt => this.config[opt.tag] === TagState.checked);
     switch (opt?.tag) {
       default:
-      case 'config_evidence_hidden_0': return 1;
+      case 'config_evidence_hidden_0': return 0;
       case 'config_evidence_hidden_1': return 1;
       case 'config_evidence_hidden_2': return 2;
       case 'config_evidence_hidden_3': return 3;
