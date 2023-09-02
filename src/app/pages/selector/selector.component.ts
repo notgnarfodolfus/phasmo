@@ -59,7 +59,7 @@ export class SelectorComponent {
     this.hints = Object.entries(this.states)
       .filter(s => s[1] === TagState.checked)
       .map(s => AllTagsById[s[0]])
-      .filter(t => !!t.hint)
+      .filter(t => !!t?.hint)
       .reduce((all, tag) => { all[tag.name] = tag.hint!; return all; }, {} as { [tag: string]: string });
 
     // Ensure toggled elements are clickable (enabled)
