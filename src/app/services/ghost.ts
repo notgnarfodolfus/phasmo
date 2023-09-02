@@ -1,4 +1,9 @@
-export enum Evidence {
+
+export type GhostName =
+  'Banshee' | 'Demon' | 'Deogen' | 'Goryo' | 'Hantu' | 'Jinn' | 'Mare' | 'Moroi' | 'Myling' | 'Obake' | 'Oni' | 'Onryo' | 'Phantom' |
+  'Poltergeist' | 'Raiju' | 'Revenant' | 'Shade' | 'Spirit' | 'Thaye' | 'The Mimic' | 'The Twins' | 'Wraith' | 'Yokai' | 'Yurei';
+
+export enum GhostEvidence {
   Emf5 = 'EMF 5',
   DotsProjector = 'D.O.T.S Projector',
   Ultraviolett = 'Ultraviolett',
@@ -8,126 +13,111 @@ export enum Evidence {
   FreezingTemperature = 'Freezing Temperature'
 }
 
-export type GhostName =
-  'Banshee' | 'Demon' | 'Deogen' | 'Goryo' | 'Hantu' | 'Jinn' | 'Mare' | 'Moroi' | 'Myling' | 'Obake' | 'Oni' | 'Onryo' | 'Phantom' |
-  'Poltergeist' | 'Raiju' | 'Revenant' | 'Shade' | 'Spirit' | 'Thaye' | 'The Mimic' | 'The Twins' | 'Wraith' | 'Yokai' | 'Yurei';
-
-export type Selector =
+export type GhostSelector =
   'speed_slow' | 'speed_medium' | 'speed_fast' |
   'movement_normal' | 'movement_fuzzy' | 'movement_special' |
   'los_accelerate' | 'los_constant' |
   'threshold_low' | 'threshold_medium' | 'threshold_high' | 'threshold_very_high' |
   'sanity_below_40' | 'sanity_below_50' | 'sanity_below_60' | 'sanity_below_70' | 'sanity_below_80' |
-  'ability_mist_event' | 'ability_footprints' | 'ability_analog_dots' | 'ability_digital_dots';
+  'ability_mist_event' | 'ability_footprints' | 'ability_analog_dots' | 'ability_digital_dots' |
+  'hunt_ability_deogen' | 'hunt_ability_hantu' | 'hunt_ability_myling' | 'hunt_ability_obake' | 'hunt_ability_oni' | 'hunt_ability_phantom' | 'hunt_ability_poltergeist' | 'hunt_ability_yokai';
 
-export type Tag = GhostName | Evidence | Selector;
+export type TagId = GhostName | GhostEvidence | GhostSelector;
 
-export interface TagOption {
-  tag: Tag,
-  name: string,
-  hint?: string,
-  negative?: boolean | Tag
-}
+export class Tag {
 
-export interface TagInfo {
-  key?: string; // for hints
-  name: string;
-  exclusive: boolean;
-  options: TagOption[];
-}
+  public readonly tag: TagId;
+  public readonly name: string;
+  public readonly hint: string | null;
 
-export const Tags: TagInfo[] = [
-  {
-    key: 'speed',
-    name: 'Speed',
-    exclusive: false,
-    options: [
-      { tag: 'speed_slow', name: 'slow' },
-      { tag: 'speed_medium', name: 'medium' },
-      { tag: 'speed_fast', name: 'fast' }
-    ]
-  },
-  {
-    name: 'Line of Sight',
-    exclusive: false,
-    options: [
-      { tag: 'los_accelerate', name: 'accelerate', hint: 'The ghost accelerates by 65% over 13sec when seeing a player' },
-      { tag: 'los_constant', name: 'constant/special', hint: 'The ghost has constent speed or special speed rules while chasing the player' },
-    ]
-  },
-  {
-    key: 'hunt_sanity',
-    name: 'Sanity',
-    exclusive: true,
-    options: [
-      { tag: 'sanity_below_40', name: '40%' },
-      { tag: 'sanity_below_50', name: '50%' },
-      { tag: 'sanity_below_60', name: '60%' },
-      { tag: 'sanity_below_70', name: '70%' },
-      { tag: 'sanity_below_80', name: '80%' }
-    ]
-  }, {
-    key: 'hunt_threshold',
-    name: 'Threshold',
-    exclusive: true,
-    options: [
-      { tag: 'threshold_low', name: '< 50%' },
-      { tag: 'threshold_medium', name: '50%' },
-      { tag: 'threshold_high', name: '> 50' },
-      { tag: 'threshold_very_high', name: '> 65%' }
-    ]
-  },
-  {
-    key: 'hunt_abilties',
-    name: 'Hunt Abilites',
-    exclusive: true,
-    options: [
-      { tag: 'Phantom', name: 'Shorter visible', negative: true, hint: 'A Phantom is only visible every 1 to 2 sec (instead of 0.3 to 1s) during hunts' },
-      { tag: 'Oni', name: 'Longer visible', negative: true, hint: 'Oni has shorter invisibility phases during hunt and is better visible' },
-      { tag: 'Obake', name: 'Shapeshift', negative: true, hint: 'Obake can temporary shapeshift to another ghost model on each blink during hunts (6.67%)' },
-      { tag: 'Hantu', name: 'Visible breath', negative: true, hint: 'The breath is visible on Hantu models when the breaker is off' },
-      { tag: 'Yokai', name: 'Short hearing range', negative: true, hint: 'A Yokai can only hear players and sense electronics within 2.5m (insted of 9 and 7m)' },
-      { tag: 'Myling', name: 'Less audible', negative: true, hint: 'Myling footsteps can be heared within 12m (instead of 20m)' },
-      { tag: 'Poltergeist', name: 'Frequent throws', negative: true, hint: 'During hunts a Poltergeist always throws a nearby item (instead of 50%)' },
-      { tag: 'Deogen', name: 'Finds player', negative: true, hint: 'Deogens always know where the players are' }
-    ]
-  },
-  {
-    key: 'abilities',
-    name: 'Other Abilities',
-    exclusive: false,
-    options: [
-      { tag: 'ability_mist_event', name: 'Mist Orb', negative: true, hint: 'Oni is unable to perform the mist orb ghost event' },
-      { tag: 'ability_footprints', name: 'Footprints', negative: true, hint: 'Wraithes will never step into salt' },
-      { tag: 'ability_analog_dots', name: 'Analog D.O.T.S.', negative: 'ability_digital_dots', hint: 'D.O.T.S of Goryos can only be seen through a video camera' }
-    ]
+  /**
+   * Determines whether this tag can be negated. This can be used to negate the filter.
+   * E.g. you can cross out an evidence, but it makes little sense to cross out a speed hint (because you select another hint instead).
+   * If set to true the original ghost tag is used for a negative filter (deny list).
+   * If set to another tag that tag is added to the positive filter list instead.
+   */
+  public readonly inverse: TagId | true | null;
+
+  constructor(tag: TagId, name: string, inverse: TagId | true | null = null, hint: string | null = null) {
+    this.tag = tag;
+    this.name = name;
+    this.hint = hint;
+    this.inverse = inverse;
   }
-];
+}
+
+export class TagGroup {
+
+  public readonly id: string;
+  public readonly name: string;
+  /**
+   * Determines whether multiple tags in the group can be selected or crossed out.
+   * If set to null there can only be a single element selected or crossed out.
+   * Otherwise the positive and negative entries determine for both options whether multiple entries can be selected.
+   */
+  public readonly multiple: { positive: boolean, negative: boolean } | null;
+  public readonly options: Tag[];
+
+  constructor(id: string, name: string, multiple: { positive: boolean, negative: boolean } | true | false | null, options: Tag[]) {
+    this.id = id;
+    this.name = name;
+    this.multiple = (multiple === true) ? { positive: true, negative: true }
+      : (multiple === false) ? { positive: false, negative: false }
+        : multiple;
+    this.options = options;
+  }
+}
+
+export enum TagState { off, checked, striked };
+
+export type TagStates = { [tagId: string]: TagState };
 
 export class Ghost {
 
   public readonly name: GhostName;
   public readonly order: number;
-  public readonly evidence: Evidence[];
-  public readonly selectors: Tag[];
-  public readonly tags: Tag[];
+  public readonly evidence: GhostEvidence[];
+  public readonly selectors: GhostSelector[];
+  public readonly tags: Set<TagId>;
   public readonly hints: { [tag: string]: string };
 
-  constructor(name: GhostName, order: number, evidence: Evidence[], selectors: Selector[], hints: { [tag: string]: string }) {
+  constructor(name: GhostName, order: number, evidence: GhostEvidence[], selectors: GhostSelector[], hints: { [tag: string]: string }) {
     this.name = name;
     this.order = order;
     this.evidence = evidence;
     this.selectors = selectors;
-    this.tags = [name, ...evidence, ...selectors];
+    this.tags = new Set<TagId>([name, ...evidence, ...selectors]);
     this.hints = hints;
+  }
+
+  public isPossible(states: TagStates, evidenceHidden: number = 0) {
+    return !this.isSelectorMismatch(states)
+      && !this.isEvidenceExcluded(states, evidenceHidden ?? 0);
+  }
+
+  // TRUE if any selector was detected that the ghost does NOT have
+  private isSelectorMismatch(states: TagStates) {
+    return Object.entries(states).some(e => {
+      const match = this.tags.has(e[0] as TagId);
+      const state = e[1];
+      return (match && state === TagState.striked) || (!match && state === TagState.checked);
+    });
+  }
+
+  // TRUE if an evidence was RULED OUT that the ghost requires
+  // TODO: Add forced evidence at specific evidenceHidden values!
+  private isEvidenceExcluded(states: TagStates, evidenceHidden: number) {
+    const mismatchEvidence = this.evidence.filter(e => states[e] === TagState.striked).length;
+    const mismatchEvidenceMax = (evidenceHidden < 3) ? evidenceHidden : 1000;
+    return mismatchEvidence > mismatchEvidenceMax;
   }
 }
 
 export const Ghosts: Ghost[] = [
   new Ghost('Banshee', 5,
-    [Evidence.DotsProjector, Evidence.Ultraviolett, Evidence.GhostOrb],
+    [GhostEvidence.DotsProjector, GhostEvidence.Ultraviolett, GhostEvidence.GhostOrb],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_digital_dots',
+      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
       'sanity_below_40', 'sanity_below_50'
     ],
     {
@@ -135,7 +125,7 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Demon', 10,
-    [Evidence.Ultraviolett, Evidence.FreezingTemperature, Evidence.GhostWriting],
+    [GhostEvidence.Ultraviolett, GhostEvidence.FreezingTemperature, GhostEvidence.GhostWriting],
     [
       'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_very_high', 'ability_mist_event', 'ability_footprints',
       'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70', 'sanity_below_80'
@@ -145,19 +135,20 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Deogen', 23,
-    [Evidence.DotsProjector, Evidence.GhostWriting, Evidence.SpiritBox],
+    [GhostEvidence.DotsProjector, GhostEvidence.GhostWriting, GhostEvidence.SpiritBox],
     [
-      'speed_slow', 'speed_fast', 'movement_special', 'los_constant', 'threshold_low', 'ability_mist_event', 'ability_footprints', 'ability_digital_dots',
-      'sanity_below_40'
+      'speed_slow', 'speed_fast', 'movement_special', 'los_constant', 'threshold_low', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
+      'sanity_below_40',
+      'hunt_ability_deogen'
     ],
     {
       speed: "Speed when far: 3m/s; close: 0.4m/s", threshold: "Hunts at 40% sanity", special: "Always finds player"
     }
   ),
   new Ghost('Goryo', 15,
-    [Evidence.DotsProjector, Evidence.Emf5, Evidence.Ultraviolett],
+    [GhostEvidence.DotsProjector, GhostEvidence.Emf5, GhostEvidence.Ultraviolett],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
+      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_digital_dots',
       'sanity_below_40', 'sanity_below_50', 'sanity_below_60'
     ],
     {
@@ -165,17 +156,18 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Hantu', 14,
-    [Evidence.Ultraviolett, Evidence.FreezingTemperature, Evidence.GhostOrb],
+    [GhostEvidence.Ultraviolett, GhostEvidence.FreezingTemperature, GhostEvidence.GhostOrb],
     [
       'speed_slow', 'speed_medium', 'speed_fast', 'movement_fuzzy', 'movement_special', 'los_constant', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50'
+      'sanity_below_40', 'sanity_below_50',
+      'hunt_ability_hantu'
     ],
     {
       speed: "Speed depends on temperature: 1.4m/s (15°C) to 2.7m/s (0°C)", special: "Breath visible when breaker is off"
     }
   ),
   new Ghost('Jinn', 6,
-    [Evidence.Emf5, Evidence.Ultraviolett, Evidence.FreezingTemperature],
+    [GhostEvidence.Emf5, GhostEvidence.Ultraviolett, GhostEvidence.FreezingTemperature],
     [
       'speed_medium', 'speed_fast', 'los_accelerate', 'movement_fuzzy', 'movement_special', 'los_constant', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
       'sanity_below_40', 'sanity_below_50'
@@ -185,7 +177,7 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Mare', 7,
-    [Evidence.GhostOrb, Evidence.GhostWriting, Evidence.SpiritBox],
+    [GhostEvidence.GhostOrb, GhostEvidence.GhostWriting, GhostEvidence.SpiritBox],
     [
       'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_low', 'threshold_high', 'ability_mist_event', 'ability_footprints',
       'sanity_below_40', 'sanity_below_50'
@@ -195,7 +187,7 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Moroi', 22,
-    [Evidence.FreezingTemperature, Evidence.GhostWriting, Evidence.SpiritBox],
+    [GhostEvidence.FreezingTemperature, GhostEvidence.GhostWriting, GhostEvidence.SpiritBox],
     [
       'speed_slow', 'speed_medium', 'speed_fast', 'movement_fuzzy', 'movement_special', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
       'sanity_below_40', 'sanity_below_50'
@@ -205,34 +197,37 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Myling', 16,
-    [Evidence.Emf5, Evidence.Ultraviolett, Evidence.GhostWriting],
+    [GhostEvidence.Emf5, GhostEvidence.Ultraviolett, GhostEvidence.GhostWriting],
     [
       'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50'
+      'sanity_below_40', 'sanity_below_50',
+      'hunt_ability_myling'
     ],
     {
     }
   ),
   new Ghost('Obake', 20,
-    [Evidence.Emf5, Evidence.Ultraviolett, Evidence.GhostOrb],
+    [GhostEvidence.Emf5, GhostEvidence.Ultraviolett, GhostEvidence.GhostOrb],
     [
       'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50'
+      'sanity_below_40', 'sanity_below_50',
+      'hunt_ability_obake'
     ],
     {
     }
   ),
   new Ghost('Oni', 12,
-    [Evidence.DotsProjector, Evidence.Emf5, Evidence.FreezingTemperature],
+    [GhostEvidence.DotsProjector, GhostEvidence.Emf5, GhostEvidence.FreezingTemperature],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_footprints', 'ability_digital_dots',
-      'sanity_below_40', 'sanity_below_50'
+      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_footprints', 'ability_analog_dots',
+      'sanity_below_40', 'sanity_below_50',
+      'hunt_ability_oni'
     ],
     {
     }
   ),
   new Ghost('Onryo', 17,
-    [Evidence.FreezingTemperature, Evidence.GhostOrb, Evidence.SpiritBox],
+    [GhostEvidence.FreezingTemperature, GhostEvidence.GhostOrb, GhostEvidence.SpiritBox],
     [
       'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_high', 'threshold_very_high', 'ability_mist_event', 'ability_footprints',
       'sanity_below_40', 'sanity_below_50', 'sanity_below_60'
@@ -242,27 +237,29 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Phantom', 3,
-    [Evidence.DotsProjector, Evidence.Ultraviolett, Evidence.SpiritBox],
+    [GhostEvidence.DotsProjector, GhostEvidence.Ultraviolett, GhostEvidence.SpiritBox],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_digital_dots',
-      'sanity_below_40', 'sanity_below_50'
+      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
+      'sanity_below_40', 'sanity_below_50',
+      'hunt_ability_phantom'
     ],
     {
     }
   ),
   new Ghost('Poltergeist', 4,
-    [Evidence.Ultraviolett, Evidence.GhostWriting, Evidence.SpiritBox],
+    [GhostEvidence.Ultraviolett, GhostEvidence.GhostWriting, GhostEvidence.SpiritBox],
     [
       'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50'
+      'sanity_below_40', 'sanity_below_50',
+      'hunt_ability_poltergeist'
     ],
     {
     }
   ),
   new Ghost('Raiju', 19,
-    [Evidence.DotsProjector, Evidence.Emf5, Evidence.GhostOrb],
+    [GhostEvidence.DotsProjector, GhostEvidence.Emf5, GhostEvidence.GhostOrb],
     [
-      'speed_medium', 'speed_fast', 'movement_normal', 'movement_fuzzy', 'movement_special', 'los_accelerate', 'los_constant', 'threshold_medium', 'threshold_high', 'ability_mist_event', 'ability_footprints', 'ability_digital_dots',
+      'speed_medium', 'speed_fast', 'movement_normal', 'movement_fuzzy', 'movement_special', 'los_accelerate', 'los_constant', 'threshold_medium', 'threshold_high', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
       'sanity_below_40', 'sanity_below_50', 'sanity_below_60'
     ],
     {
@@ -270,7 +267,7 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Revenant', 8,
-    [Evidence.FreezingTemperature, Evidence.GhostOrb, Evidence.GhostWriting],
+    [GhostEvidence.FreezingTemperature, GhostEvidence.GhostOrb, GhostEvidence.GhostWriting],
     [
       'speed_slow', 'speed_fast', 'movement_special', 'los_constant', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
       'sanity_below_40', 'sanity_below_50'
@@ -280,7 +277,7 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Shade', 9,
-    [Evidence.Emf5, Evidence.FreezingTemperature, Evidence.GhostWriting],
+    [GhostEvidence.Emf5, GhostEvidence.FreezingTemperature, GhostEvidence.GhostWriting],
     [
       'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_low', 'ability_mist_event', 'ability_footprints'
     ],
@@ -289,7 +286,7 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Spirit', 1,
-    [Evidence.Emf5, Evidence.GhostWriting, Evidence.SpiritBox],
+    [GhostEvidence.Emf5, GhostEvidence.GhostWriting, GhostEvidence.SpiritBox],
     [
       'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
       'sanity_below_40', 'sanity_below_50'
@@ -298,9 +295,9 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Thaye', 24,
-    [Evidence.DotsProjector, Evidence.GhostOrb, Evidence.GhostWriting],
+    [GhostEvidence.DotsProjector, GhostEvidence.GhostOrb, GhostEvidence.GhostWriting],
     [
-      'speed_slow', 'speed_medium', 'speed_fast', 'movement_special', 'los_constant', 'threshold_low', 'threshold_medium', 'threshold_high', 'threshold_very_high', 'ability_mist_event', 'ability_footprints', 'ability_digital_dots',
+      'speed_slow', 'speed_medium', 'speed_fast', 'movement_special', 'los_constant', 'threshold_low', 'threshold_medium', 'threshold_high', 'threshold_very_high', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
       'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70'
     ],
     {
@@ -308,7 +305,7 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('The Mimic', 21,
-    [Evidence.Ultraviolett, Evidence.FreezingTemperature, Evidence.GhostOrb, Evidence.SpiritBox],
+    [GhostEvidence.Ultraviolett, GhostEvidence.FreezingTemperature, GhostEvidence.GhostOrb, GhostEvidence.SpiritBox],
     [
       'speed_slow', 'speed_medium', 'speed_fast', 'movement_normal', 'movement_fuzzy', 'movement_special', 'los_accelerate', 'los_constant', 'threshold_low', 'threshold_medium', 'threshold_high', 'threshold_very_high', 'ability_mist_event', 'ability_footprints',
       'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70', 'sanity_below_80'
@@ -318,7 +315,7 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('The Twins', 18,
-    [Evidence.Emf5, Evidence.FreezingTemperature, Evidence.SpiritBox],
+    [GhostEvidence.Emf5, GhostEvidence.FreezingTemperature, GhostEvidence.SpiritBox],
     [
       'speed_slow', 'speed_medium', 'speed_fast', 'movement_fuzzy', 'movement_special', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
       'sanity_below_40', 'sanity_below_50'
@@ -328,31 +325,96 @@ export const Ghosts: Ghost[] = [
     }
   ),
   new Ghost('Wraith', 2,
-    [Evidence.DotsProjector, Evidence.Emf5, Evidence.SpiritBox],
+    [GhostEvidence.DotsProjector, GhostEvidence.Emf5, GhostEvidence.SpiritBox],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_digital_dots',
+      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_analog_dots',
       'sanity_below_40', 'sanity_below_50'
     ],
     {
     }
   ),
   new Ghost('Yokai', 13,
-    [Evidence.DotsProjector, Evidence.GhostOrb, Evidence.SpiritBox],
+    [GhostEvidence.DotsProjector, GhostEvidence.GhostOrb, GhostEvidence.SpiritBox],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'threshold_very_high', 'ability_mist_event', 'ability_footprints', 'ability_digital_dots',
-      'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70', 'sanity_below_80'
+      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'threshold_very_high', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
+      'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70', 'sanity_below_80',
+      'hunt_ability_yokai'
     ],
     {
       threshold: "Hunts at 80% if a player is talking in its ghost room", special: "Hears sounds and senses electroincs in a radius of 2.5m (instead of 9m and 7m)"
     }
   ),
   new Ghost('Yurei', 11,
-    [Evidence.DotsProjector, Evidence.FreezingTemperature, Evidence.GhostOrb],
+    [GhostEvidence.DotsProjector, GhostEvidence.FreezingTemperature, GhostEvidence.GhostOrb],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_digital_dots',
+      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
       'sanity_below_40', 'sanity_below_50'
     ],
     {
     }
   )
 ];
+
+export const GhostGroupAlphabetical: TagGroup = new TagGroup(
+  'ghosts_alphabetical',
+  'Ghosts',
+  { positive: false, negative: true },
+  Ghosts.map((g) => new Tag(g.name, g.name, true))
+);
+
+export const GhostGroup: TagGroup = new TagGroup(
+  'ghosts',
+  'Ghosts',
+  { positive: false, negative: true },
+  Ghosts.sort((a, b) => a.order - b.order).map((g) => new Tag(g.name, g.name, true))
+);
+
+export const EvidenceGroup: TagGroup = new TagGroup(
+  'evidence',
+  'Evidence',
+  true,
+  Object.values(GhostEvidence).map((v) => new Tag(v, v, true))
+);
+
+export const SelectorGroups: TagGroup[] = [
+  new TagGroup('speed', 'Speed', true, [
+    new Tag('speed_slow', 'slow'),
+    new Tag('speed_medium', 'medium'),
+    new Tag('speed_fast', 'fast')
+  ]),
+  new TagGroup('los', 'Line of Sight', true, [
+    new Tag('los_accelerate', 'accelerate', null, 'The ghost accelerates by 65% over 13sec when seeing a player'),
+    new Tag('los_constant', 'constant / special', null, 'The ghost has constant speed or special speed rules while chasing the player')
+  ]),
+  new TagGroup('sanity', 'Sanity', null, [
+    new Tag('sanity_below_40', '40%'),
+    new Tag('sanity_below_50', '50%'),
+    new Tag('sanity_below_60', '60%'),
+    new Tag('sanity_below_70', '70%'),
+    new Tag('sanity_below_80', '80%'),
+  ]),
+  new TagGroup('threshold', 'Threshold', null, [
+    new Tag('threshold_low', '< 50%'),
+    new Tag('threshold_medium', '50%'),
+    new Tag('threshold_high', '> 50%'),
+    new Tag('threshold_very_high', '> 65%')
+  ]),
+  new TagGroup('hunt_abilities', 'Hunt Abilites', { positive: false, negative: true }, [
+    new Tag('hunt_ability_phantom', 'Shorter visible', true, 'Phantoms are only visible every 1 to 2 sec (instead of 0.3 to 1s) during hunts'),
+    new Tag('hunt_ability_oni', 'Longer visible', true, 'Onis have shorter invisibility phases during hunts and are better visible'),
+    new Tag('hunt_ability_obake', 'Shapeshift', true, 'Obake can temporary shapeshift to another ghost model on each blink during hunts (6.67%)'),
+    new Tag('hunt_ability_hantu', 'Visible breath', true, 'On Hantu models the breath is visible when the breaker is off'),
+    new Tag('hunt_ability_yokai', 'Less audition', true, 'Yokais can hear players and sense electronics within 2.5m (instead of 9 and 7m)'),
+    new Tag('hunt_ability_myling', 'Low audible range', true, 'Myling footsteps can be heard within 12m (instead of 20m)'),
+    new Tag('hunt_ability_poltergeist', 'Frequent throws', true, 'A Poltergeist always throws available nearby items during hunts (instead of 50%)'),
+    new Tag('hunt_ability_deogen', 'Finds players', true, 'Deogens always know where the players are and aproach rapidly before slowing down')
+  ]),
+  new TagGroup('ghost_abilities', 'Ghost Abilites', true, [
+    new Tag('ability_mist_event', 'Mist Orb', true, 'Onis are unable to perform the mist orb ghost event'),
+    new Tag('ability_footprints', 'Footprints', true, 'Wraithes will never step into salt'),
+    new Tag('ability_digital_dots', 'Digital D.O.T.S.', 'ability_analog_dots', 'Goryo D.O.T.S can only be seen through a video camera')
+  ]),
+];
+
+export const AllGroups: TagGroup[] = [GhostGroup, EvidenceGroup, ...SelectorGroups];
+export const AllTagsById: { [key: string]: Tag } = AllGroups.flatMap(grp => grp.options).reduce((tags, tag) => { tags[tag.tag] = tag; return tags }, {} as { [key: string]: Tag });

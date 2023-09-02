@@ -3,11 +3,11 @@ import { SelectorComponent } from './pages/selector/selector.component';
 
 export const AppRoutes: Routes = [
   {
-    path: 'selector',
+    path: '',
     component: SelectorComponent
   },
   {
     path: '**',
-    redirectTo: '/selector'
+    redirectTo: ''
   }
 ];

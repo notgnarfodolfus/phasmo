@@ -1,0 +1,12 @@
+<div
+  *ngIf="tag"
+  class="d-flex align-items-start checkbox clickable"
+  [class.disabled]="disabled"
+  [class.strikethrough]="state === GhostTagState.striked && tag.name"
+  (click)="toggle()"
+>
+  <img class="align-self-center me-1 box" [src]="imgsrc" /><img />
+  <div class="align-self-center ms-1 text-nowrap" *ngIf="tag.name">
+    <span class="align-middle text-nowrap"> {{ tag.name }}</span>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div *ngIf="group && states" class="row">
+  <div *ngFor="let option of group.options" [class]="col">
+    <app-tag-checkbox
+      [tag]="option"
+      [disabled]="disabled?.has(option.tag) ?? false"
+      [(state)]="states[option.tag]"
+      (stateChange)="onChange(option, $event)"
+    ></app-tag-checkbox>
+  </div>
+</div>

@@ -1,13 +1,63 @@
 <div class="row">
-  <div class="col-md-12 col-lg-6 mb-4">
-    <app-ghost-selector
-      [disable]="disable"
-      (options)="options = $event"
-    ></app-ghost-selector>
+  <div class="col col-lg-12 col-xl-6 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col col-8">
+            <h3 class="card-title align-middle mb-0">Evidence</h3>
+          </div>
+          <div class="col col-4 text-end">
+            <span class="clickable align-middle mx-2" (click)="reset()">
+              [ Reset ]
+            </span>
+          </div>
+        </div>
+        <hr />
+        <app-tag-selector
+          col="col col-4"
+          [group]="evidence"
+          [states]="states"
+          [disabled]="disabled"
+          (statesChange)="update($event)"
+        ></app-tag-selector>
+        <hr />
+        <app-tag-selector
+          col="col col-4"
+          [group]="ghosts"
+          [states]="states"
+          [disabled]="disabled"
+          (statesChange)="update($event)"
+        ></app-tag-selector>
+      </div>
+    </div>
   </div>
-  <div class="col-md-12 col-lg-6 mb-4">
-    <app-behavior-selector
-      (valueChange)="onTagsUpdate($event)"
-    ></app-behavior-selector>
+
+  <div class="col col-lg-12 col-xl-6 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Behavior</h3>
+        <hr />
+        <div class="row" *ngFor="let grp of groups">
+          <div class="col-3 fw-bold">{{ grp.name }}</div>
+          <div class="col-9">
+            <app-tag-selector
+              [group]="grp"
+              [states]="states"
+              [disabled]="disabled"
+              (statesChange)="update($event)"
+            ></app-tag-selector>
+          </div>
+        </div>
+        <ng-container *ngIf="showHints">
+          <hr />
+          <div class="row" *ngFor="let hint of hints | keyvalue">
+            <div class="col-3 fw-bold">
+              <strong>{{ hint.key }}</strong>
+            </div>
+            <div class="col-9">{{ hint.value }}</div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </div>
