@@ -27,13 +27,13 @@ export class TagSelectorComponent implements OnInit {
     this.multiStriked = this.multi && (this.group.multiple?.negative ?? false);
 
     // Setup default values
-    this.group.options
-      .filter(opt => this.states[opt.tag] == null)
-      .forEach(opt => this.states[opt.tag] = TagState.off);
+    this.group.tags
+      .filter(opt => this.states[opt.id] == null)
+      .forEach(opt => this.states[opt.id] = TagState.off);
 
     // Ensure a value is checked if required
-    if (this.group.required && this.group.options.length > 0 && Object.values(this.states).every(v => v !== TagState.checked)) {
-      this.states[this.group.options[0].tag] = TagState.checked;
+    if (this.group.required && this.group.tags.length > 0 && Object.values(this.states).every(v => v !== TagState.checked)) {
+      this.states[this.group.tags[0].id] = TagState.checked;
     }
   }
 
@@ -42,12 +42,12 @@ export class TagSelectorComponent implements OnInit {
 
     if (value !== TagState.off && !this.multi) {
       // Multi selection is disabled: Reset all except the current selection
-      this.group.options.filter(opt => opt.tag !== tag.tag).forEach(opt => this.states[opt.tag] = TagState.off);
+      this.group.tags.filter(opt => opt.id !== tag.id).forEach(opt => this.states[opt.id] = TagState.off);
     } else if ((value === TagState.checked && !this.multiChecked) || (value === TagState.striked && !this.multiStriked)) {
       // Multi selection is partially disabled: Reset either checked or striped except the current selection
-      this.group.options
-        .filter(opt => opt.tag !== tag.tag && this.states[opt.tag] === value)
-        .forEach(opt => this.states[opt.tag] = TagState.off);
+      this.group.tags
+        .filter(opt => opt.id !== tag.id && this.states[opt.id] === value)
+        .forEach(opt => this.states[opt.id] = TagState.off);
     }
 
     // Inject inverse tag if any is specified
@@ -57,8 +57,8 @@ export class TagSelectorComponent implements OnInit {
     }
 
     // Ensure a value is checked if required
-    if (this.group.required && this.group.options.length > 0 && Object.values(this.states).every(v => v !== TagState.checked)) {
-      this.states[this.group.options[0].tag] = TagState.checked;
+    if (this.group.required && this.group.tags.length > 0 && Object.values(this.states).every(v => v !== TagState.checked)) {
+      this.states[this.group.tags[0].id] = TagState.checked;
     }
 
     this.statesChange.emit(this.states);

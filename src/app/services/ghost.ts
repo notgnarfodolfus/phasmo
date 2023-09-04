@@ -31,7 +31,7 @@ export type TagId = GhostName | GhostEvidence | GhostSelector | Config;
 
 export class Tag {
 
-  public readonly tag: TagId;
+  public readonly id: TagId;
   public readonly name: string;
   public readonly hint: string | null;
 
@@ -43,8 +43,8 @@ export class Tag {
    */
   public readonly inverse: TagId | true | null;
 
-  constructor(tag: TagId, name: string, inverse: TagId | true | null = null, hint: string | null = null) {
-    this.tag = tag;
+  constructor(id: TagId, name: string, inverse: TagId | true | null = null, hint: string | null = null) {
+    this.id = id;
     this.name = name;
     this.hint = hint;
     this.inverse = inverse;
@@ -61,16 +61,16 @@ export class TagGroup {
    * Otherwise the positive and negative entries determine for both options whether multiple entries can be selected.
    */
   public readonly multiple: { positive: boolean, negative: boolean } | null;
-  public readonly options: Tag[];
+  public readonly tags: Tag[];
   public readonly required: boolean;
 
-  constructor(id: string, name: string, multiple: { positive: boolean, negative: boolean } | true | false | null, options: Tag[], required: boolean = false) {
+  constructor(id: string, name: string, multiple: { positive: boolean, negative: boolean } | true | false | null, tags: Tag[], required: boolean = false) {
     this.id = id;
     this.name = name;
     this.multiple = (multiple === true) ? { positive: true, negative: true }
       : (multiple === false) ? { positive: false, negative: false }
         : multiple;
-    this.options = options;
+    this.tags = tags;
     this.required = required;
   }
 }
@@ -449,4 +449,4 @@ export const ConfigEvidence: TagGroup = new TagGroup(
   ], true);
 
 export const AllGroups: TagGroup[] = [GhostGroup, EvidenceGroup, ...SelectorGroups, ConfigEvidence];
-export const AllTagsById: { [key: string]: Tag } = AllGroups.flatMap(grp => grp.options).reduce((tags, tag) => { tags[tag.tag] = tag; return tags }, {} as { [key: string]: Tag });
+export const AllTagsById: { [key: string]: Tag } = AllGroups.flatMap(grp => grp.tags).reduce((tags, tag) => { tags[tag.id] = tag; return tags }, {} as { [key: string]: Tag });

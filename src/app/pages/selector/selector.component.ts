@@ -28,8 +28,8 @@ export class SelectorComponent {
 
   public get title(): string {
     if (!this.showConfig) {
-      const opt = ConfigEvidence.options.find(opt => this.config[opt.tag] === TagState.checked);
-      if (opt != null && opt.tag != 'config_evidence_hidden_0') {
+      const opt = ConfigEvidence.tags.find(opt => this.config[opt.id] === TagState.checked);
+      if (opt != null && opt.id != 'config_evidence_hidden_0') {
         return 'Evidence - ' + opt.name;
       }
     }
@@ -69,12 +69,12 @@ export class SelectorComponent {
 
     // Map enabled -> disabled
     this.disabled.clear();
-    AllGroups.forEach(grp => grp.options.filter(opt => !enabled.has(opt.tag)).forEach(opt => this.disabled.add(opt.tag)));
+    AllGroups.forEach(grp => grp.tags.filter(opt => !enabled.has(opt.id)).forEach(opt => this.disabled.add(opt.id)));
   }
 
   private getEvidenceHidden(): number {
-    const opt = ConfigEvidence.options.find(opt => this.config[opt.tag] === TagState.checked);
-    switch (opt?.tag) {
+    const opt = ConfigEvidence.tags.find(opt => this.config[opt.id] === TagState.checked);
+    switch (opt?.id) {
       default:
       case 'config_evidence_hidden_0': return 0;
       case 'config_evidence_hidden_1': return 1;

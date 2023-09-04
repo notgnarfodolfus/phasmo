@@ -1,11 +1,11 @@
 <div *ngIf="group && states" class="row">
-  <div *ngFor="let option of group.options; let index = index" [class]="col">
+  <div *ngFor="let tag of group.tags; let index = index" [class]="col">
     <app-tag-checkbox
-      [tag]="option"
-      [disabled]="disabled?.has(option.tag) ?? false"
+      [tag]="tag"
+      [disabled]="disabled?.has(tag.id) ?? false"
       [required]="group.required && index === 0"
-      [(state)]="states[option.tag]"
-      (stateChange)="onChange(option, $event)"
+      [(state)]="states[tag.id]"
+      (stateChange)="onChange(tag, $event)"
     ></app-tag-checkbox>
   </div>
 </div>
