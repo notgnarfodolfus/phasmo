@@ -34,6 +34,7 @@ export class Tag {
   public readonly id: TagId;
   public readonly name: string;
   public readonly hint: string | null;
+  public readonly hintStriked: string | null;
 
   /**
    * Determines whether this tag can be negated. This can be used to negate the filter.
@@ -43,11 +44,21 @@ export class Tag {
    */
   public readonly inverse: TagId | true | null;
 
-  constructor(id: TagId, name: string, inverse: TagId | true | null = null, hint: string | null = null) {
+  constructor(id: TagId, name: string, inverse: TagId | true | null = null, hint: string | null = null, hintStriked: string | true | null = null) {
     this.id = id;
     this.name = name;
-    this.hint = hint;
     this.inverse = inverse;
+    this.hint = hint;
+    this.hintStriked = (hintStriked === true) ? hint : hintStriked;
+  }
+
+  public getHint(state: TagState): string | null {
+    switch (state) {
+      default:
+      case TagState.off: return null;
+      case TagState.checked: return this.hint;
+      case TagState.striked: return this.hintStriked;
+    }
   }
 }
 
@@ -145,7 +156,7 @@ export const Ghosts: Ghost[] = [
       'sanity_below_40', 'sanity_below_50'
     ],
     {
-      hints: { 'Threshold': 'Hunts at 50% sanity of the targeted player' }
+      hints: { 'Threshold': 'Hunts at 50% sanity of the <strong>targeted</strong> player' }
     }
   ),
   new Ghost('Demon', 10,
@@ -415,19 +426,19 @@ export const SelectorGroups: TagGroup[] = [
     new Tag('threshold_very_high', '> 65%')
   ]),
   new TagGroup('hunt_abilities', 'Hunt Abilites', { positive: false, negative: true }, [
-    new Tag('hunt_ability_phantom', 'Shorter visible', true, 'Phantoms are only visible every 1 to 2 sec (instead of 0.3 to 1s) during hunts'),
-    new Tag('hunt_ability_oni', 'Longer visible', true, 'Onis have shorter invisibility phases during hunts and are better visible'),
-    new Tag('hunt_ability_obake', 'Shapeshift', true, 'Obake can temporary shapeshift to another ghost model on each blink during hunts (6.67%)'),
-    new Tag('hunt_ability_hantu', 'Visible breath', true, 'On Hantu models the breath is visible when the breaker is off'),
-    new Tag('hunt_ability_yokai', 'Less audition', true, 'Yokais can hear players and sense electronics within 2.5m (instead of 9 and 7m)'),
-    new Tag('hunt_ability_myling', 'Low audible range', true, 'Myling footsteps can be heard within 12m (instead of 20m)'),
-    new Tag('hunt_ability_poltergeist', 'Frequent throws', true, 'A Poltergeist always throws available nearby items during hunts (instead of 50%)'),
-    new Tag('hunt_ability_deogen', 'Finds players', true, 'Deogens always know where the players are and aproach rapidly before slowing down')
+    new Tag('hunt_ability_phantom', 'Shorter visible', true, '<strong>Phantom</strong>s are only visible every 1 to 2 sec (instead of 0.3 to 1s) during hunts'),
+    new Tag('hunt_ability_oni', 'Longer visible', true, '<strong>Oni</strong>s have shorter invisibility phases during hunts and are better visible'),
+    new Tag('hunt_ability_obake', 'Shapeshift', true, '<strong>Obake</strong> can temporary shapeshift to another ghost model on each blink during hunts (6.67%)'),
+    new Tag('hunt_ability_hantu', 'Visible breath', true, 'On <strong>Hantu</strong> models the breath is visible when the breaker is off'),
+    new Tag('hunt_ability_yokai', 'Less audition', true, '<strong>Yokai</strong>s can hear players and sense electronics within 2.5m (instead of 9 and 7m)'),
+    new Tag('hunt_ability_myling', 'Low audible range', true, '<strong>Myling</strong> footsteps can be heard within 12m (instead of 20m)'),
+    new Tag('hunt_ability_poltergeist', 'Frequent throws', true, 'A <strong>Poltergeist</strong> always throws available nearby items during hunts (instead of 50%)'),
+    new Tag('hunt_ability_deogen', 'Finds players', true, '<strong>Deogen</strong>s always know where the players are and aproach rapidly before slowing down')
   ]),
   new TagGroup('ghost_abilities', 'Ghost Abilites', true, [
-    new Tag('ability_mist_event', 'Mist Orb', true, 'Onis are unable to perform the mist orb ghost event'),
-    new Tag('ability_footprints', 'Footprints', true, 'Wraithes will never step into salt'),
-    new Tag('ability_digital_dots', 'Digital D.O.T.S.', 'ability_analog_dots', 'Goryo D.O.T.S can only be seen through a video camera')
+    new Tag('ability_mist_event', 'Mist Orb', true, '<strong>Oni</strong>s are unable to perform the mist orb ghost event', true),
+    new Tag('ability_footprints', 'Footprints', true, '<strong>Wraith</strong>es will never step into salt', true),
+    new Tag('ability_digital_dots', 'Digital D.O.T.S.', 'ability_analog_dots', '<strong>Goryo</strong> D.O.T.S can only be seen through a video camera', true)
   ]),
 ];
 

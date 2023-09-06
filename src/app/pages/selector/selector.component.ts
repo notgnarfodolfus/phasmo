@@ -64,11 +64,14 @@ export class SelectorComponent {
       .flatMap(g => Object.entries(g.config.hints ?? {})
         .map(e => { return { key: g.name + ' ' + e[0], value: e[1] }; }));
     const tagHints = Object.entries(this.states)
-      .filter(s => s[1] === TagState.checked)
-      .map(s => AllTagsById[s[0]])
-      .filter(t => !!t?.hint)
-      .map(t => { return { key: t.name, value: t.hint! } });
-    this.hints = ghostHints.concat(tagHints);
+      .map(s => {
+        const tag = AllTagsById[s[0]];
+        const hint = tag?.getHint(s[1]);
+        return hint ? { key: tag.name, value: hint } : null;
+      })
+      .filter(t => !!t)
+      .map(t => t!);
+    this.hints = [...ghostHints, ...tagHints];
 
     // Ensure toggled elements are clickable (enabled)
     Object.entries(this.states)
