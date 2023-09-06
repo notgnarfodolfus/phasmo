@@ -25,7 +25,9 @@ export type GhostSelector =
   'ability_mist_event' | 'ability_footprints' | 'ability_analog_dots' | 'ability_digital_dots' |
   'hunt_ability_deogen' | 'hunt_ability_hantu' | 'hunt_ability_myling' | 'hunt_ability_obake' | 'hunt_ability_oni' | 'hunt_ability_phantom' | 'hunt_ability_poltergeist' | 'hunt_ability_yokai';
 
-export type Config = 'config_evidence_hidden_0' | 'config_evidence_hidden_1' | 'config_evidence_hidden_2' | 'config_evidence_hidden_3';
+export type Config =
+  'config_evidence_hidden_0' | 'config_evidence_hidden_1' | 'config_evidence_hidden_2' | 'config_evidence_hidden_3' |
+  'config_sort_ghosts_default' | 'config_sort_ghosts_by_name';
 
 export type TagId = GhostName | GhostEvidence | GhostSelector | Config;
 
@@ -113,21 +115,24 @@ export class Ghost {
     this.tags = new Set<TagId>([name, ...evidence, ...selectors]);
   }
 
-  public isPossible(states: TagStates, evidenceHidden: number) {
+  public isPossible(states: TagStates, evidenceHidden: number): boolean {
+    // Ensure the Ghost is not automatically disabled when striked through
+    const entries = Object.entries(states).filter(e => e[0] !== this.name);
+
     // In case a mismatching tag is CHECKED the ghost can be ruled out instantly
-    if (Object.entries(states).some(e => e[1] === TagState.checked && !this.tags.has(e[0] as TagId))) {
+    if (entries.some(e => e[1] === TagState.checked && !this.tags.has(e[0] as TagId) && e[0] !== this.name)) {
       return false;
     }
 
     // In case we got more evidence than expected the ghost can be ruled out as well
-    const evidenceStates = Object.entries(states).filter(e => !!GhostEvidenceReverse[e[0]]);
+    const evidenceStates = entries.filter(e => !!GhostEvidenceReverse[e[0]]);
     const evidenceChecked = evidenceStates.filter(e => e[1] === TagState.checked);
     if (evidenceChecked.length + evidenceHidden > this.evidence.length) {
       return false;
     }
 
     // In case a matching tag is STRIKED we need some aditional checks for hidden evidence
-    const strikeMismatch = Object.entries(states).filter(e => e[1] === TagState.striked && this.tags.has(e[0] as TagId));
+    const strikeMismatch = entries.filter(e => e[1] === TagState.striked && this.tags.has(e[0] as TagId));
 
     // Rule out ghosts whith forced evidence
     if (strikeMismatch.some(e => e[0] === this.config.forcedEvidence)) {
@@ -451,5 +456,12 @@ export const ConfigEvidence: TagGroup = new TagGroup(
     new Tag('config_evidence_hidden_3', 'No Evidence (Custom)')
   ], true);
 
-export const AllGroups: TagGroup[] = [GhostGroup, EvidenceGroup, ...SelectorGroups, ConfigEvidence];
+export const ConfigSorting: TagGroup = new TagGroup(
+  'config_ghost_sorting', 'Sort Ghosts', null,
+  [
+    new Tag('config_sort_ghosts_default', 'Regular Order'),
+    new Tag('config_sort_ghosts_by_name', 'Sort by Name')
+  ], true);
+
+export const AllGroups: TagGroup[] = [GhostGroup, EvidenceGroup, ...SelectorGroups];
 export const AllTagsById: { [key: string]: Tag } = AllGroups.flatMap(grp => grp.tags).reduce((tags, tag) => { tags[tag.id] = tag; return tags }, {} as { [key: string]: Tag });

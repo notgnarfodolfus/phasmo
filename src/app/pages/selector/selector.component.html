@@ -18,11 +18,26 @@
         <hr />
         <ng-container *ngIf="showConfig">
           <div class="row">
-            <div class="col">
+            <div class="col-3 fw-bold">
+              <span>{{ evidenceConfig.name }}</span>
+            </div>
+            <div class="col-9">
               <app-tag-selector
                 [group]="evidenceConfig"
                 [states]="config"
-                (statesChange)="update({})"
+                (statesChange)="update()"
+              ></app-tag-selector>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3 fw-bold">
+              <span>{{ sortConfig.name }}</span>
+            </div>
+            <div class="col-9">
+              <app-tag-selector
+                [group]="sortConfig"
+                [states]="config"
+                (statesChange)="updateSorting()"
               ></app-tag-selector>
             </div>
           </div>
@@ -33,7 +48,7 @@
           [group]="evidence"
           [states]="states"
           [disabled]="disabled"
-          (statesChange)="update($event)"
+          (statesChange)="update()"
         ></app-tag-selector>
         <hr />
         <app-tag-selector
@@ -41,7 +56,7 @@
           [group]="ghosts"
           [states]="states"
           [disabled]="disabled"
-          (statesChange)="update($event)"
+          (statesChange)="update()"
         ></app-tag-selector>
       </div>
     </div>
@@ -61,7 +76,7 @@
               [group]="sel"
               [states]="states"
               [disabled]="disabled"
-              (statesChange)="update($event)"
+              (statesChange)="update()"
             ></app-tag-selector>
           </div>
         </div>

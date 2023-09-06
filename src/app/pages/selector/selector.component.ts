@@ -1,5 +1,21 @@
 import { Component } from "@angular/core";
-import { EvidenceGroup, GhostGroup, TagGroup, TagId, TagState, TagStates, Ghosts, SelectorGroups, AllGroups, AllTagsById, ConfigEvidence, GhostEvidence, Ghost } from "src/app/services/ghost";
+import {
+  EvidenceGroup,
+  GhostGroup,
+  TagGroup,
+  TagId,
+  TagState,
+  TagStates,
+  Ghosts,
+  SelectorGroups,
+  AllGroups,
+  AllTagsById,
+  ConfigEvidence,
+  GhostEvidence,
+  Ghost,
+  ConfigSorting,
+  GhostGroupAlphabetical
+} from "src/app/services/ghost";
 
 @Component({
   selector: 'app-selector',
@@ -20,6 +36,7 @@ export class SelectorComponent {
 
   public showConfig: boolean = false;
   public evidenceConfig: TagGroup = ConfigEvidence;
+  public sortConfig: TagGroup = ConfigSorting;
 
   public get showHints(): boolean {
     const count = Object.keys(this.hints).length;
@@ -29,7 +46,7 @@ export class SelectorComponent {
   public get title(): string {
     if (!this.showConfig) {
       const opt = ConfigEvidence.tags.find(opt => this.config[opt.id] === TagState.checked);
-      if (opt != null && opt.id != 'config_evidence_hidden_0') {
+      if (opt != null && opt.id !== 'config_evidence_hidden_0') {
         return 'Evidence - ' + opt.name;
       }
     }
@@ -38,22 +55,20 @@ export class SelectorComponent {
 
   public reset() {
     this.states = {};
-    this.update({});
+    this.update();
   }
 
-  public update(value: TagStates): void {
-
-    // Merge new value into full states tracker
-    Object.assign(this.states, value);
-
+  public update(): void {
     const evidenceHidden = this.getEvidenceHidden();
 
     // Find ghosts and selectors that are still available in this configuration
     const enabled = new Set<TagId>();
     Ghosts.filter(ghost => ghost.isPossible(this.states, evidenceHidden)).forEach(ghost => {
       enabled.add(ghost.name);
-      ghost.evidence.forEach(e => enabled.add(e));
-      ghost.selectors.forEach(s => enabled.add(s));
+      if (this.states[ghost.name] !== TagState.striked) {
+        ghost.evidence.forEach(e => enabled.add(e));
+        ghost.selectors.forEach(s => enabled.add(s));
+      }
     });
 
     // Disable impossible evidence options depending on hidden settings
@@ -73,14 +88,20 @@ export class SelectorComponent {
       .map(t => t!);
     this.hints = [...ghostHints, ...tagHints];
 
-    // Ensure toggled elements are clickable (enabled)
-    Object.entries(this.states)
-      .filter(e => e[1] !== TagState.off)
-      .forEach(e => enabled.add(e[0] as TagId));
+    // Ensure active elements (except ghosts) are clickable/enabled
+    [EvidenceGroup, ...SelectorGroups]
+      .flatMap(g => g.tags)
+      .filter(t => this.states[t.id] !== TagState.off)
+      .forEach(t => enabled.add(t.id));
 
     // Map enabled -> disabled
     this.disabled.clear();
     AllGroups.forEach(grp => grp.tags.filter(opt => !enabled.has(opt.id)).forEach(opt => this.disabled.add(opt.id)));
+  }
+
+  public updateSorting() {
+    const sortByName = this.config['config_sort_ghosts_by_name'] === TagState.checked;
+    this.ghosts = sortByName ? GhostGroupAlphabetical : GhostGroup;
   }
 
   private getEvidenceHidden(): number {
