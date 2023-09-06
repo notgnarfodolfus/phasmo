@@ -401,7 +401,7 @@ export const SelectorGroups: TagGroup[] = [
     new Tag('los_accelerate', 'Accelerate', null, 'The ghost accelerates by 65% over 13sec when seeing a player'),
     new Tag('los_constant', 'Constant / Special', null, 'The ghost has constant speed or special speed rules while chasing the player')
   ]),
-  new TagGroup('sanity_min', 'Min. Sanity', null, [
+  new TagGroup('sanity', 'Hunt Sanity', null, [
     new Tag('sanity_below_40', '40%'),
     new Tag('sanity_below_50', '50%'),
     new Tag('sanity_below_60', '60%'),
