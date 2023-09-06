@@ -31,10 +31,7 @@ export class TagSelectorComponent implements OnInit {
       .filter(opt => this.states[opt.id] == null)
       .forEach(opt => this.states[opt.id] = TagState.off);
 
-    // Ensure a value is checked if required
-    if (this.group.required && this.group.tags.length > 0 && Object.values(this.states).every(v => v !== TagState.checked)) {
-      this.states[this.group.tags[0].id] = TagState.checked;
-    }
+    this.ensureDefault();
   }
 
   public onChange(tag: Tag, value: TagState) {
@@ -57,11 +54,16 @@ export class TagSelectorComponent implements OnInit {
     }
 
     // Ensure a value is checked if required
-    if (this.group.required && this.group.tags.length > 0 && Object.values(this.states).every(v => v !== TagState.checked)) {
-      this.states[this.group.tags[0].id] = TagState.checked;
-    }
+    this.ensureDefault();
 
     this.statesChange.emit(this.states);
+  }
+
+  // Ensure a value is checked if required
+  private ensureDefault(): void {
+    if (this.group && this.group.required && this.group.tags.length > 0 && this.group.tags.every(v => this.states[v.id] !== TagState.checked)) {
+      this.states[this.group.tags[0].id] = TagState.checked;
+    }
   }
 
   private static inverse(tag: TagState): TagState {
