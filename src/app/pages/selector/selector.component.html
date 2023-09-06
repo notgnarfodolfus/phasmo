@@ -48,12 +48,14 @@
   </div>
 
   <div class="col col-lg-12 col-xl-6 mb-4">
-    <div class="card">
+    <div class="card mb-4">
       <div class="card-body">
         <h3 class="card-title">Behavior</h3>
         <hr />
         <div class="row" *ngFor="let sel of selectors">
-          <div class="col-3 fw-bold">{{ sel.name }}</div>
+          <div class="col-3 fw-bold">
+            <span>{{ sel.name }}</span>
+          </div>
           <div class="col-9">
             <app-tag-selector
               [group]="sel"
@@ -63,15 +65,18 @@
             ></app-tag-selector>
           </div>
         </div>
-        <ng-container *ngIf="showHints">
-          <hr />
-          <div class="row" *ngFor="let hint of hints | keyvalue">
-            <div class="col-3 fw-bold">
-              <strong>{{ hint.key }}</strong>
-            </div>
-            <div class="col-9">{{ hint.value }}</div>
+      </div>
+    </div>
+    <div class="card" *ngIf="hints.length">
+      <div class="card-body">
+        <h3 class="card-title">Hints & Info</h3>
+        <hr />
+        <div class="row" *ngFor="let hint of hints">
+          <div class="col-3 fw-bold">
+            <strong>{{ hint.key }}</strong>
           </div>
-        </ng-container>
+          <div class="col-9">{{ hint.value }}</div>
+        </div>
       </div>
     </div>
   </div>

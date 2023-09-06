@@ -79,7 +79,7 @@ export enum TagState { off, checked, striked };
 
 export type TagStates = { [tagId: string]: TagState };
 
-export interface GhostConfig {
+export interface GhostOptions {
   hints?: { [tag: string]: string };
   forcedEvidence?: GhostEvidence;
 }
@@ -90,10 +90,10 @@ export class Ghost {
   public readonly order: number;
   public readonly evidence: GhostEvidence[];
   public readonly selectors: GhostSelector[];
-  public readonly config: GhostConfig;
+  public readonly config: GhostOptions;
   public readonly tags: Set<TagId>;
 
-  constructor(name: GhostName, order: number, evidence: GhostEvidence[], selectors: GhostSelector[], config: GhostConfig = {}) {
+  constructor(name: GhostName, order: number, evidence: GhostEvidence[], selectors: GhostSelector[], config: GhostOptions = {}) {
     this.name = name;
     this.order = order;
     this.evidence = evidence;
@@ -103,28 +103,25 @@ export class Ghost {
   }
 
   public isPossible(states: TagStates, evidenceHidden: number) {
-    // In case a mismatching tag is CHECKED the ghost can be ruled out
+    // In case a mismatching tag is CHECKED the ghost can be ruled out instantly
     if (Object.entries(states).some(e => e[1] === TagState.checked && !this.tags.has(e[0] as TagId))) {
       return false;
     }
 
-    // HACK: Special handling for no evidence runs: striked evidence can be ignored, checked evidence disables all ghosts
-    if (evidenceHidden >= 3) {
-      const evidenceStates = Object.entries(states).filter(e => !!GhostEvidenceReverse[e[0]]);
-      const evidenceChecked = evidenceStates.filter(e => e[1] === TagState.checked);
-      const evidenceStriked = evidenceStates.filter(e => e[1] === TagState.striked);
-      if (evidenceChecked.length > 0) {
-        // Checked evidence should not be possible and will disable all ghosts; Exception: Mimics must still have ghost orbs
-        return this.name === 'The Mimic' && evidenceChecked.every(e => GhostEvidenceReverse[e[0]] === GhostEvidence.GhostOrb);
-      }
-      if (evidenceStriked.length > 0) {
-        // Striked evidence can be ignored with zero evidence; Exception: Mimics must still have ghost orbs
-        return this.name !== 'The Mimic' || !evidenceStriked.some(e => GhostEvidenceReverse[e[0]] === GhostEvidence.GhostOrb);
-      }
+    // In case we got more evidence than expected the ghost can be ruled out as well
+    const evidenceStates = Object.entries(states).filter(e => !!GhostEvidenceReverse[e[0]]);
+    const evidenceChecked = evidenceStates.filter(e => e[1] === TagState.checked);
+    if (evidenceChecked.length + evidenceHidden > this.evidence.length) {
+      return false;
     }
 
     // In case a matching tag is STRIKED we need some aditional checks for hidden evidence
     const strikeMismatch = Object.entries(states).filter(e => e[1] === TagState.striked && this.tags.has(e[0] as TagId));
+
+    // Rule out ghosts whith forced evidence
+    if (strikeMismatch.some(e => e[0] === this.config.forcedEvidence)) {
+      return false;
+    }
 
     // If some strike mismatch is not related to evidence but has another reason the ghost can be ruled out
     if (strikeMismatch.some(e => !GhostEvidenceReverse[e[0]])) {
@@ -133,11 +130,6 @@ export class Ghost {
 
     // If there are more evidence striked than hidden the ghost can be ruled out as well
     if (strikeMismatch.length > evidenceHidden) {
-      return false;
-    }
-
-    // Rule out ghosts whith forced evidence
-    if (evidenceHidden < 3 && strikeMismatch.some(e => e[0] === this.config.forcedEvidence)) {
       return false;
     }
 
@@ -153,7 +145,7 @@ export const Ghosts: Ghost[] = [
       'sanity_below_40', 'sanity_below_50'
     ],
     {
-      hints: { threshold: 'Hunts at 50% sanity of the targeted player' }
+      hints: { 'Threshold': 'Hunts at 50% sanity of the targeted player' }
     }
   ),
   new Ghost('Demon', 10,
@@ -163,7 +155,7 @@ export const Ghosts: Ghost[] = [
       'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70', 'sanity_below_80'
     ],
     {
-      hints: { threshold: 'Hunts at 70% sanity or any time via ability' }
+      hints: { 'Threshold': 'Hunts at 70% sanity or any time via ability' }
     }
   ),
   new Ghost('Deogen', 23,
@@ -174,7 +166,7 @@ export const Ghosts: Ghost[] = [
       'hunt_ability_deogen'
     ],
     {
-      hints: { speed: 'Speed when far: 3m/s; close: 0.4m/s', threshold: 'Hunts at 40% sanity', special: 'Always finds player' }
+      hints: { 'Speed': 'Speed when far: 3m/s; close: 0.4m/s', 'Threshold': 'Hunts at 40% sanity', 'Ability': 'Always finds player' }
     }
   ),
   new Ghost('Goryo', 15,
@@ -185,7 +177,7 @@ export const Ghosts: Ghost[] = [
     ],
     {
       forcedEvidence: GhostEvidence.DotsProjector,
-      hints: { special: 'D.O.T.S only visible on video' }
+      hints: { 'Ability': 'D.O.T.S only visible on video' }
     }
   ),
   new Ghost('Hantu', 14,
@@ -197,7 +189,7 @@ export const Ghosts: Ghost[] = [
     ],
     {
       forcedEvidence: GhostEvidence.FreezingTemperatures,
-      hints: { speed: 'Speed depends on temperature: 1.4m/s (15°C) to 2.7m/s (0°C)', special: 'Breath visible when breaker is off' }
+      hints: { 'Speed': 'Speed depends on temperature: 1.4m/s (15°C) to 2.7m/s (0°C)', 'Ability': 'Breath visible when breaker is off' }
     }
   ),
   new Ghost('Jinn', 6,
@@ -207,7 +199,7 @@ export const Ghosts: Ghost[] = [
       'sanity_below_40', 'sanity_below_50'
     ],
     {
-      hints: { speed: 'Constant speed of 2.5m/s if breaker is on, LoS and 3m+ distance' }
+      hints: { 'Speed': 'Constant speed of 2.5m/s if breaker is on, LoS and 3m+ distance' }
     }
   ),
   new Ghost('Mare', 7,
@@ -217,7 +209,7 @@ export const Ghosts: Ghost[] = [
       'sanity_below_40', 'sanity_below_50'
     ],
     {
-      hints: { threshold: 'Hunts at 40% sanity if light is on or 60% if light is off' }
+      hints: { 'Threshold': 'Hunts at 40% sanity if light is on or 60% if light is off' }
     }
   ),
   new Ghost('Moroi', 22,
@@ -228,7 +220,7 @@ export const Ghosts: Ghost[] = [
     ],
     {
       forcedEvidence: GhostEvidence.SpiritBox,
-      hints: { speed: 'Speed depends on team sanity: 1.4m/s (45%+) to 2.1m/s (0%), accelerates (up to 3.7m/s)' }
+      hints: { 'Speed': 'Speed depends on team sanity: 1.4m/s (45%+) to 2.1m/s (0%), accelerates (up to 3.7m/s)' }
     }
   ),
   new Ghost('Myling', 16,
@@ -261,11 +253,11 @@ export const Ghosts: Ghost[] = [
   new Ghost('Onryo', 17,
     [GhostEvidence.FreezingTemperatures, GhostEvidence.GhostOrb, GhostEvidence.SpiritBox],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_high', 'threshold_very_high', 'ability_mist_event', 'ability_footprints',
+      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_high', 'ability_mist_event', 'ability_footprints',
       'sanity_below_40', 'sanity_below_50', 'sanity_below_60'
     ],
     {
-      hints: { threshold: 'Hunts at 60% sanity or if 3 candles are blown out', special: 'Lit candles act as crucifixes' }
+      hints: { 'Threshold': 'Hunts at 60% sanity or if 3 candles are blown out', 'Ability': 'Lit candles act as crucifixes' }
     }
   ),
   new Ghost('Phantom', 3,
@@ -291,7 +283,7 @@ export const Ghosts: Ghost[] = [
       'sanity_below_40', 'sanity_below_50', 'sanity_below_60'
     ],
     {
-      hints: { speed: 'Speed when close electrical equipment: 2.5m/s', threshold: 'Hunts at 65% in the presence of active electronics' }
+      hints: { 'Speed': 'Speed when close electrical equipment: 2.5m/s', 'Threshold': 'Hunts at 65% in the presence of active electronics' }
     }
   ),
   new Ghost('Revenant', 8,
@@ -301,7 +293,7 @@ export const Ghosts: Ghost[] = [
       'sanity_below_40', 'sanity_below_50'
     ],
     {
-      hints: { speed: 'Speed while chasing: 3m/s; Speed while roaming: 1m/s' }
+      hints: { 'Speed': 'Speed while chasing: 3m/s; Speed while roaming: 1m/s' }
     }
   ),
   new Ghost('Shade', 9,
@@ -310,7 +302,7 @@ export const Ghosts: Ghost[] = [
       'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_low', 'ability_mist_event', 'ability_footprints'
     ],
     {
-      hints: { threshold: 'Hunts at 35% sanity' }
+      hints: { 'Threshold': 'Hunts at 35% sanity' }
     }
   ),
   new Ghost('Spirit', 1,
@@ -327,7 +319,7 @@ export const Ghosts: Ghost[] = [
       'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70'
     ],
     {
-      hints: { speed: 'Speed at start: 2.75m/s; Speed at max age: 1m/s', threshold: 'Hunts at 75% to 15% sanity depending on age' }
+      hints: { 'Speed': 'Speed at start: 2.75m/s; Speed at max age: 1m/s', 'Threshold': 'Hunts at 75% to 15% sanity depending on age' }
     }
   ),
   new Ghost('The Mimic', 21,
@@ -338,7 +330,7 @@ export const Ghosts: Ghost[] = [
     ],
     {
       forcedEvidence: GhostEvidence.GhostOrb,
-      hints: { speed: 'Speed depends on mimicked ghost', threshold: 'Hunt threshold depends on mimicked ghost' }
+      hints: { 'Speed': 'Speed depends on mimicked ghost', 'Threshold': 'Hunt threshold depends on mimicked ghost' }
     }
   ),
   new Ghost('The Twins', 18,
@@ -348,7 +340,7 @@ export const Ghosts: Ghost[] = [
       'sanity_below_40', 'sanity_below_50'
     ],
     {
-      hints: { speed: 'Main twin speed: 1.5 m/s; Decoy twin speed: 1.9m/s' }
+      hints: { 'Speed': 'Main twin speed: 1.5 m/s; Decoy twin speed: 1.9m/s' }
     }
   ),
   new Ghost('Wraith', 2,
@@ -366,7 +358,7 @@ export const Ghosts: Ghost[] = [
       'hunt_ability_yokai'
     ],
     {
-      hints: { threshold: 'Hunts at 80% if a player is talking in its ghost room', special: 'Hears sounds and senses electroincs in a radius of 2.5m (instead of 9m and 7m)' }
+      hints: { 'Threshold': 'Hunts at 80% if a player is talking in its ghost room', 'Ability': 'Hears sounds and senses electroincs in a radius of 2.5m (instead of 9m and 7m)' }
     }
   ),
   new Ghost('Yurei', 11,
@@ -409,12 +401,12 @@ export const SelectorGroups: TagGroup[] = [
     new Tag('los_accelerate', 'Accelerate', null, 'The ghost accelerates by 65% over 13sec when seeing a player'),
     new Tag('los_constant', 'Constant / Special', null, 'The ghost has constant speed or special speed rules while chasing the player')
   ]),
-  new TagGroup('sanity', 'Sanity', null, [
+  new TagGroup('sanity_min', 'Min. Sanity', null, [
     new Tag('sanity_below_40', '40%'),
     new Tag('sanity_below_50', '50%'),
     new Tag('sanity_below_60', '60%'),
     new Tag('sanity_below_70', '70%'),
-    new Tag('sanity_below_80', '80%'),
+    new Tag('sanity_below_80', '80%')
   ]),
   new TagGroup('threshold', 'Threshold', null, [
     new Tag('threshold_low', '< 50%'),
