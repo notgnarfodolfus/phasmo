@@ -14,8 +14,15 @@ import {
   GhostEvidence,
   Ghost,
   ConfigSorting,
-  GhostGroupAlphabetical
+  GhostGroupAlphabetical,
+  GhostName,
 } from "src/app/services/ghost";
+
+interface Hint {
+  ghost?: GhostName,
+  key: string,
+  value: string
+}
 
 @Component({
   selector: 'app-selector',
@@ -23,6 +30,7 @@ import {
   styleUrls: ['./selector.component.scss']
 })
 export class SelectorComponent {
+
 
   public disabled: Set<TagId> = new Set<TagId>();
   public states: TagStates = {};
@@ -32,7 +40,7 @@ export class SelectorComponent {
   public evidence: TagGroup = EvidenceGroup;
   public selectors: TagGroup[] = SelectorGroups;
 
-  public hints: { key: string, value: string }[] = [];
+  public hints: Hint[] = [];
 
   public showConfig: boolean = false;
   public evidenceConfig: TagGroup = ConfigEvidence;
@@ -74,19 +82,18 @@ export class SelectorComponent {
     // Disable impossible evidence options depending on hidden settings
     this.impossibleEvidence(this.states, evidenceHidden).forEach(e => enabled.delete(e))
 
-    // Generate hints
-    const ghostHints = Ghosts.filter(g => this.states[g.name] === TagState.checked)
+    // Generate ghost hints
+    this.hints = Ghosts.filter(g => this.states[g.name] === TagState.checked)
       .flatMap(g => Object.entries(g.config.hints ?? {})
-        .map(e => { return { key: g.name + ' ' + e[0], value: e[1] }; }));
-    const tagHints = Object.entries(this.states)
-      .map(s => {
-        const tag = AllTagsById[s[0]];
-        const hint = tag?.getHint(s[1]);
-        return hint ? { key: tag.name, value: hint } : null;
-      })
-      .filter(t => !!t)
-      .map(t => t!);
-    this.hints = [...ghostHints, ...tagHints];
+        .map(e => { return { ghost: g.name, key: e[0], value: e[1] }; }));
+    // Add behavior hints
+    Object.entries(this.states).forEach(e => {
+      const tag = AllTagsById[e[0]];
+      const hint = tag?.getHint(e[1]);
+      if (hint && !this.hints.some(h => h.key === tag.name)) {
+        this.hints.push({ key: tag.name, value: hint });
+      }
+    });
 
     // Ensure active elements (except ghosts) are clickable/enabled
     [EvidenceGroup, ...SelectorGroups]

@@ -22,8 +22,10 @@ export type GhostSelector =
   'los_accelerate' | 'los_constant' |
   'threshold_low' | 'threshold_medium' | 'threshold_high' | 'threshold_very_high' |
   'sanity_below_40' | 'sanity_below_50' | 'sanity_below_60' | 'sanity_below_70' | 'sanity_below_80' |
-  'ability_mist_event' | 'ability_footprints' | 'ability_analog_dots' | 'ability_digital_dots' |
-  'hunt_ability_deogen' | 'hunt_ability_hantu' | 'hunt_ability_myling' | 'hunt_ability_obake' | 'hunt_ability_oni' | 'hunt_ability_phantom' | 'hunt_ability_poltergeist' | 'hunt_ability_yokai';
+  'hunt_ability_deogen' | 'hunt_ability_hantu' | 'hunt_ability_myling' | 'hunt_ability_obake' | 'hunt_ability_oni' | 'hunt_ability_phantom' | 'hunt_ability_poltergeist' | 'hunt_ability_yokai' |
+  'ability_mist_event' | 'ability_footprints' | 
+  'ability_teleport' | 'ability_wander' | 'ability_shy_on_photo' | 'ability_analog_dots' | 'ability_digital_dots' | 'ability_paramic_scream';
+ 
 
 export type Config =
   'config_evidence_hidden_0' | 'config_evidence_hidden_1' | 'config_evidence_hidden_2' | 'config_evidence_hidden_3' |
@@ -159,11 +161,13 @@ export const Ghosts: Ghost[] = [
     [
       'speed_medium', 'movement_normal', 'los_accelerate',
       'threshold_medium', 'sanity_below_40', 'sanity_below_50',
-      'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
+      'ability_mist_event', 'ability_footprints', 'ability_wander', 'ability_analog_dots', 'ability_paramic_scream'
     ],
     {
       hints: {
-        'Threshold': 'Hunts at 50% sanity of the <strong>targeted</strong> player'
+        'Target': 'Targets one (alive and reachable) player, ignores other players',
+        'Threshold': 'Hunts at 50% sanity of the <strong>targeted</strong> player',
+        'Wander to Player': 'Tends to wander towards the <strong>targeted</strong> player out of Hunts'
       }
     }
   ),
@@ -309,8 +313,13 @@ export const Ghosts: Ghost[] = [
     [
       'speed_medium', 'movement_normal', 'los_accelerate',
       'threshold_medium', 'sanity_below_40', 'sanity_below_50', 'hunt_ability_phantom',
-      'ability_mist_event', 'ability_footprints', 'ability_analog_dots'
-    ]
+      'ability_mist_event', 'ability_footprints', 'ability_wander', 'ability_shy_on_photo', 'ability_analog_dots'
+    ],
+    {
+      hints: {
+        'Wander to Player': 'Tends to wander towards players out of Hunts'
+      }
+    }
   ),
   new Ghost('Poltergeist', 4,
     [GhostEvidence.Ultraviolett, GhostEvidence.GhostWriting, GhostEvidence.SpiritBox],
@@ -366,7 +375,12 @@ export const Ghosts: Ghost[] = [
       'speed_medium', 'movement_normal', 'los_accelerate',
       'threshold_medium', 'sanity_below_40', 'sanity_below_50',
       'ability_mist_event', 'ability_footprints'
-    ]
+    ],
+    {
+      hints: {
+        'Incense': 'Smudge prevents Hunts for 180 sec (instead of 90)'
+      }
+    }
   ),
   new Ghost('Thaye', 24,
     [GhostEvidence.DotsProjector, GhostEvidence.GhostOrb, GhostEvidence.GhostWriting],
@@ -415,8 +429,14 @@ export const Ghosts: Ghost[] = [
     [
       'speed_medium', 'movement_normal', 'los_accelerate',
       'threshold_medium', 'sanity_below_40', 'sanity_below_50',
-      'ability_mist_event', 'ability_analog_dots'
-    ]
+      'ability_mist_event', 'ability_teleport', 'ability_analog_dots'
+    ],
+    {
+      hints: {
+        'Footprints': 'Cannot step into salt',
+        'Teleport to Player': 'Might teleport to player out of hunts and generate EMF 2'
+      }
+    }
   ),
   new Ghost('Yokai', 13,
     [GhostEvidence.DotsProjector, GhostEvidence.GhostOrb, GhostEvidence.SpiritBox],
@@ -496,10 +516,16 @@ export const SelectorGroups: TagGroup[] = [
     new Tag('hunt_ability_poltergeist', 'Frequent throws', true, 'A <strong>Poltergeist</strong> always throws available nearby items during hunts (instead of 50%)'),
     new Tag('hunt_ability_deogen', 'Finds players', true, '<strong>Deogen</strong>s always know where the players are and aproach rapidly before slowing down')
   ]),
-  new TagGroup('ghost_abilities', 'Ghost Abilites', true, [
-    new Tag('ability_mist_event', 'Mist Orb', true, '<strong>Oni</strong>s are unable to perform the mist orb ghost event', true),
-    new Tag('ability_footprints', 'Footprints', true, '<strong>Wraith</strong>es will never step into salt', true),
-    new Tag('ability_digital_dots', 'Digital D.O.T.S.', 'ability_analog_dots', '<strong>Goryo</strong> D.O.T.S can only be seen through a video camera', true)
+  new TagGroup('ghost_abilities', 'Ghost Abilitess', { positive: true, negative: false }, [
+    new Tag('ability_mist_event', 'Mist Orb', null, '<strong>Oni</strong>s are unable to perform the mist orb ghost event'),
+    new Tag('ability_footprints', 'Footprints', null, '<strong>Wraith</strong>es will never step into salt')
+  ]),
+  new TagGroup('unique_abilities', 'Unique Abilitess', true, [
+    new Tag('ability_teleport', 'Teleport to Player', true, '<strong>Wraith</strong>es can teleport to players, which generates EMF Level 2', true),
+    new Tag('ability_wander', 'Wander to Player', true, '<strong>Phantom</strong>s and <strong>Banshee</strong>s might wander towards players', true),
+    new Tag('ability_shy_on_photo', 'Shy on Photos', true, '<strong>Phantom</strong>s disappear when photographed during ghost events', true),
+    new Tag('ability_digital_dots', 'Digital D.O.T.S.', 'ability_analog_dots', '<strong>Goryo</strong> D.O.T.S can only be seen through a video camera', true),
+    new Tag('ability_paramic_scream', 'Banshee Scream', true, '<strong>Banshee</strong>s have a 33% chance to convert a Parabolic Microphone "Whisper" into a screem')
   ]),
 ];
 

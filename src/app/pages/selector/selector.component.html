@@ -88,7 +88,7 @@
         <hr />
         <div class="row" *ngFor="let hint of hints">
           <div class="col-3 fw-bold">
-            <strong>{{ hint.key }}</strong>
+            <strong>{{ hint.ghost }} {{ hint.key }}</strong>
           </div>
           <div class="col-9">
             <div [innerHTML]="hint.value"></div>
