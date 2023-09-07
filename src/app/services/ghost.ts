@@ -157,102 +157,126 @@ export const Ghosts: Ghost[] = [
   new Ghost('Banshee', 5,
     [GhostEvidence.DotsProjector, GhostEvidence.Ultraviolett, GhostEvidence.GhostOrb],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
-      'sanity_below_40', 'sanity_below_50'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50',
+      'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
     ],
     {
-      hints: { 'Threshold': 'Hunts at 50% sanity of the <strong>targeted</strong> player' }
+      hints: {
+        'Threshold': 'Hunts at 50% sanity of the <strong>targeted</strong> player'
+      }
     }
   ),
   new Ghost('Demon', 10,
     [GhostEvidence.Ultraviolett, GhostEvidence.FreezingTemperatures, GhostEvidence.GhostWriting],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_very_high', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70', 'sanity_below_80'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_very_high', 'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70', 'sanity_below_80',
+      'ability_mist_event', 'ability_footprints'
     ],
     {
-      hints: { 'Threshold': 'Hunts at 70% sanity or any time via ability' }
+      hints: {
+        'Threshold': 'Hunts at 70% sanity or any time via ability'
+      }
     }
   ),
   new Ghost('Deogen', 23,
     [GhostEvidence.DotsProjector, GhostEvidence.GhostWriting, GhostEvidence.SpiritBox],
     [
-      'speed_slow', 'speed_fast', 'movement_special', 'los_constant', 'threshold_low', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
-      'sanity_below_40',
-      'hunt_ability_deogen'
+      'speed_slow', 'speed_fast', 'movement_special', 'los_constant',
+      'threshold_low', 'sanity_below_40', 'hunt_ability_deogen',
+      'ability_mist_event', 'ability_footprints', 'ability_analog_dots'
     ],
     {
-      hints: { 'Speed': 'Speed when far: 3m/s; close: 0.4m/s', 'Threshold': 'Hunts at 40% sanity', 'Ability': 'Always finds player' }
+      hints: {
+        'Speed': 'Speed when far: 3m/s; close: 0.4m/s',
+        'Threshold': 'Hunts at 40% sanity', 'Ability': 'Always finds player'
+      }
     }
   ),
   new Ghost('Goryo', 15,
     [GhostEvidence.DotsProjector, GhostEvidence.EmfLevel5, GhostEvidence.Ultraviolett],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_digital_dots',
-      'sanity_below_40', 'sanity_below_50', 'sanity_below_60'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50', 'sanity_below_60',
+      'ability_mist_event', 'ability_footprints', 'ability_digital_dots'
     ],
     {
       forcedEvidence: GhostEvidence.DotsProjector,
-      hints: { 'Ability': 'D.O.T.S only visible on video' }
+      hints: {
+        'Ability': 'D.O.T.S only visible on video'
+      }
     }
   ),
   new Ghost('Hantu', 14,
     [GhostEvidence.Ultraviolett, GhostEvidence.FreezingTemperatures, GhostEvidence.GhostOrb],
     [
-      'speed_slow', 'speed_medium', 'speed_fast', 'movement_fuzzy', 'movement_special', 'los_constant', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50',
-      'hunt_ability_hantu'
+      'speed_slow', 'speed_medium', 'speed_fast', 'movement_fuzzy', 'movement_special', 'los_constant',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50', 'hunt_ability_hantu',
+      'ability_mist_event', 'ability_footprints'
     ],
     {
       forcedEvidence: GhostEvidence.FreezingTemperatures,
-      hints: { 'Speed': 'Speed depends on temperature: 1.4m/s (15°C) to 2.7m/s (0°C)', 'Ability': 'Breath visible when breaker is off' }
+      hints: {
+        'Speed': 'Speed depends on temperature: 1.4m/s (15°C) to 2.7m/s (0°C)',
+        'Ability': 'Breath visible when breaker is off'
+      }
     }
   ),
   new Ghost('Jinn', 6,
     [GhostEvidence.EmfLevel5, GhostEvidence.Ultraviolett, GhostEvidence.FreezingTemperatures],
     [
-      'speed_medium', 'speed_fast', 'los_accelerate', 'movement_fuzzy', 'movement_special', 'los_constant', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50'
+      'speed_medium', 'speed_fast', 'los_accelerate', 'movement_fuzzy', 'movement_special', 'los_constant',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50',
+      'ability_mist_event', 'ability_footprints'
     ],
     {
-      hints: { 'Speed': 'Constant speed of 2.5m/s if breaker is on, LoS and 3m+ distance' }
+      hints: {
+        'Speed': 'Constant speed of 2.5m/s if breaker is on, LoS and 3m+ distance'
+      }
     }
   ),
   new Ghost('Mare', 7,
     [GhostEvidence.GhostOrb, GhostEvidence.GhostWriting, GhostEvidence.SpiritBox],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_low', 'threshold_high', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_low', 'threshold_high', 'sanity_below_40', 'sanity_below_50',
+      'ability_mist_event', 'ability_footprints'
     ],
     {
-      hints: { 'Threshold': 'Hunts at 40% sanity if light is on or 60% if light is off' }
+      hints: {
+        'Threshold': 'Hunts at 40% sanity if light is on or 60% if light is off'
+      }
     }
   ),
   new Ghost('Moroi', 22,
     [GhostEvidence.FreezingTemperatures, GhostEvidence.GhostWriting, GhostEvidence.SpiritBox],
     [
-      'speed_slow', 'speed_medium', 'speed_fast', 'movement_fuzzy', 'movement_special', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50'
+      'speed_slow', 'speed_medium', 'speed_fast', 'movement_fuzzy', 'movement_special', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50',
+      'ability_mist_event', 'ability_footprints'
     ],
     {
       forcedEvidence: GhostEvidence.SpiritBox,
-      hints: { 'Speed': 'Speed depends on team sanity: 1.4m/s (45%+) to 2.1m/s (0%), accelerates (up to 3.7m/s)' }
+      hints: {
+        'Speed': 'Speed depends on team sanity: 1.4m/s (45%+) to 2.1m/s (0%), accelerates (up to 3.7m/s)'
+      }
     }
   ),
   new Ghost('Myling', 16,
     [GhostEvidence.EmfLevel5, GhostEvidence.Ultraviolett, GhostEvidence.GhostWriting],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50',
-      'hunt_ability_myling'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50', 'hunt_ability_myling',
+      'ability_mist_event', 'ability_footprints'
     ]
   ),
   new Ghost('Obake', 20,
     [GhostEvidence.EmfLevel5, GhostEvidence.Ultraviolett, GhostEvidence.GhostOrb],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50',
-      'hunt_ability_obake'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50', 'hunt_ability_obake',
+      'ability_mist_event', 'ability_footprints'
     ],
     {
       forcedEvidence: GhostEvidence.Ultraviolett
@@ -261,127 +285,159 @@ export const Ghosts: Ghost[] = [
   new Ghost('Oni', 12,
     [GhostEvidence.DotsProjector, GhostEvidence.EmfLevel5, GhostEvidence.FreezingTemperatures],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_footprints', 'ability_analog_dots',
-      'sanity_below_40', 'sanity_below_50',
-      'hunt_ability_oni'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50', 'hunt_ability_oni',
+      'ability_footprints', 'ability_analog_dots'
     ]
   ),
   new Ghost('Onryo', 17,
     [GhostEvidence.FreezingTemperatures, GhostEvidence.GhostOrb, GhostEvidence.SpiritBox],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_high', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50', 'sanity_below_60'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_high', 'sanity_below_40', 'sanity_below_50', 'sanity_below_60',
+      'ability_mist_event', 'ability_footprints'
     ],
     {
-      hints: { 'Threshold': 'Hunts at 60% sanity or if 3 candles are blown out', 'Ability': 'Lit candles act as crucifixes' }
+      hints: {
+        'Threshold': 'Hunts at 60% sanity or if 3 candles are blown out',
+        'Ability': 'Lit candles act as crucifixes'
+      }
     }
   ),
   new Ghost('Phantom', 3,
     [GhostEvidence.DotsProjector, GhostEvidence.Ultraviolett, GhostEvidence.SpiritBox],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
-      'sanity_below_40', 'sanity_below_50',
-      'hunt_ability_phantom'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50', 'hunt_ability_phantom',
+      'ability_mist_event', 'ability_footprints', 'ability_analog_dots'
     ]
   ),
   new Ghost('Poltergeist', 4,
     [GhostEvidence.Ultraviolett, GhostEvidence.GhostWriting, GhostEvidence.SpiritBox],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50',
-      'hunt_ability_poltergeist'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50', 'hunt_ability_poltergeist',
+      'ability_mist_event', 'ability_footprints'
     ]
   ),
   new Ghost('Raiju', 19,
     [GhostEvidence.DotsProjector, GhostEvidence.EmfLevel5, GhostEvidence.GhostOrb],
     [
-      'speed_medium', 'speed_fast', 'movement_normal', 'movement_fuzzy', 'movement_special', 'los_accelerate', 'los_constant', 'threshold_medium', 'threshold_high', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
-      'sanity_below_40', 'sanity_below_50', 'sanity_below_60'
+      'speed_medium', 'speed_fast', 'movement_normal', 'movement_fuzzy', 'movement_special', 'los_accelerate', 'los_constant',
+      'threshold_medium', 'threshold_high', 'sanity_below_40', 'sanity_below_50', 'sanity_below_60',
+      'ability_mist_event', 'ability_footprints', 'ability_analog_dots'
     ],
     {
-      hints: { 'Speed': 'Speed when close electrical equipment: 2.5m/s', 'Threshold': 'Hunts at 65% in the presence of active electronics' }
+      hints: {
+        'Speed': 'Speed when close electrical equipment: 2.5m/s',
+        'Threshold': 'Hunts at 65% in the presence of active electronics'
+      }
     }
   ),
   new Ghost('Revenant', 8,
     [GhostEvidence.FreezingTemperatures, GhostEvidence.GhostOrb, GhostEvidence.GhostWriting],
     [
-      'speed_slow', 'speed_fast', 'movement_special', 'los_constant', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50'
+      'speed_slow', 'speed_fast', 'movement_special', 'los_constant',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50',
+      'ability_mist_event', 'ability_footprints'
     ],
     {
-      hints: { 'Speed': 'Speed while chasing: 3m/s; Speed while roaming: 1m/s' }
+      hints: {
+        'Speed': 'Speed while chasing: 3m/s; Speed while roaming: 1m/s'
+      }
     }
   ),
   new Ghost('Shade', 9,
     [GhostEvidence.EmfLevel5, GhostEvidence.FreezingTemperatures, GhostEvidence.GhostWriting],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_low', 'ability_mist_event', 'ability_footprints'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_low',
+      'ability_mist_event', 'ability_footprints'
     ],
     {
-      hints: { 'Threshold': 'Hunts at 35% sanity' }
+      hints: {
+        'Threshold': 'Hunts at 35% sanity'
+      }
     }
   ),
   new Ghost('Spirit', 1,
     [GhostEvidence.EmfLevel5, GhostEvidence.GhostWriting, GhostEvidence.SpiritBox],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50',
+      'ability_mist_event', 'ability_footprints'
     ]
   ),
   new Ghost('Thaye', 24,
     [GhostEvidence.DotsProjector, GhostEvidence.GhostOrb, GhostEvidence.GhostWriting],
     [
-      'speed_slow', 'speed_medium', 'speed_fast', 'movement_special', 'los_constant', 'threshold_low', 'threshold_medium', 'threshold_high', 'threshold_very_high', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
-      'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70'
+      'speed_slow', 'speed_medium', 'speed_fast', 'movement_special', 'los_constant',
+      'threshold_low', 'threshold_medium', 'threshold_high', 'threshold_very_high', 'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70',
+      'ability_mist_event', 'ability_footprints', 'ability_analog_dots'
     ],
     {
-      hints: { 'Speed': 'Speed at start: 2.75m/s; Speed at max age: 1m/s', 'Threshold': 'Hunts at 75% to 15% sanity depending on age' }
+      hints: {
+        'Speed': 'Speed at start: 2.75m/s; Speed at max age: 1m/s',
+        'Threshold': 'Hunts at 75% to 15% sanity depending on age'
+      }
     }
   ),
   new Ghost('The Mimic', 21,
     [GhostEvidence.Ultraviolett, GhostEvidence.FreezingTemperatures, GhostEvidence.GhostOrb, GhostEvidence.SpiritBox],
     [
-      'speed_slow', 'speed_medium', 'speed_fast', 'movement_normal', 'movement_fuzzy', 'movement_special', 'los_accelerate', 'los_constant', 'threshold_low', 'threshold_medium', 'threshold_high', 'threshold_very_high', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70', 'sanity_below_80'
+      'speed_slow', 'speed_medium', 'speed_fast', 'movement_normal', 'movement_fuzzy', 'movement_special', 'los_accelerate', 'los_constant',
+      'threshold_low', 'threshold_medium', 'threshold_high', 'threshold_very_high', 'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70', 'sanity_below_80',
+      'ability_mist_event', 'ability_footprints'
     ],
     {
       forcedEvidence: GhostEvidence.GhostOrb,
-      hints: { 'Speed': 'Speed depends on mimicked ghost', 'Threshold': 'Hunt threshold depends on mimicked ghost' }
+      hints: {
+        'Speed': 'Speed depends on mimicked ghost',
+        'Threshold': 'Hunt threshold depends on mimicked ghost'
+      }
     }
   ),
   new Ghost('The Twins', 18,
     [GhostEvidence.EmfLevel5, GhostEvidence.FreezingTemperatures, GhostEvidence.SpiritBox],
     [
-      'speed_slow', 'speed_medium', 'speed_fast', 'movement_fuzzy', 'movement_special', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints',
-      'sanity_below_40', 'sanity_below_50'
+      'speed_slow', 'speed_medium', 'speed_fast', 'movement_fuzzy', 'movement_special', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50',
+      'ability_mist_event', 'ability_footprints',
     ],
     {
-      hints: { 'Speed': 'Main twin speed: 1.5 m/s; Decoy twin speed: 1.9m/s' }
+      hints: {
+        'Speed': 'Main twin speed: 1.5 m/s; Decoy twin speed: 1.9m/s'
+      }
     }
   ),
   new Ghost('Wraith', 2,
     [GhostEvidence.DotsProjector, GhostEvidence.EmfLevel5, GhostEvidence.SpiritBox],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_analog_dots',
-      'sanity_below_40', 'sanity_below_50'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50',
+      'ability_mist_event', 'ability_analog_dots'
     ]
   ),
   new Ghost('Yokai', 13,
     [GhostEvidence.DotsProjector, GhostEvidence.GhostOrb, GhostEvidence.SpiritBox],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'threshold_very_high', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
-      'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70', 'sanity_below_80',
-      'hunt_ability_yokai'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_medium', 'threshold_very_high', 'sanity_below_40', 'sanity_below_50', 'sanity_below_60', 'sanity_below_70', 'sanity_below_80', 'hunt_ability_yokai',
+      'ability_mist_event', 'ability_footprints', 'ability_analog_dots'
     ],
     {
-      hints: { 'Threshold': 'Hunts at 80% if a player is talking in its ghost room', 'Ability': 'Hears sounds and senses electroincs in a radius of 2.5m (instead of 9m and 7m)' }
+      hints: {
+        'Threshold': 'Hunts at 80% if a player is talking in its ghost room',
+        'Ability': 'Hears sounds and senses electroincs in a radius of 2.5m (instead of 9m and 7m)'
+      }
     }
   ),
   new Ghost('Yurei', 11,
     [GhostEvidence.DotsProjector, GhostEvidence.FreezingTemperatures, GhostEvidence.GhostOrb],
     [
-      'speed_medium', 'movement_normal', 'los_accelerate', 'threshold_medium', 'ability_mist_event', 'ability_footprints', 'ability_analog_dots',
-      'sanity_below_40', 'sanity_below_50'
+      'speed_medium', 'movement_normal', 'los_accelerate',
+      'threshold_medium', 'sanity_below_40', 'sanity_below_50',
+      'ability_mist_event', 'ability_footprints', 'ability_analog_dots'
     ]
   )
 ];
