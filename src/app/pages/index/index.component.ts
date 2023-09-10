@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component } from "@angular/core";
 import { Ghosts } from "src/app/services/ghosts";
 import { Evidence, GhostFilters, GhostName } from "src/app/services/models";
@@ -5,7 +6,14 @@ import { Evidence, GhostFilters, GhostName } from "src/app/services/models";
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss']
+  styleUrls: ['./index.component.scss'],
+  animations: [
+    trigger('moveIn', [
+      state('open', style({ opacity: 1, height: '*' })),
+      transition(':enter', [style({ opacity: 0, height: '0px' }), animate(200)]),
+      transition(':leave', animate(200, style({ opacity: 0, height: '0px' })))
+    ])
+  ]
 })
 export class IndexPageComponent {
 
@@ -25,7 +33,6 @@ export class IndexPageComponent {
   public evidenceDisabled = new Set<Evidence>();
 
   public get title(): string {
-    if (this.showConfig) return 'Evidence';
     switch (this.evidenceHidden) {
       default:
       case 0: return 'Evidence';
@@ -50,12 +57,12 @@ export class IndexPageComponent {
   }
 
   public onChange() {
-    // Compute remaining options
+    // Compute remaining ghost and evidence options
     const possibleGhosts = Object.values(Ghosts).filter(g => g.isPossible(this.filters));
     const possibleEvidence = new Set<Evidence>();
-    possibleGhosts // Evidence of eliminated ghosts is ruled out as well
+    possibleGhosts
       .filter(g => !this.filters.ghostEliminated.has(g.name))
-      .forEach(g => g.evidence.forEach(e => possibleEvidence.add(e)));
+      .forEach(g => g.getPossibleEvidence(this.filters).forEach(e => possibleEvidence.add(e)));
 
     // Map remaining options to disabled states
     const impossibleGhosts = Object.values(Ghosts)

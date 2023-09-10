@@ -104,6 +104,7 @@ export interface GhostFilterConfig {
 export interface GhostModel {
   order: number;
   evidence: string[];
+  forced?: string;
   tags: Tag[];
   speed?: number;
   threshold?: number;
@@ -120,6 +121,7 @@ export class Ghost {
   public readonly name: GhostName;
   public readonly order: number; // In game number for sorting
   public readonly evidence: Evidence[];
+  public readonly forced: Evidence | null;
   public readonly tags: Set<Tag>;
   public readonly threshold: number;
   public readonly speed: number; // Ghost specific classes may ignore this value
@@ -128,6 +130,7 @@ export class Ghost {
     this.name = name;
     this.order = data.order;
     this.evidence = data.evidence.map(e => Evidence[e as keyof typeof Evidence]);
+    this.forced = data.forced ? Evidence[data.forced as keyof typeof Evidence] : null;
     this.tags = new Set(data.tags);
     this.threshold = data.threshold ?? 50; // Setup to default sanity threshold
     this.speed = data.speed ?? 1.7; // Setup to default speed
@@ -137,6 +140,7 @@ export class Ghost {
     if (this.isGhostMismatch(filters)) return false;
     if (this.isEvidenceExcluded(filters)) return false;
     if (this.isEvidenceMismatch(filters)) return false;
+    if (this.isForcedEvidenceMismatch(filters)) return false;
     if (this.isTagExcluded(filters)) return false;
     if (this.isTagMismatch(filters)) return false;
     if (!this.isThresholdPossible(filters)) return false;
@@ -163,6 +167,12 @@ export class Ghost {
     return [...filters.evidenceSelected].some(s => !this.evidence.includes(s)); // Mismatch?
   }
 
+  // Was the forced evidence eliminated or cannot be selected anymore?
+  public isForcedEvidenceMismatch(filters: GhostFilters): boolean {
+    if (this.forced == null || filters.evidenceSelected.has(this.forced)) return false; // This is fine
+    return filters.evidenceEliminated.has(this.forced) || filters.evidenceSelected.size + filters.config.evidenceHidden > this.evidence.length;
+  }
+
   // Has any required evidence of this ghost been eliminated?
   public isTagExcluded(filters: GhostFilters): boolean {
     return [...this.tags].some(t => filters.tagsEliminated.has(t));
@@ -182,6 +192,15 @@ export class Ghost {
   // This method might be overwritten by specific ghost implementations.
   public isSpeedPossible(filters: GhostFilters): boolean {
     return Ghost.speedInRange(filters, this.speed);
+  }
+
+  // Assuming this ghost is shortlisted (isPossible returned true) this provide evidence that may still be selected.
+  // This includes already selected evidence (which must be selectable because it IS selected and this ghost is possible).
+  public getPossibleEvidence(filters: GhostFilters): Evidence[] {
+    const remaining = this.evidence.length - filters.evidenceSelected.size - filters.config.evidenceHidden;
+    if (remaining <= 0) return [];
+    if (remaining > 1 || this.forced === null || filters.evidenceSelected.has(this.forced)) return this.evidence;
+    else return [this.forced]; // The only valid remaining option is the forced evidence
   }
 
   protected static speedInRange(filters: GhostFilters, min: number, max: number = min): boolean {

@@ -3,12 +3,14 @@
     <div class="card mb-4">
       <div class="card-body p-4">
         <div class="d-flex">
-          <h3 class="card-title mb-0">{{ title }}</h3>
           <div class="mx-2">
-            <span class="clickable m-1" (click)="showConfig = !showConfig">
+            <span class="clickable" (click)="showConfig = !showConfig">
               <img class="config-icon" src="assets/img/cog.png" height="24px" />
             </span>
           </div>
+          <h3 class="card-title mb-0 mx-2">
+            {{ title }}
+          </h3>
           <div class="mx-2 ms-auto">
             <span class="clickable m-1" (click)="reset()">
               <img
@@ -19,9 +21,9 @@
             </span>
           </div>
         </div>
-        <hr />
 
-        <ng-container *ngIf="showConfig">
+        <div *ngIf="showConfig" [@moveIn]="'open'">
+          <hr />
           <div class="row">
             <app-check-box-choice
               [options]="evidenceOptions"
@@ -30,9 +32,9 @@
             >
             </app-check-box-choice>
           </div>
-          <hr />
-        </ng-container>
+        </div>
 
+        <hr />
         <app-evidence-select
           [(selected)]="filters.evidenceSelected"
           [(eliminated)]="filters.evidenceEliminated"
