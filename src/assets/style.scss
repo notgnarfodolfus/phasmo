@@ -20,6 +20,17 @@ $font-family-base: 'Lazy Dog';
   filter: opacity(35%);
 }
 
+.clickable {
+  cursor: pointer;
+
+  &:not(.disabled) {
+    &:hover {
+      font-weight: bold;
+    }
+  }
+}
+
+
 // Form input range
 
 $form-range-track-bg: black;

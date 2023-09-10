@@ -1,12 +1,4 @@
-.clickable {
-  cursor: pointer;
-
-  &:not(.disabled) {
-    &:hover {
-      font-weight: bold;
-    }
-  }
-}
+@import 'src/assets/style';
 
 .striked {
   background-image: url('~src/assets/img/linethrough.png');

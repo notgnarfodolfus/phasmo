@@ -71,6 +71,24 @@ export class GhostFilters {
       ghostSpeedAccuracy: 0.1
     };
   }
+
+  public reset(resetConfig: boolean) {
+    this.speedEstimation = null;
+    this.thresholdEstimation = null;
+    this.ghostSelected = null;
+
+    this.ghostEliminated = new Set<GhostName>();
+    this.evidenceSelected = new Set<Evidence>();
+    this.evidenceEliminated = new Set<Evidence>();
+    this.tagsSelected = new Set<Tag>();
+    this.tagsEliminated = new Set<Tag>();
+    if (resetConfig) {
+      this.config = {
+        evidenceHidden: 0,
+        ghostSpeedAccuracy: 0.1
+      };
+    }
+  }
 }
 
 export interface GhostFilterConfig {

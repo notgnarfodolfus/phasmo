@@ -2,8 +2,37 @@
   <div class="col-md-12 col-xl-6 col-xxl-4">
     <div class="card mb-4">
       <div class="card-body p-4">
-        <h3 class="card-title">Evidence</h3>
+        <div class="d-flex">
+          <h3 class="card-title mb-0">{{ title }}</h3>
+          <div class="mx-2">
+            <span class="clickable m-1" (click)="showConfig = !showConfig">
+              <img class="config-icon" src="assets/img/cog.png" height="24px" />
+            </span>
+          </div>
+          <div class="mx-2 ms-auto">
+            <span class="clickable m-1" (click)="reset()">
+              <img
+                class="reset-icon"
+                src="assets/img/rotate.png"
+                height="24px"
+              />
+            </span>
+          </div>
+        </div>
         <hr />
+
+        <ng-container *ngIf="showConfig">
+          <div class="row">
+            <app-check-box-choice
+              [options]="evidenceOptions"
+              [default]="0"
+              [(selected)]="evidenceHidden"
+            >
+            </app-check-box-choice>
+          </div>
+          <hr />
+        </ng-container>
+
         <app-evidence-select
           [(selected)]="filters.evidenceSelected"
           [(eliminated)]="filters.evidenceEliminated"
