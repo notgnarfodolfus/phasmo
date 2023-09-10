@@ -1,0 +1,16 @@
+.clickable {
+  cursor: pointer;
+
+  &:not(.disabled) {
+    &:hover {
+      font-weight: bold;
+    }
+  }
+}
+
+.striked {
+  background-image: url('~src/assets/img/linethrough.png');
+  background-repeat: no-repeat;
+  background-size: 100% 0.35em;
+  background-position-y: center;
+}

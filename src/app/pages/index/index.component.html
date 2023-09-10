@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-12 col-xl-6 col-xxl-4">
+    <div class="card mb-4">
+      <div class="card-body p-4">
+        <h3 class="card-title">Evidence</h3>
+        <hr />
+        <app-evidence-select
+          [(selected)]="filters.evidenceSelected"
+          [(eliminated)]="filters.evidenceEliminated"
+          [disabled]="evidenceDisabled"
+          (change)="onChange()"
+        >
+        </app-evidence-select>
+        <hr />
+        <app-ghost-select
+          [(selected)]="filters.ghostSelected"
+          [(eliminated)]="filters.ghostEliminated"
+          [disabled]="ghostsDisabled"
+          (change)="onChange()"
+        >
+        </app-ghost-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 col-xl-6 col-xxl-4">
+    <div class="card mb-4">
+      <div class="card-body p-4">
+        <h3 class="card-title">Behavior</h3>
+        <hr />
+      </div>
+    </div>
+  </div>
+</div>

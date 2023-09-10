@@ -1,0 +1,26 @@
+@import '../check-base/check-base.component.scss';
+
+.outer {
+  position: relative;
+  text-align: center;
+  max-width: fit-content;
+}
+
+.image {
+  height: 2em;
+  width: 100%;
+
+  &.hidden {
+    visibility: hidden;
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-4" *ngFor="let ghost of ghosts">
+    <app-check-label
+      [label]="ghost"
+      [disabled]="disabled.has(ghost)"
+      [strikeable]="true"
+      [state]="getState(ghost)"
+      (stateChange)="setState(ghost, $event)"
+    ></app-check-label>
+  </div>
+</div>

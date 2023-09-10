@@ -1,0 +1,223 @@
+{
+  "Banshee": {
+    "order": 5,
+    "evidence": [
+      "DotsProjector",
+      "Ultraviolett",
+      "GhostOrb"
+    ],
+    "tags": [
+      "hunt_los_constant"
+    ]
+  },
+  "Demon": {
+    "order": 10,
+    "evidence": [
+      "Ultraviolett",
+      "Freezing",
+      "GhostWriting"
+    ],
+    "tags": []
+  },
+  "Deogen": {
+    "order": 23,
+    "evidence": [
+      "DotsProjector",
+      "GhostWriting",
+      "SpiritBox"
+    ],
+    "tags": []
+  },
+  "Goryo": {
+    "order": 15,
+    "evidence": [
+      "DotsProjector",
+      "EmfLevel5",
+      "Ultraviolett"
+    ],
+    "tags": []
+  },
+  "Hantu": {
+    "order": 14,
+    "evidence": [
+      "Ultraviolett",
+      "Freezing",
+      "GhostOrb"
+    ],
+    "tags": []
+  },
+  "Jinn": {
+    "order": 6,
+    "evidence": [
+      "EmfLevel5",
+      "Ultraviolett",
+      "Freezing"
+    ],
+    "tags": []
+  },
+  "Mare": {
+    "order": 7,
+    "evidence": [
+      "GhostOrb",
+      "GhostWriting",
+      "SpiritBox"
+    ],
+    "tags": []
+  },
+  "Mimic": {
+    "order": 21,
+    "evidence": [
+      "Ultraviolett",
+      "Freezing",
+      "GhostOrb",
+      "SpiritBox"
+    ],
+    "tags": [
+      "hunt_los_constant"
+    ]
+  },
+  "Moroi": {
+    "order": 22,
+    "evidence": [
+      "Freezing",
+      "GhostWriting",
+      "SpiritBox"
+    ],
+    "tags": []
+  },
+  "Myling": {
+    "order": 16,
+    "evidence": [
+      "EmfLevel5",
+      "Ultraviolett",
+      "GhostWriting"
+    ],
+    "tags": []
+  },
+  "Obake": {
+    "order": 20,
+    "evidence": [
+      "EmfLevel5",
+      "Ultraviolett",
+      "GhostOrb"
+    ],
+    "tags": []
+  },
+  "Oni": {
+    "order": 12,
+    "evidence": [
+      "DotsProjector",
+      "EmfLevel5",
+      "Freezing"
+    ],
+    "tags": []
+  },
+  "Onryo": {
+    "order": 17,
+    "evidence": [
+      "Freezing",
+      "GhostOrb",
+      "SpiritBox"
+    ],
+    "tags": []
+  },
+  "Phantom": {
+    "order": 3,
+    "evidence": [
+      "DotsProjector",
+      "Ultraviolett",
+      "SpiritBox"
+    ],
+    "tags": []
+  },
+  "Poltergeist": {
+    "order": 4,
+    "evidence": [
+      "Ultraviolett",
+      "GhostWriting",
+      "SpiritBox"
+    ],
+    "tags": []
+  },
+  "Raiju": {
+    "order": 19,
+    "evidence": [
+      "DotsProjector",
+      "EmfLevel5",
+      "GhostOrb"
+    ],
+    "tags": []
+  },
+  "Revenant": {
+    "order": 8,
+    "evidence": [
+      "Freezing",
+      "GhostOrb",
+      "GhostWriting"
+    ],
+    "tags": []
+  },
+  "Shade": {
+    "order": 9,
+    "evidence": [
+      "EmfLevel5",
+      "Freezing",
+      "GhostWriting"
+    ],
+    "tags": []
+  },
+  "Spirit": {
+    "order": 1,
+    "evidence": [
+      "EmfLevel5",
+      "GhostWriting",
+      "SpiritBox"
+    ],
+    "tags": []
+  },
+  "Thaye": {
+    "order": 24,
+    "evidence": [
+      "DotsProjector",
+      "GhostOrb",
+      "GhostWriting"
+    ],
+    "tags": []
+  },
+  "Twins": {
+    "order": 18,
+    "evidence": [
+      "EmfLevel5",
+      "Freezing",
+      "SpiritBox"
+    ],
+    "tags": []
+  },
+  "Wraith": {
+    "order": 2,
+    "evidence": [
+      "DotsProjector",
+      "EmfLevel5",
+      "SpiritBox"
+    ],
+    "tags": []
+  },
+  "Yokai": {
+    "order": 13,
+    "evidence": [
+      "DotsProjector",
+      "GhostOrb",
+      "SpiritBox"
+    ],
+    "tags": []
+  },
+  "Yurei": {
+    "order": 11,
+    "evidence": [
+      "DotsProjector",
+      "Freezing",
+      "GhostOrb"
+    ],
+    "tags": []
+  }
+}

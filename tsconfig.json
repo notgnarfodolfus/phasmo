@@ -25,6 +25,8 @@
     ]
   },
   "angularCompilerOptions": {
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,

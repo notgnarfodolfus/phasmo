@@ -4,16 +4,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SelectorComponent } from './pages/selector/selector.component';
-import { TagCheckboxComponent } from './components/tag-checkbox/tag-checkbox.component';
-import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
+import { IndexPageComponent } from './pages/index/index.component';
+import { FootstepPageComponent } from './pages/footstep/footstep.component';
+import { CheckBoxComponent } from './components/check/check-box/check-box.component';
+import { CheckLabelComponent } from './components/check/check-label/check-label.component';
+import { GhostSelectComponent } from './components/ghost-select/ghost-select.component';
+import { EvidenceSelectComponent } from './components/evidence-select/evidence-select.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SelectorComponent,
-    TagCheckboxComponent,
-    TagSelectorComponent
+    IndexPageComponent,
+    FootstepPageComponent,
+    CheckBoxComponent,
+    CheckLabelComponent,
+    GhostSelectComponent,
+    EvidenceSelectComponent
   ],
   imports: [
     BrowserModule,

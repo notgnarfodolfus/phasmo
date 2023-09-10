@@ -1,0 +1,11 @@
+@import '../check-base/check-base.component.scss';
+
+.checkbox {
+  position: relative;
+  width: fit-content;
+
+  .image {
+    width: 1em;
+    height: 1em;
+  }
+}

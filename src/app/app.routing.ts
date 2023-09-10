@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { SelectorComponent } from './pages/selector/selector.component';
+import { IndexPageComponent } from './pages/index/index.component';
 
 export const AppRoutes: Routes = [
   {
     path: '',
-    component: SelectorComponent
+    component: IndexPageComponent
   },
   {
     path: '**',
