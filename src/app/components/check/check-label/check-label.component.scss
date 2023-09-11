@@ -3,12 +3,10 @@
 .outer {
   position: relative;
   text-align: center;
-  max-width: fit-content;
 }
 
 .image {
   height: 2em;
-  width: 100%;
 
   &.hidden {
     visibility: hidden;
