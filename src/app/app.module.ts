@@ -12,6 +12,7 @@ import { CheckBoxChoiceComponent } from './components/check/check-box-choice/che
 import { CheckLabelComponent } from './components/check/check-label/check-label.component';
 import { GhostSelectComponent } from './components/ghost-select/ghost-select.component';
 import { EvidenceSelectComponent } from './components/evidence-select/evidence-select.component';
+import { EvidenceCardComponent } from './components/evidence-card/evidence-card.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { EvidenceSelectComponent } from './components/evidence-select/evidence-s
     CheckBoxChoiceComponent,
     CheckLabelComponent,
     GhostSelectComponent,
-    EvidenceSelectComponent
+    EvidenceSelectComponent,
+    EvidenceCardComponent
   ],
   imports: [
     BrowserModule,

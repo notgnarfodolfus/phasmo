@@ -1,58 +1,12 @@
 <div class="row">
   <div class="col-md-12 col-xl-6 col-xxl-4">
-    <div class="card mb-4">
-      <div class="card-body p-4">
-        <div class="d-flex">
-          <div class="mx-2">
-            <span class="clickable" (click)="showConfig = !showConfig">
-              <img class="config-icon" src="assets/img/cog.png" height="24px" />
-            </span>
-          </div>
-          <h3 class="card-title mb-0 mx-2">
-            {{ title }}
-          </h3>
-          <div class="mx-2 ms-auto">
-            <span class="clickable m-1" (click)="reset()">
-              <img
-                class="reset-icon"
-                src="assets/img/rotate.png"
-                height="24px"
-              />
-            </span>
-          </div>
-        </div>
-
-        <div *ngIf="showConfig" [@moveIn]="'open'">
-          <hr />
-          <div class="row">
-            <app-check-box-choice
-              [options]="evidenceOptions"
-              [default]="0"
-              [(selected)]="evidenceHidden"
-            >
-            </app-check-box-choice>
-          </div>
-        </div>
-
-        <hr />
-        <app-evidence-select
-          [(selected)]="filters.evidenceSelected"
-          [(eliminated)]="filters.evidenceEliminated"
-          [disabled]="evidenceDisabled"
-          (change)="onChange()"
-        >
-        </app-evidence-select>
-        <hr />
-        <app-ghost-select
-          [(selected)]="filters.ghostSelected"
-          [(eliminated)]="filters.ghostEliminated"
-          [disabled]="ghostsDisabled"
-          (change)="onChange()"
-        >
-        </app-ghost-select>
-      </div>
-    </div>
+    <app-evidence-card
+      [(filters)]="filters"
+      [ghostsDisabled]="ghostsDisabled"
+      [evidenceDisabled]="evidenceDisabled"
+    ></app-evidence-card>
   </div>
+
   <div class="col-md-12 col-xl-6 col-xxl-4">
     <div class="card mb-4">
       <div class="card-body p-4">
