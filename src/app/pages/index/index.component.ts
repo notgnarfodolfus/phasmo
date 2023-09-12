@@ -1,4 +1,3 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component } from "@angular/core";
 import { Ghosts } from "src/app/services/ghosts";
 import { Evidence, GhostFilters, GhostName } from "src/app/services/models";
@@ -18,8 +17,6 @@ export class IndexPageComponent {
   public get filters(): GhostFilters {
     return this._filters;
   }
-
-  private i: number = 0;
 
   public set filters(value: GhostFilters) {
     const filters: GhostFilters = Object.assign({}, value);

@@ -1,0 +1,18 @@
+<div class="d-flex">
+  <div class="flex-grow-1">
+    <input
+      type="range"
+      class="form-range"
+      id="range"
+      [value]="value"
+      (input)="onValueChanged($event)"
+      (change)="onChange()"
+      [min]="min"
+      [max]="max"
+      [step]="step"
+    />
+  </div>
+  <div class="text-end" style="min-width: 2.5em;">
+    {{ value | number : "1.0-0" }}%
+  </div>
+</div>

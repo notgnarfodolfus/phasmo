@@ -1,18 +1,20 @@
-<div class="row">
-  <div class="col-md-12 col-xl-6 col-xxl-4">
-    <app-evidence-card
-      [(filters)]="filters"
-      [ghostsDisabled]="ghostsDisabled"
-      [evidenceDisabled]="evidenceDisabled"
-    ></app-evidence-card>
+<div class="container">
+  <div class="d-flex justify-content-center header text-light mb-5">
+    <h1 class="text-end w-50 ">Phasmophobia Toolbox</h1>
+    <h1 class="text-center mx-2">-</h1>
+    <h1 class="text-start w-50">Ghost Identification</h1>
   </div>
-
-  <div class="col-md-12 col-xl-6 col-xxl-4">
-    <div class="card mb-4">
-      <div class="card-body p-4">
-        <h3 class="card-title">Behavior</h3>
-        <hr />
-      </div>
+  <div class="row">
+    <div class="col-md-12 col-xl-6">
+      <app-evidence-card
+        [(filters)]="filters"
+        [ghostsDisabled]="ghostsDisabled"
+        [evidenceDisabled]="evidenceDisabled"
+      ></app-evidence-card>
+    </div>
+    <div class="col-md-12 col-xl-6">
+      <!-- <app-behavior-card></app-behavior-card> -->
+      <app-threshold-card [(filters)]="filters"></app-threshold-card>
     </div>
   </div>
 </div>

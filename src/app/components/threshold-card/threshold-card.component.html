@@ -1,0 +1,68 @@
+<div class="card mb-4">
+  <div class="card-body p-4">
+    <!-- Title / Header -->
+    <div class="d-flex">
+      <div class="mx-2">
+        <span class="clickable" (click)="showConfig = !showConfig">
+          <img class="config-icon" src="assets/img/cog.png" height="24px" />
+        </span>
+      </div>
+      <h3 class="card-title mb-0 mx-2">Hunt Threshold</h3>
+    </div>
+
+    <!-- Configuration -->
+    <div *ngIf="showConfig" [@moveIn]="'open'">
+      <hr />
+      <div>
+        <app-check-box
+          label="Show Hints"
+          [(state)]="showHintsState"
+          (stateChange)="saveShowHints()"
+        ></app-check-box>
+      </div>
+    </div>
+
+    <!-- Behavior selection -->
+    <hr />
+    <div class="row">
+      <div class="col-2 fw-bold">Abilites</div>
+      <div class="col-10">
+        <div class="row">
+          <div class="col-auto" *ngFor="let a of abilities">
+            <app-check-box
+              [label]="a.name"
+              [state]="getState(a)"
+              (stateChange)="setState(a, $event)"
+            ></app-check-box>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-2 fw-bold">Sanity</div>
+      <div class="col-10">
+        <div class="form-group row">
+          <div class="col">
+            <app-slider
+              [(value)]="filters.thresholdEstimation"
+              (valueChange)="onChange()"
+              [min]="0"
+              [max]="100"
+              [step]="5"
+            >
+            </app-slider>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="showHints">
+      <hr />
+      <div class="row" *ngFor="let a of activeAbilities" [@moveIn]="'open'">
+        <div class="col-3 text-end">{{ abilityToGhosts[a.name] }}</div>
+        <div class="col-9 description">{{ a.description }}</div>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -10,9 +10,12 @@ import { FootstepPageComponent } from './pages/footstep/footstep.component';
 import { CheckBoxComponent } from './components/check/check-box/check-box.component';
 import { CheckBoxChoiceComponent } from './components/check/check-box-choice/check-box-choice.component';
 import { CheckLabelComponent } from './components/check/check-label/check-label.component';
+import { SliderComponent } from './components/slider/slider.component';
 import { GhostSelectComponent } from './components/ghost-select/ghost-select.component';
 import { EvidenceSelectComponent } from './components/evidence-select/evidence-select.component';
 import { EvidenceCardComponent } from './components/evidence-card/evidence-card.component';
+import { ThresholdCardComponent } from './components/threshold-card/threshold-card.component';
+import { BehaviorCardComponent } from './components/behavior-card/behavior-card.component';
 
 @NgModule({
   declarations: [
@@ -22,9 +25,12 @@ import { EvidenceCardComponent } from './components/evidence-card/evidence-card.
     CheckBoxComponent,
     CheckBoxChoiceComponent,
     CheckLabelComponent,
+    SliderComponent,
     GhostSelectComponent,
     EvidenceSelectComponent,
-    EvidenceCardComponent
+    EvidenceCardComponent,
+    ThresholdCardComponent,
+    BehaviorCardComponent
   ],
   imports: [
     BrowserModule,

@@ -1,30 +1,22 @@
-import * as raw from '../../assets/ghosts.json';
+import * as rawTags from '../../assets/tags.json';
+import * as rawGhosts from '../../assets/ghosts.json';
 
-import { Ghost, GhostFilters, GhostName, GhostModel } from './models';
-
-class DeogenGhost extends Ghost {
-
-  public override isPossible(filters: GhostFilters): boolean {
-    return super.isPossible(filters);
-  }
-}
-
-class HantuGhost extends Ghost {
-
-  public override isPossible(filters: GhostFilters): boolean {
-    return super.isPossible(filters);
-  }
-}
+import { Ghost, GhostName, GhostModel, TagData, TagModel } from './models';
 
 const GhostImplementations: { [key: string]: typeof Ghost } = {
-  "": Ghost, // default
-  "Deogen": DeogenGhost,
-  "Hantu": HantuGhost
+
+}
+
+function createTags(): { [key: string]: TagData } {
+  const lookup: { [key: string]: TagData } = {};
+  Object.entries(rawTags as { [name: string]: TagModel })
+    .forEach(e => lookup[e[0]] = new TagData(e[0], e[1]));
+  return lookup;
 }
 
 function createGhosts(): { [key in GhostName]: Ghost } {
   const lookup: { [key in GhostName]?: Ghost } = {};
-  Object.entries(raw as { [name: string]: GhostModel })
+  Object.entries(rawGhosts as { [name: string]: GhostModel })
     .filter(e => e[0] !== 'default') // Skip over JSON import fragmet
     .forEach(e => {
       const name = GhostName[e[0] as keyof typeof GhostName] ?? e[0] as GhostName;
@@ -34,4 +26,5 @@ function createGhosts(): { [key in GhostName]: Ghost } {
   return lookup as { [key in GhostName]: Ghost };
 }
 
+export const Tags = createTags();
 export const Ghosts = createGhosts();

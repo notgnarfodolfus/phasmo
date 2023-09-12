@@ -1,0 +1,14 @@
+{
+  "ability_mist_event": {
+    "name": "Mist Event"
+  },
+  "ability_footprints": {
+    "name": "Salt Footprints"
+  },
+  "ability_analog_dots": {
+    "name": "Analog D.O.T.S."
+  },
+  "ability_digital_dots": {
+    "name": "Digital D.O.T.S."
+  }
+}

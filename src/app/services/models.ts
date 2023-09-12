@@ -35,9 +35,9 @@ export enum Evidence {
   Freezing = 'Freezing Temperatures'
 }
 
-export type CommonTag = 'hunt_los_accelerate' | 'hunt_los_constant' | 'hunt_los_special';
+export type Tag = string;
 
-export type Tag = CommonTag;
+export type HuntAbilityName = string;
 
 export class GhostFilters {
 
@@ -45,25 +45,27 @@ export class GhostFilters {
   public speedEstimation: number | null;
 
   // Optional hunt threshold sanity estimation (the maximum average player sanity when the ghost started a regular hunt)
-  public thresholdEstimation: number | null;
+  public thresholdEstimation: number;
 
   public ghostSelected: GhostName | null;
 
   public ghostEliminated: Set<GhostName>;
   public evidenceSelected: Set<Evidence>;
   public evidenceEliminated: Set<Evidence>;
+  public huntAbiliesFlipped: Set<HuntAbilityName>;
   public tagsSelected: Set<Tag>;
   public tagsEliminated: Set<Tag>;
   public config: GhostFilterConfig;
 
   constructor() {
     this.speedEstimation = null;
-    this.thresholdEstimation = null;
+    this.thresholdEstimation = 0;
     this.ghostSelected = null;
 
     this.ghostEliminated = new Set<GhostName>();
     this.evidenceSelected = new Set<Evidence>();
     this.evidenceEliminated = new Set<Evidence>();
+    this.huntAbiliesFlipped = new Set<Evidence>();
     this.tagsSelected = new Set<Tag>();
     this.tagsEliminated = new Set<Tag>();
     this.config = {
@@ -87,11 +89,64 @@ export interface GhostModel {
   order: number;
   evidence: string[];
   forced?: string;
-  tags: Tag[];
   speed?: number;
   threshold?: number;
+  hunts?: HuntAbilityModel[];
 };
 
+/**
+* For serialization.
+*/
+export interface TagModel {
+  name: string
+};
+
+/**
+ * Optional ghost abilitiy that can trigger or prevent a hunt.
+ * Ghosts that have such abilities are Demon, Mare, Onryo, Raiju, Shade (prevent), 
+ */
+export interface HuntAbilityModel {
+  name: string;
+  description: string;
+  threshold: number;
+  enabled?: boolean;
+  prevent?: boolean;
+  order?: number;
+}
+
+/**
+ * Optional ghost abilitiy that can trigger or prevent a hunt.
+ * Ghosts that have such abilities are Demon, Mare, Onryo, Raiju, Shade (prevent), 
+ */
+export class HuntAbility {
+
+  public readonly name: HuntAbilityName; // condition to trigger the hunt ability
+  public readonly description: string;
+  public readonly threshold: number; // sanity required
+  public readonly enabled: boolean; // enabled by default?
+  public readonly prevent: boolean; // ability prevents the hunt instead of triggering one
+  public readonly order: number; // sorting priority
+
+  constructor(data: HuntAbilityModel) {
+    this.name = data.name;
+    this.description = data.description;
+    this.threshold = data.threshold;
+    this.enabled = data.enabled ?? false;
+    this.prevent = data.prevent ?? false;
+    this.order = data.order ?? 0;
+  }
+}
+
+export class TagData {
+
+  public readonly key: Tag;
+  public readonly name: string;
+
+  constructor(key: Tag, data: TagModel) {
+    this.key = key;
+    this.name = data.name;
+  }
+}
 
 /**
  * Common base class for all ghosts and concrete implementation for most.
@@ -105,17 +160,19 @@ export class Ghost {
   public readonly evidence: Evidence[];
   public readonly forced: Evidence | null;
   public readonly tags: Set<Tag>;
-  public readonly threshold: number;
+  public readonly threshold: number; // The maximum sanity threshold at which the ghost can hunt including all abilities
   public readonly speed: number; // Ghost specific classes may ignore this value
+  public readonly hunts: HuntAbility[];
 
   constructor(name: GhostName, data: GhostModel) {
     this.name = name;
     this.order = data.order;
     this.evidence = data.evidence.map(e => Evidence[e as keyof typeof Evidence]);
     this.forced = data.forced ? Evidence[data.forced as keyof typeof Evidence] : null;
-    this.tags = new Set(data.tags);
+    this.tags = new Set<Tag>();
     this.threshold = data.threshold ?? 50; // Setup to default sanity threshold
     this.speed = data.speed ?? 1.7; // Setup to default speed
+    this.hunts = data.hunts ? data.hunts.map(h => new HuntAbility(h)) : [];
   }
 
   public isPossible(filters: GhostFilters): boolean {
@@ -167,7 +224,13 @@ export class Ghost {
 
   // Can the ghost even hunt at this point?
   public isThresholdPossible(filters: GhostFilters): boolean {
-    return this.threshold >= (filters.thresholdEstimation ?? 0);
+    const current = filters.thresholdEstimation ?? 0;
+    const abilities = this.getActiveHuntAbilities(filters);
+    // Check whether a hunt is prevented due to an ability
+    if (abilities.some(a => a.prevent && a.threshold < current)) return false;
+    // Check whether a hunt is positive due to an ability
+    if (abilities.some(a => !a.prevent && a.threshold >= current)) return true;
+    return this.threshold >= current;
   }
 
   // Does the selected ghost speed configuration match on this ghost?
@@ -183,6 +246,11 @@ export class Ghost {
     if (remaining <= 0) return [];
     if (remaining > 1 || this.forced === null || filters.evidenceSelected.has(this.forced)) return this.evidence;
     else return [this.forced]; // The only valid remaining option is the forced evidence
+  }
+
+  // Return all hunt abilities of this ghost that are current enabled
+  protected getActiveHuntAbilities(filters: GhostFilters): HuntAbility[] {
+    return this.hunts.filter(h => h.enabled !== filters.huntAbiliesFlipped.has(h.name));
   }
 
   protected static speedInRange(filters: GhostFilters, min: number, max: number = min): boolean {

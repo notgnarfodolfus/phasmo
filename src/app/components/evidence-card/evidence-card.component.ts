@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Evidence, GhostFilters, GhostName } from "src/app/services/models";
 
 @Component({
@@ -14,7 +14,7 @@ import { Evidence, GhostFilters, GhostName } from "src/app/services/models";
     ])
   ]
 })
-export class EvidenceCardComponent {
+export class EvidenceCardComponent implements OnInit {
 
   public readonly evidenceOptions = [
     { title: 'All Evidence', value: 0 },
@@ -46,8 +46,17 @@ export class EvidenceCardComponent {
   }
 
   public set evidenceHidden(value: number | null) {
+    sessionStorage.setItem('evidence_hidden', '' + value ?? 0);
     this.filters.config.evidenceHidden = value ?? 0;
     this.onChange();
+  }
+
+  public ngOnInit(): void {
+    const hidden = sessionStorage.getItem('evidence_hidden');
+    if (hidden?.length == 1) {
+      this.filters.config.evidenceHidden = parseInt(hidden);
+      this.onChange();
+    }
   }
 
   public reset() {
