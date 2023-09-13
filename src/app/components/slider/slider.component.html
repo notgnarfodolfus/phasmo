@@ -5,6 +5,7 @@
       class="form-range"
       id="range"
       [value]="value"
+      [disabled]="disabled"
       (input)="onValueChanged($event)"
       (change)="onChange()"
       [min]="min"
@@ -12,7 +13,7 @@
       [step]="step"
     />
   </div>
-  <div class="text-end" style="min-width: 2.5em;">
-    {{ value | number : "1.0-0" }}%
+  <div class="text-end" [class.disabled]="disabled" style="min-width: 3em">
+    {{ value | number : format }}{{ unit }}
   </div>
 </div>

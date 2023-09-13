@@ -1,0 +1,165 @@
+<div class="card mb-4">
+  <div class="card-body p-4">
+    <!-- Title / Header -->
+    <div class="d-flex">
+      <div class="mx-2">
+        <span class="clickable" (click)="showConfig = !showConfig">
+          <img class="config-icon" src="assets/img/cog.png" height="24px" />
+        </span>
+      </div>
+      <h3 class="card-title mb-0 mx-2">
+        <ng-container *ngIf="ghostSpeedPercent === 100">
+          Ghost Speed
+        </ng-container>
+        <ng-container *ngIf="ghostSpeedPercent !== 100">
+          Ghost Speed ({{ ghostSpeedPercent }} %)
+        </ng-container>
+      </h3>
+      <div class="mx-2 ms-auto">
+        <span class="clickable m-1" (click)="reset()">
+          <img class="reset-icon" src="assets/img/rotate.png" height="24px" />
+        </span>
+      </div>
+    </div>
+
+    <!-- Configuration -->
+    <div *ngIf="showConfig" [@moveIn]="'open'">
+      <hr />
+      <div class="row">
+        <app-check-box-choice
+          [options]="speedOptions"
+          [default]="100"
+          [(selected)]="ghostSpeedPercent"
+          (selectedChange)="onChange(true)"
+        >
+        </app-check-box-choice>
+      </div>
+      <div class="row">
+        <div class="col">
+          <app-check-box
+            label="Show Tips"
+            [(state)]="showTipsState"
+          ></app-check-box>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">Accuracy</div>
+        <div class="col-10">
+          <app-slider
+            [(value)]="accuracyPercent"
+            (valueChange)="onChange(false)"
+            [min]="80"
+            [max]="100"
+            [step]="1"
+            format="1.0"
+            unit="%"
+          >
+          </app-slider>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acceleration -->
+    <hr />
+    <div class="row">
+      <div class="col-2 fw-bold">Accelerate</div>
+      <div class="col-auto">
+        <app-check-box
+          label="Speeds up when seeing Player"
+          [(state)]="accelerateState"
+          [strikeable]="true"
+          (stateChange)="onChange(false)"
+        ></app-check-box>
+      </div>
+      <div
+        class="col-auto mt-1"
+        *ngIf="showAccelerateSlider && ghostSpeedAccelerate > 0"
+      >
+        (+{{ speedAccelerationMult * 100 - 100 | number : "1.0" }} %)
+      </div>
+    </div>
+    <div class="row" *ngIf="showAccelerateSlider" [@moveIn]="'open'">
+      <div class="col-2"></div>
+      <div class="col-10">
+        <app-slider
+          [disabled]="!sliderEnabled"
+          [(value)]="ghostSpeedAccelerate"
+          (valueChange)="onChange(true)"
+          [min]="0.0"
+          [max]="13.0"
+          [step]="0.1"
+          format="1.1"
+          unit="sec"
+        >
+        </app-slider>
+      </div>
+    </div>
+
+    <!-- Speed -->
+    <div class="row">
+      <div class="col-2 fw-bold">Speed</div>
+      <div class="col-auto">
+        <app-check-box
+          label="Filter ghosts by speed"
+          [(state)]="filterState"
+          (stateChange)="onChange(false)"
+        ></app-check-box>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-10">
+        <app-slider
+          [(value)]="ghostSpeedBase"
+          (valueChange)="onChange(true)"
+          [disabled]="!sliderEnabled"
+          [min]="0.4"
+          [max]="3.7"
+          [step]="0.05"
+          format="1.1"
+          unit="m/s"
+        >
+        </app-slider>
+      </div>
+    </div>
+
+    <!-- Playback -->
+    <div class="row">
+      <div class="col-2 fw-bold">Metronome</div>
+      <div class="col-auto">
+        <app-check-box
+          label="Play"
+          [(state)]="playState"
+          (stateChange)="onChange(true)"
+        ></app-check-box>
+      </div>
+      <div class="col-auto">
+        <app-check-box
+          label="Mute"
+          [(state)]="muteState"
+          [disabled]="playState === CheckState.off"
+          (stateChange)="onChange(true)"
+        ></app-check-box>
+      </div>
+    </div>
+    <div
+      class="row"
+      *ngIf="playState === CheckState.checked"
+      [@moveIn]="'open'"
+    >
+      <div class="col-2"></div>
+      <div class="col" *ngFor="let o of stepLabelEntries">
+        <div class="step" [class.active]="o === stepLabelActive">Step</div>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div *ngIf="showTips"  [@moveIn]="'open'">
+      <hr />
+      <div class="row" *ngFor="let t of tips">
+        <div class="col-2 text-end">{{ t.ghost }}</div>
+        <div class="col-10 description">{{ t.description }}</div>
+      </div>
+    </div>
+  </div>
+</div>

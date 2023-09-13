@@ -32,13 +32,15 @@
 
     <!-- Evidence selection -->
     <hr />
-    <app-evidence-select
-      [(selected)]="filters.evidenceSelected"
-      [(eliminated)]="filters.evidenceEliminated"
-      [disabled]="evidenceDisabled"
-      (change)="onChange()"
-    >
-    </app-evidence-select>
+    <div class="mx-4">
+      <app-evidence-select
+        [(selected)]="filters.evidenceSelected"
+        [(eliminated)]="filters.evidenceEliminated"
+        [disabled]="evidenceDisabled"
+        (change)="onChange()"
+      >
+      </app-evidence-select>
+    </div>
 
     <!-- Ghost selection -->
     <hr />

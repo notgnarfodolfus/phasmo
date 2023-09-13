@@ -15,6 +15,7 @@ import { GhostSelectComponent } from './components/ghost-select/ghost-select.com
 import { EvidenceSelectComponent } from './components/evidence-select/evidence-select.component';
 import { EvidenceCardComponent } from './components/evidence-card/evidence-card.component';
 import { ThresholdCardComponent } from './components/threshold-card/threshold-card.component';
+import { SpeedCardComponent } from './components/speed-card/speed-card.component';
 import { BehaviorCardComponent } from './components/behavior-card/behavior-card.component';
 
 @NgModule({
@@ -30,6 +31,7 @@ import { BehaviorCardComponent } from './components/behavior-card/behavior-card.
     EvidenceSelectComponent,
     EvidenceCardComponent,
     ThresholdCardComponent,
+    SpeedCardComponent,
     BehaviorCardComponent
   ],
   imports: [

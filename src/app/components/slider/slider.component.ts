@@ -11,6 +11,9 @@ export class SliderComponent {
   @Input() public min: number = 0;
   @Input() public max: number = 100;
   @Input() public step: number = 1;
+  @Input() public format: string = '1.0-0'
+  @Input() public unit: string = '';
+  @Input() public disabled: boolean = false;
 
   @Output() public valueChange = new EventEmitter<number>();
   @Output() public change = new EventEmitter<number>();

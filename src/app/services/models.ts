@@ -43,6 +43,7 @@ export class GhostFilters {
 
   // Optional ghost speed estimation in m/s, cleaned of difficulty setting mulipliers (mapped to 100%)
   public speedEstimation: number | null;
+  public speedLoSAcceleration: boolean | null;
 
   // Optional hunt threshold sanity estimation (the maximum average player sanity when the ghost started a regular hunt)
   public thresholdEstimation: number;
@@ -59,6 +60,7 @@ export class GhostFilters {
 
   constructor() {
     this.speedEstimation = null;
+    this.speedLoSAcceleration = null;
     this.thresholdEstimation = 0;
     this.ghostSelected = null;
 
@@ -70,7 +72,7 @@ export class GhostFilters {
     this.tagsEliminated = new Set<Tag>();
     this.config = {
       evidenceHidden: 0,
-      ghostSpeedAccuracy: 0.1
+      ghostSpeedAccuracy: 0.95
     };
   }
 }
@@ -89,9 +91,11 @@ export interface GhostModel {
   order: number;
   evidence: string[];
   forced?: string;
-  speed?: number;
+  speed?: SpeedModel | SpeedModel[];
+  speedInfo?: string;
   threshold?: number;
   hunts?: HuntAbilityModel[];
+  tags?: string[];
 };
 
 /**
@@ -99,6 +103,19 @@ export interface GhostModel {
 */
 export interface TagModel {
   name: string
+  description?: string;
+  opposite?: string;
+};
+
+/**
+* For serialization.
+*/
+export interface SpeedModel {
+  condition?: string;
+  accelerate?: boolean;
+  value?: number;
+  min?: number;
+  max?: number;
 };
 
 /**
@@ -137,14 +154,33 @@ export class HuntAbility {
   }
 }
 
+export class GhostSpeed {
+
+  public readonly condition: Tag | null;
+  public readonly accelerate: boolean; // Default LoS acceleration
+  public readonly min: number;
+  public readonly max: number;
+
+  constructor(data: SpeedModel) {
+    this.condition = data.condition ?? null;
+    this.accelerate = data.accelerate ?? true;
+    this.min = data.min ?? data.value ?? 1.7;
+    this.max = data.max ?? data.value ?? 1.7;
+  }
+}
+
 export class TagData {
 
   public readonly key: Tag;
   public readonly name: string;
+  public readonly description: string | null;
+  public opposite: TagData | null;
 
   constructor(key: Tag, data: TagModel) {
     this.key = key;
     this.name = data.name;
+    this.description = data.description ?? null;
+    this.opposite = null;
   }
 }
 
@@ -161,7 +197,8 @@ export class Ghost {
   public readonly forced: Evidence | null;
   public readonly tags: Set<Tag>;
   public readonly threshold: number; // The maximum sanity threshold at which the ghost can hunt including all abilities
-  public readonly speed: number; // Ghost specific classes may ignore this value
+  public readonly speed: GhostSpeed[]; // Ghost specific classes may ignore this value
+  public readonly speedInfo: string | null;
   public readonly hunts: HuntAbility[];
 
   constructor(name: GhostName, data: GhostModel) {
@@ -169,9 +206,10 @@ export class Ghost {
     this.order = data.order;
     this.evidence = data.evidence.map(e => Evidence[e as keyof typeof Evidence]);
     this.forced = data.forced ? Evidence[data.forced as keyof typeof Evidence] : null;
-    this.tags = new Set<Tag>();
+    this.tags = new Set<Tag>(data.tags ?? []);
     this.threshold = data.threshold ?? 50; // Setup to default sanity threshold
-    this.speed = data.speed ?? 1.7; // Setup to default speed
+    this.speed = Ghost.readSpeed(data.speed);
+    this.speedInfo = data.speedInfo ?? null;
     this.hunts = data.hunts ? data.hunts.map(h => new HuntAbility(h)) : [];
   }
 
@@ -236,7 +274,10 @@ export class Ghost {
   // Does the selected ghost speed configuration match on this ghost?
   // This method might be overwritten by specific ghost implementations.
   public isSpeedPossible(filters: GhostFilters): boolean {
-    return Ghost.speedInRange(filters, this.speed);
+    const losA = filters.speedLoSAcceleration;
+    return this.speed
+      .filter(s => losA === null || losA === s.accelerate) // Acceleration setting must match
+      .some(s => Ghost.speedInRange(filters, s.min, s.max));
   }
 
   // Assuming this ghost is shortlisted (isPossible returned true) this provide evidence that may still be selected.
@@ -253,11 +294,17 @@ export class Ghost {
     return this.hunts.filter(h => h.enabled !== filters.huntAbiliesFlipped.has(h.name));
   }
 
-  protected static speedInRange(filters: GhostFilters, min: number, max: number = min): boolean {
+  protected static speedInRange(filters: GhostFilters, min: number, max: number): boolean {
     const value = filters.speedEstimation;
     if (value == null)
       return true; // C: Can't say
-    const margin = filters.config.ghostSpeedAccuracy;
-    return value >= min * (1 - margin) && value <= max * (1 + margin);
+    const margin = 1 - (filters.config.ghostSpeedAccuracy - 0.005); // be generous with rounding errors
+    return value * (1 + margin) >= min && value * (1 - margin) <= max;
+  }
+
+  protected static readSpeed(data?: SpeedModel | SpeedModel[]): GhostSpeed[] {
+    if (data == null) return [new GhostSpeed({})];
+    else if (Array.isArray(data)) return data.map(m => new GhostSpeed(m));
+    else return [new GhostSpeed(data)];
   }
 }

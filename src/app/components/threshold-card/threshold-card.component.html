@@ -15,9 +15,8 @@
       <hr />
       <div>
         <app-check-box
-          label="Show Hints"
-          [(state)]="showHintsState"
-          (stateChange)="saveShowHints()"
+          label="Show Tips"
+          [(state)]="showTipsState"
         ></app-check-box>
       </div>
     </div>
@@ -42,22 +41,20 @@
     <div class="row">
       <div class="col-2 fw-bold">Sanity</div>
       <div class="col-10">
-        <div class="form-group row">
-          <div class="col">
-            <app-slider
-              [(value)]="filters.thresholdEstimation"
-              (valueChange)="onChange()"
-              [min]="0"
-              [max]="100"
-              [step]="5"
-            >
-            </app-slider>
-          </div>
-        </div>
+        <app-slider
+          [(value)]="filters.thresholdEstimation"
+          (valueChange)="onChange()"
+          [min]="0"
+          [max]="100"
+          [step]="5"
+          unit="%"
+        >
+        </app-slider>
       </div>
     </div>
 
-    <ng-container *ngIf="showHints">
+    <!-- Tips -->
+    <ng-container *ngIf="showTips">
       <hr />
       <div class="row" *ngFor="let a of activeAbilities" [@moveIn]="'open'">
         <div class="col-3 text-end">{{ abilityToGhosts[a.name] }}</div>

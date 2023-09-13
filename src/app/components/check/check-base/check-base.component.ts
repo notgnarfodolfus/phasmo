@@ -15,7 +15,7 @@ export abstract class CheckBaseComponent {
 
   public readonly CheckState = CheckState;
 
-  @Input() public label?: string;
+  @Input() public label?: string = '\xa0'; // nbsp - arguably a stupid hack, but helps to keep the element height
   @Input() public locked: boolean = false;
   @Input() public disabled: boolean = false;
   @Input() public strikeable: boolean = false;

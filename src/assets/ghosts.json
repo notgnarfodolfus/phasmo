@@ -19,8 +19,8 @@
       "ability_mist_event",
       "ability_footprints",
       "ability_wander",
-      "ability_analog_dots",
-      "ability_paramic_scream"
+      "ability_banshee_screem",
+      "ability_analog_dots"
     ]
   },
   "Demon": {
@@ -52,6 +52,17 @@
       "SpiritBox"
     ],
     "threshold": 40,
+    "speed": [
+      {
+        "value": 0.4,
+        "accelerate": false
+      },
+      {
+        "value": 3.0,
+        "accelerate": false
+      }
+    ],
+    "speedInfo": "Always finds player, 3m/s when far (>2.5m), 0.4m/s when close",
     "tags": [
       "ability_mist_event",
       "ability_footprints",
@@ -80,6 +91,12 @@
       "GhostOrb"
     ],
     "forced": "Freezing",
+    "speed": {
+      "min": 1.4,
+      "max": 2.7,
+      "accelerate": false
+    },
+    "speedInfo": "Fast in colder environments (1.4 to 2.7 m/s)",
     "tags": [
       "ability_mist_event",
       "ability_footprints"
@@ -92,6 +109,18 @@
       "Ultraviolett",
       "Freezing"
     ],
+    "speed": [
+      {
+        "value": 1.7,
+        "accelerate": true
+      },
+      {
+        "condition": "speed_condition_jinn",
+        "value": 2.5,
+        "accelerate": false
+      }
+    ],
+    "speedInfo": "Normal speed, exception: 2.5m/s when fuse box on, sees player and 3+ meters away",
     "tags": [
       "ability_mist_event",
       "ability_footprints"
@@ -127,6 +156,36 @@
       "SpiritBox"
     ],
     "forced": "GhostOrb",
+    "speed": [
+      {
+        "value": 1.7,
+        "accelerate": true
+      },
+      {
+        "value": 0.4,
+        "accelerate": false
+      },
+      {
+        "value": 3.0,
+        "accelerate": false
+      },
+      {
+        "min": 1.0,
+        "max": 2.75,
+        "accelerate": false
+      },
+      {
+        "min": 1.4,
+        "max": 2.7,
+        "accelerate": false
+      },
+      {
+        "min": 1.5,
+        "max": 2.25,
+        "accelerate": true
+      }
+    ],
+    "speedInfo": "Copies speed of the mimicked ghost",
     "hunts": [
       {
         "name": "Mimic",
@@ -147,6 +206,12 @@
       "GhostWriting",
       "SpiritBox"
     ],
+    "speed": {
+      "min": 1.5,
+      "max": 2.25,
+      "accelerate": true
+    },
+    "speedInfo": "Faster when average sanity is below 45% (1.5m/s to 2.25m/s), accelerates in LoS",
     "forced": "SpiritBox",
     "tags": [
       "ability_mist_event",
@@ -186,7 +251,6 @@
       "Freezing"
     ],
     "tags": [
-      "ability_mist_event",
       "ability_footprints"
     ]
   },
@@ -228,6 +292,8 @@
     "tags": [
       "ability_mist_event",
       "ability_footprints",
+      "ability_wander",
+      "ability_camera_shyness",
       "ability_analog_dots"
     ]
   },
@@ -250,6 +316,18 @@
       "EmfLevel5",
       "GhostOrb"
     ],
+    "speed": [
+      {
+        "value": 1.7,
+        "accelerate": true
+      },
+      {
+        "condition": "speed_condition_raiju",
+        "value": 2.5,
+        "accelerate": false
+      }
+    ],
+    "speedInfo": "Normal speed, exception: 2.5m/s when close to active electrical equipment (6/8/10m on small/medium/large maps)",
     "threshold": 50,
     "hunts": [
       {
@@ -272,6 +350,17 @@
       "GhostOrb",
       "GhostWriting"
     ],
+    "speed": [
+      {
+        "min": 1.0,
+        "accelerate": false
+      },
+      {
+        "value": 3.0,
+        "accelerate": false
+      }
+    ],
+    "speedInfo": "Roams at 1m/s, instantly chases players at 3m/s, slows over time (2.7s) when not in LoS",
     "tags": [
       "ability_mist_event",
       "ability_footprints"
@@ -328,6 +417,12 @@
         "prevent": true
       }
     ],
+    "speed": {
+      "min": 1.0,
+      "max": 2.75,
+      "accelerate": false
+    },
+    "speedInfo": "Initially 2.75m/s, gradually slows down to 1m/s when aging",
     "tags": [
       "ability_mist_event",
       "ability_footprints",
@@ -341,6 +436,17 @@
       "Freezing",
       "SpiritBox"
     ],
+    "speed": [
+      {
+        "value": 1.5,
+        "accelerate": true
+      },
+      {
+        "value": 1.9,
+        "accelerate": true
+      }
+    ],
+    "speedInfo": "Fast twin: 1.9m/s, slow twin: 1.5m/s, both accelerate in LoS",
     "tags": [
       "ability_mist_event",
       "ability_footprints"
@@ -352,6 +458,10 @@
       "DotsProjector",
       "EmfLevel5",
       "SpiritBox"
+    ],
+    "tags": [
+      "ability_mist_event",
+      "ability_teleport"
     ]
   },
   "Yokai": {

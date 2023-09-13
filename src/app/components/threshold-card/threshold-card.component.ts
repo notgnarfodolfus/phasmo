@@ -23,22 +23,21 @@ export class ThresholdCardComponent implements OnInit {
 
   public showConfig: boolean = false;
   public abilities: HuntAbility[] = [];
-  public showHintsState: CheckState = CheckState.off;
+  public showTipsState: CheckState = CheckState.off;
   public abilityByName: { [ability: string]: HuntAbility } = {};
   public abilityToGhosts: { [ability: string]: GhostName } = {};
 
-  // For hints
+  // For tips
   public get activeAbilities(): HuntAbility[] {
     return Object.values(this.abilityByName)
       .filter(a => this.isChecked(a));
   }
 
-  public get showHints() {
-    return this.showHintsState === CheckState.checked && this.activeAbilities.length > 0;
+  public get showTips() {
+    return this.showTipsState === CheckState.checked && this.activeAbilities.length > 0;
   }
 
   public ngOnInit(): void {
-    this.loadShowHints();
     this.abilities = Object.values(Ghosts).flatMap(g => g.hunts).sort((a, b) => (b.enabled ? 1 : 0) - (a.enabled ? 1 : 0));
     this.abilityByName = {};
     this.abilityToGhosts = {};
@@ -66,13 +65,5 @@ export class ThresholdCardComponent implements OnInit {
     if (flipped) this.filters.huntAbiliesFlipped.add(ability.name);
     else this.filters.huntAbiliesFlipped.delete(ability.name);
     this.onChange();
-  }
-
-  public loadShowHints() {
-    this.showHintsState = localStorage.getItem('threshold_show_hints') === 'true' ? CheckState.checked : CheckState.off;
-  }
-
-  public saveShowHints() {
-    localStorage.setItem('threshold_show_hints', '' + (this.showHintsState === CheckState.checked));
   }
 }

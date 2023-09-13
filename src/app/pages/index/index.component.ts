@@ -13,6 +13,7 @@ export class IndexPageComponent {
 
   public ghostsDisabled = new Set<GhostName>();
   public evidenceDisabled = new Set<Evidence>();
+  public ghostsExcluded = new Set<GhostName>(); // disabled or striked
 
   public get filters(): GhostFilters {
     return this._filters;
@@ -37,6 +38,7 @@ export class IndexPageComponent {
       .filter(evid => !possibleEvidence.has(evid));
     this.ghostsDisabled = new Set<GhostName>(impossibleGhosts);
     this.evidenceDisabled = new Set<Evidence>(impossibleEvidence);
+    this.ghostsExcluded = new Set<GhostName>([...impossibleGhosts, ...filters.ghostEliminated]);
 
     // Apply new data
     this._filters = filters;

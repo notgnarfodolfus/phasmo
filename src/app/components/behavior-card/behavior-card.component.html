@@ -1,10 +1,46 @@
 <div class="card mb-4">
   <div class="card-body p-4">
     <!-- Title / Header -->
-    <div>
-      <h3 class="card-title mb-0 mx-2">Behavior</h3>
+    <div class="d-flex">
+      <div class="mx-2">
+        <span class="clickable" (click)="showConfig = !showConfig">
+          <img class="config-icon" src="assets/img/cog.png" height="24px" />
+        </span>
+      </div>
+      <h3 class="card-title mb-0 mx-2">Abilities</h3>
     </div>
+
+    <!-- Configuration -->
+    <div *ngIf="showConfig" [@moveIn]="'open'">
+      <hr />
+      <div>
+        <app-check-box
+          label="Show Tips"
+          [(state)]="showTipsState"
+        ></app-check-box>
+      </div>
+    </div>
+
+    <!-- Abilities -->
     <hr />
-    <div class="row"></div>
+    <div class="row">
+      <div class="col-auto" *ngFor="let tag of tags">
+        <app-check-box
+          [label]="tag.name"
+          [strikeable]="true"
+          [state]="getState(tag)"
+          (stateChange)="setState(tag, $event)"
+        ></app-check-box>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div *ngIf="showTips" [@moveIn]="'open'">
+      <hr />
+      <div class="row" *ngFor="let t of tipTags">
+        <div class="col-4 description text-end">{{ t.name }}</div>
+        <div class="col-8 description">{{ t.description }}</div>
+      </div>
+    </div>
   </div>
 </div>
