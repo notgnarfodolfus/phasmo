@@ -146,13 +146,15 @@ export class SpeedCardComponent implements OnInit, OnChanges {
         description: 'Most ghosts walk at 1.7m/s and speed up over 13 sec to 2.8m/s  when seeing the player'
       });
     }
-    this.tips = [...basic, ...Object.values(Ghosts)
-      .filter(g => g.speedInfo)
-      .filter(g => !this.ghostsDisabled.has(g.name))
-      .filter(g => g.isSpeedPossible(speed, accuracy, accelerate))
-      .map(g => {
-        return { ghost: g.name, description: g.speedInfo! };
-      })
+    this.tips = [
+      ...basic,
+      ...Object.values(Ghosts)
+        .filter(g => g.speedInfo)
+        .filter(g => !this.ghostsDisabled.has(g.name))
+        .filter(g => g.isSpeedPossible(speed, accuracy, accelerate))
+        .map(g => {
+          return { ghost: g.name, description: g.speedInfo! };
+        })
     ];
   }
 

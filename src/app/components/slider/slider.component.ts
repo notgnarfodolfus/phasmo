@@ -6,7 +6,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./slider.component.scss']
 })
 export class SliderComponent implements OnInit {
-
   @Input() public value: number = 0;
   @Input() public min: number = 0;
   @Input() public max: number = 100;
@@ -22,7 +21,7 @@ export class SliderComponent implements OnInit {
     // Workaround, for some values the initial slider position is not applied correctly otherwise
     const v = this.value;
     this.value = this.min;
-    setTimeout(() => this.value = v);
+    setTimeout(() => (this.value = v));
   }
 
   public onChange() {

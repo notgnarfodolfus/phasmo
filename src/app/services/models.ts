@@ -292,7 +292,11 @@ export class Ghost {
   // Is the configured speed out of the ghost speed range?
   public isSpeedMismatch(filters: GhostFilters): boolean {
     if (filters.speedEstimation == null) return false; // This is fine
-    return !this.isSpeedPossible(filters.speedEstimation, filters.config.ghostSpeedAccuracy, filters.speedLoSAcceleration);
+    return !this.isSpeedPossible(
+      filters.speedEstimation,
+      filters.config.ghostSpeedAccuracy,
+      filters.speedLoSAcceleration
+    );
   }
 
   // Assuming this ghost is shortlisted (isPossible returned true) this provide evidence that may still be selected.
