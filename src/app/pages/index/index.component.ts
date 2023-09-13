@@ -10,6 +10,7 @@ import { Evidence, GhostFilters, GhostName } from 'src/app/services/models';
 export class IndexPageComponent {
   private _filters = new GhostFilters();
 
+  public showTips: boolean = false;
   public ghostsDisabled = new Set<GhostName>();
   public evidenceDisabled = new Set<Evidence>();
   public ghostsExcluded = new Set<GhostName>(); // disabled or striked

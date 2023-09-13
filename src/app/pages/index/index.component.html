@@ -6,14 +6,16 @@
     <div class="col-md-12 col-xl-5">
       <app-evidence-card
         [(filters)]="filters"
+        [(showTips)]="showTips"
         [ghostsDisabled]="ghostsDisabled"
         [evidenceDisabled]="evidenceDisabled"></app-evidence-card>
-      <app-behavior-card [(filters)]="filters" [ghostsDisabled]="ghostsExcluded"> </app-behavior-card>
+      <app-behavior-card [(filters)]="filters" [ghostsDisabled]="ghostsExcluded" [showTips]="showTips">
+      </app-behavior-card>
     </div>
     <div class="col-md-12 col-xl-7">
       <!-- <app-behavior-card></app-behavior-card> -->
-      <app-threshold-card [(filters)]="filters"></app-threshold-card>
-      <app-speed-card [(filters)]="filters" [ghostsDisabled]="ghostsExcluded"></app-speed-card>
+      <app-threshold-card [(filters)]="filters" [showTips]="showTips"></app-threshold-card>
+      <app-speed-card [(filters)]="filters" [ghostsDisabled]="ghostsExcluded" [showTips]="showTips"></app-speed-card>
     </div>
   </div>
 

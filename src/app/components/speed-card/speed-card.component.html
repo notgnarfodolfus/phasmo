@@ -30,11 +30,6 @@
         </app-check-box-choice>
       </div>
       <div class="row">
-        <div class="col">
-          <app-check-box label="Show Tips" [(state)]="showTipsState"></app-check-box>
-        </div>
-      </div>
-      <div class="row">
         <div class="col-2">Accuracy</div>
         <div class="col-10">
           <app-slider
@@ -129,7 +124,7 @@
     </div>
 
     <!-- Tips -->
-    <div *ngIf="showTips" [@moveIn]="'open'">
+    <div *ngIf="showTips && tips.length > 0" [@moveIn]="'open'">
       <hr />
       <div class="row" *ngFor="let t of tips">
         <div class="col-2 text-end">{{ t.ghost }}</div>

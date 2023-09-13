@@ -22,6 +22,11 @@
         <app-check-box-choice [options]="evidenceOptions" [default]="0" [(selected)]="evidenceHidden">
         </app-check-box-choice>
       </div>
+      <div class="row">
+        <div class="col">
+          <app-check-box label="Show Tips" [(state)]="showTipsState"></app-check-box>
+        </div>
+      </div>
     </div>
 
     <!-- Evidence selection -->

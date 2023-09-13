@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Evidence, GhostFilters, GhostName } from 'src/app/services/models';
+import { CheckState } from '../check/check-base/check-base.component';
 
 @Component({
   selector: 'app-evidence-card',
@@ -21,6 +22,9 @@ export class EvidenceCardComponent implements OnInit {
     { title: 'Two Hidden (Insanity)', value: 2 },
     { title: 'No Evidence (Custom)', value: 3 }
   ];
+
+  @Input() public showTips: boolean = false;
+  @Output() public showTipsChange = new EventEmitter<boolean>();
 
   @Input() public filters = new GhostFilters();
   @Output() public filtersChange = new EventEmitter<GhostFilters>();
@@ -52,6 +56,15 @@ export class EvidenceCardComponent implements OnInit {
     sessionStorage.setItem('evidence_hidden', '' + value ?? 0);
     this.filters.config.evidenceHidden = value ?? 0;
     this.onChange();
+  }
+
+  public get showTipsState(): CheckState {
+    return this.showTips ? CheckState.checked : CheckState.off;
+  }
+
+  public set showTipsState(state: CheckState) {
+    this.showTips = state === CheckState.checked;
+    this.showTipsChange.emit(this.showTips);
   }
 
   public ngOnInit(): void {

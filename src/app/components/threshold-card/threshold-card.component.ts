@@ -17,22 +17,18 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class ThresholdCardComponent implements OnInit {
+  @Input() public showTips: boolean = false;
   @Input() public filters = new GhostFilters();
   @Output() public filtersChange = new EventEmitter<GhostFilters>();
 
   public showConfig: boolean = false;
   public abilities: HuntAbility[] = [];
-  public showTipsState: CheckState = CheckState.off;
   public abilityByName: { [ability: string]: HuntAbility } = {};
   public abilityToGhosts: { [ability: string]: GhostName } = {};
 
   // For tips
   public get activeAbilities(): HuntAbility[] {
     return Object.values(this.abilityByName).filter(a => this.isChecked(a));
-  }
-
-  public get showTips() {
-    return this.showTipsState === CheckState.checked && this.activeAbilities.length > 0;
   }
 
   public ngOnInit(): void {

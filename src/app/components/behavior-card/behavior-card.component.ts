@@ -17,18 +17,13 @@ import { CheckState } from '../check/check-base/check-base.component';
   ]
 })
 export class BehaviorCardComponent {
-  @Input() public ghostsDisabled = new Set<GhostName>();
   @Input() public filters = new GhostFilters();
   @Output() public filtersChange = new EventEmitter<GhostFilters>();
 
+  @Input() public showTips: boolean = false;
+  @Input() public ghostsDisabled = new Set<GhostName>();
+
   public readonly tags: TagData[] = Object.values(Tags);
-
-  public showConfig: boolean = false;
-  public showTipsState: CheckState = CheckState.off;
-
-  public get showTips() {
-    return this.showTipsState === CheckState.checked && this.tipTags.length > 0;
-  }
 
   public get tipTags(): TagData[] {
     return this.tags

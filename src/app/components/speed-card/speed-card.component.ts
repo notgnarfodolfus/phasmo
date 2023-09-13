@@ -31,12 +31,12 @@ export class SpeedCardComponent implements OnInit, OnChanges {
   // But on my machine that seems to be a bit to fast.
   private multStepsPerSecond: number = 1.14;
 
+  @Input() public showTips: boolean = false;
   @Input() public ghostsDisabled = new Set<GhostName>();
   @Input() public filters = new GhostFilters();
   @Output() public filtersChange = new EventEmitter<GhostFilters>();
 
   public showConfig: boolean = false;
-  public showTipsState: CheckState = CheckState.off;
   public accelerateState: CheckState = CheckState.off;
   public filterState: CheckState = CheckState.off;
   public playState: CheckState = CheckState.off;
@@ -74,10 +74,6 @@ export class SpeedCardComponent implements OnInit, OnChanges {
 
   public get sliderEnabled(): boolean {
     return this.playState === CheckState.checked || this.filterState === CheckState.checked;
-  }
-
-  public get showTips() {
-    return this.showTipsState === CheckState.checked && this.tips.length > 0;
   }
 
   public get frequency(): number {
@@ -159,9 +155,5 @@ export class SpeedCardComponent implements OnInit, OnChanges {
       this.audio[this.counter++ % this.buffers].play();
     }
     this.stepLabelActive = (this.stepLabelActive + 1) % this.stepLabelEntries.length;
-  }
-
-  private static isNormalSpeed(s: GhostSpeed) {
-    return s.accelerate && s.condition == null && s.min === 1.7 && s.max === 1.7;
   }
 }

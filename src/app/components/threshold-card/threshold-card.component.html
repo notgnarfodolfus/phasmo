@@ -1,21 +1,8 @@
 <div class="card mb-4">
   <div class="card-body p-4">
     <!-- Title / Header -->
-    <div class="d-flex">
-      <div class="mx-2">
-        <span class="clickable" (click)="showConfig = !showConfig">
-          <img class="config-icon" src="assets/img/cog.png" height="24px" />
-        </span>
-      </div>
+    <div>
       <h3 class="card-title mb-0 mx-2">Hunt Threshold</h3>
-    </div>
-
-    <!-- Configuration -->
-    <div *ngIf="showConfig" [@moveIn]="'open'">
-      <hr />
-      <div>
-        <app-check-box label="Show Tips" [(state)]="showTipsState"></app-check-box>
-      </div>
     </div>
 
     <!-- Behavior selection -->
@@ -46,7 +33,7 @@
     </div>
 
     <!-- Tips -->
-    <ng-container *ngIf="showTips">
+    <ng-container *ngIf="showTips && activeAbilities.length > 0">
       <hr />
       <div class="row" *ngFor="let a of activeAbilities" [@moveIn]="'open'">
         <div class="col-3 text-end">{{ abilityToGhosts[a.name] }}</div>
