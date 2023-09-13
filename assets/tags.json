@@ -1,0 +1,34 @@
+{
+  "ability_mist_event": {
+    "name": "Mist Event",
+    "description": "Onis are unable to perform the mist orb ghost event"
+  },
+  "ability_footprints": {
+    "name": "Salt Footprints",
+    "description": "Wraithes will never step into salt"
+  },
+  "ability_teleport": {
+    "name": "Teleport to Player",
+    "description": "Wraithes can teleport to players, which generates EMF Level 2"
+  },
+  "ability_wander": {
+    "name": "Wander towards Player",
+    "description": "Phantoms and Banshees might wander towards players"
+  },
+  "ability_camera_shyness": {
+    "name": "Camera Shyness",
+    "description": "Phantoms disappear when photographed during ghost events"
+  },
+  "ability_banshee_screem": {
+    "name": "Banshee Scream",
+    "description": "Banshees have a 33% chance to convert Parabolic Microphone \"Whispers\" into screems"
+  },
+  "ability_digital_dots": {
+    "name": "Digital D.O.T.S.",
+    "description": "Goryo D.O.T.S can only be seen through a video camera"
+  },
+  "ability_analog_dots": {
+    "name": "Analog D.O.T.S.",
+    "opposite": "ability_digital_dots"
+  }
+}

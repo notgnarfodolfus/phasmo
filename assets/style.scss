@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'Lazy Dog';
+  src: url('font/lazy_dog.ttf');
+}
+
+@font-face {
+  font-family: 'October Crow';
+  src: url('font/october_crow.ttf');
+}
+
+$font-size-base: 1.5rem;
+$font-family-base: 'Lazy Dog';
+
+.header {
+  font-family: 'October Crow';
+}
+
+.card {
+  background-image: url('img/journal.png');
+  background-repeat: repeat;
+}
+
+.description {
+  line-height: 1em;
+  margin-top: 0.3em;
+}
+
+.disabled {
+  filter: opacity(35%);
+}
+
+.clickable {
+  cursor: pointer;
+
+  &:not(.disabled) {
+    &:hover {
+      font-weight: bold;
+    }
+  }
+}
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1500px
+);
+
+// Form input range
+
+$form-range-track-bg: black;
+$form-range-track-height: 0.15rem;
+$form-range-track-border-radius: 1rem;
+$form-range-thumb-width: 0.75rem;
+$form-range-thumb-height: 0.75rem;
+$form-range-thumb-bg: black;
+$form-range-thumb-active-bg: black;
+$form-range-thumb-box-shadow: 0 0.1rem 0.25rem rgba(black, 0.1);
+$form-range-thumb-focus-box-shadow:
+  0 0 0 1px black,
+  0 0 0 1px black;
