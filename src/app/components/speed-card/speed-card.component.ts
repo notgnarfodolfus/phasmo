@@ -27,9 +27,12 @@ export class SpeedCardComponent implements OnInit, OnChanges {
     { title: '150%', value: 150 }
   ];
 
+  // Any ghost with default speed, lets take the most basic of them all
+  private readonly basicGhost = Ghosts.Spirit;
+
   // Ghost speed of 1.7 m/s should be 2 steps/s or a multiplier of 1.1765.
   // But on my machine that seems to be a bit to fast.
-  private multStepsPerSecond: number = 1.14;
+  private readonly multStepsPerSecond: number = 1.14;
 
   @Input() public ghostsDisabled = new Set<GhostName>();
   @Input() public filters = new GhostFilters();
@@ -80,16 +83,21 @@ export class SpeedCardComponent implements OnInit, OnChanges {
     return this.accelerateState === CheckState.checked;
   }
 
-  public get sliderEnabled(): boolean {
-    return this.playState === CheckState.checked || this.filterState === CheckState.checked;
-  }
-
   public get frequency(): number {
     return this.ghostSpeedBase * this.multStepsPerSecond * this.speedAccelerationMult * (this.speedPercent / 100.0);
   }
 
   public get showTips(): boolean {
     return this.filters.config.showTips && this.tips.length > 0;
+  }
+
+  public get adjustedGhostSpeed(): number {
+    const acceleration = this.accelerateState === CheckState.checked ? 1.0 / this.speedAccelerationMult : 1.0;
+    return this.ghostSpeedBase * acceleration;
+  }
+
+  public get isAccelerate(): boolean | null {
+    return this.accelerateState === CheckState.off ? null : this.accelerateState === CheckState.checked;
   }
 
   public ngOnInit(): void {
@@ -113,10 +121,8 @@ export class SpeedCardComponent implements OnInit, OnChanges {
   }
 
   public onChange(reloadAudio: boolean): void {
-    const acc = this.accelerateState === CheckState.checked ? 1.0 / this.speedAccelerationMult : 1.0;
-    this.filters.speedEstimation = this.filterState === CheckState.checked ? this.ghostSpeedBase * acc : null;
-    this.filters.speedLoSAcceleration =
-      this.accelerateState === CheckState.off ? null : this.accelerateState === CheckState.checked;
+    this.filters.speedEstimation = this.filterState === CheckState.checked ? this.adjustedGhostSpeed : null;
+    this.filters.speedLoSAcceleration = this.isAccelerate;
     if (reloadAudio) {
       this.ensure();
     }
@@ -130,12 +136,24 @@ export class SpeedCardComponent implements OnInit, OnChanges {
   }
 
   private generateTips(): void {
-    this.tips = Object.values(Ghosts)
+    const basic = [];
+    const speed = this.adjustedGhostSpeed;
+    const accuracy = this.filters.config.ghostSpeedAccuracy;
+    const accelerate = this.isAccelerate;
+    if (this.basicGhost.isSpeedPossible(speed, accuracy, accelerate)) {
+      basic.push({
+        ghost: '<b>Default</b>',
+        description: 'Most ghosts walk at 1.7m/s and speed up over 13 sec to 2.8m/s  when seeing the player'
+      });
+    }
+    this.tips = [...basic, ...Object.values(Ghosts)
       .filter(g => g.speedInfo)
       .filter(g => !this.ghostsDisabled.has(g.name))
+      .filter(g => g.isSpeedPossible(speed, accuracy, accelerate))
       .map(g => {
         return { ghost: g.name, description: g.speedInfo! };
-      });
+      })
+    ];
   }
 
   private ensure() {

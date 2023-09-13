@@ -64,7 +64,6 @@
       <div class="col-2"></div>
       <div class="col-10">
         <app-slider
-          [disabled]="!sliderEnabled"
           [(value)]="ghostSpeedAccelerate"
           (valueChange)="onChange(true)"
           [min]="0.0"
@@ -92,7 +91,6 @@
         <app-slider
           [(value)]="ghostSpeedBase"
           (valueChange)="onChange(true)"
-          [disabled]="!sliderEnabled"
           [min]="0.4"
           [max]="3.7"
           [step]="0.05"
@@ -127,7 +125,7 @@
     <div *ngIf="showTips" [@moveIn]="'open'">
       <hr />
       <div class="row description" *ngFor="let t of tips">
-        <div class="col-2 text-end">{{ t.ghost }}</div>
+        <div class="col-2 text-end" [innerHTML]="t.ghost"></div>
         <div class="col-10">{{ t.description }}</div>
       </div>
     </div>

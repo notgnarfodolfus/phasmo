@@ -235,8 +235,8 @@ export class Ghost {
     if (this.isForcedEvidenceMismatch(filters)) return false;
     if (this.isTagExcluded(filters)) return false;
     if (this.isTagMismatch(filters)) return false;
-    if (!this.isThresholdPossible(filters)) return false;
-    if (!this.isSpeedPossible(filters)) return false;
+    if (this.isSpeedMismatch(filters)) return false;
+    if (this.isThresholdMismatch(filters)) return false;
     return true;
   }
 
@@ -279,23 +279,20 @@ export class Ghost {
   }
 
   // Can the ghost even hunt at this point?
-  public isThresholdPossible(filters: GhostFilters): boolean {
+  public isThresholdMismatch(filters: GhostFilters): boolean {
     const current = filters.thresholdEstimation ?? 0;
     const abilities = this.getActiveHuntAbilities(filters);
     // Check whether a hunt is prevented due to an ability
-    if (abilities.some(a => a.prevent && a.threshold < current)) return false;
+    if (abilities.some(a => a.prevent && a.threshold < current)) return true;
     // Check whether a hunt is positive due to an ability
-    if (abilities.some(a => !a.prevent && a.threshold >= current)) return true;
-    return this.threshold >= current;
+    if (abilities.some(a => !a.prevent && a.threshold >= current)) return false;
+    return this.threshold < current;
   }
 
-  // Does the selected ghost speed configuration match on this ghost?
-  // This method might be overwritten by specific ghost implementations.
-  public isSpeedPossible(filters: GhostFilters): boolean {
-    const losA = filters.speedLoSAcceleration;
-    return this.speed
-      .filter(s => losA === null || losA === s.accelerate) // Acceleration setting must match
-      .some(s => Ghost.speedInRange(filters, s.min, s.max));
+  // Is the configured speed out of the ghost speed range?
+  public isSpeedMismatch(filters: GhostFilters): boolean {
+    if (filters.speedEstimation == null) return false; // This is fine
+    return !this.isSpeedPossible(filters.speedEstimation, filters.config.ghostSpeedAccuracy, filters.speedLoSAcceleration);
   }
 
   // Assuming this ghost is shortlisted (isPossible returned true) this provide evidence that may still be selected.
@@ -307,15 +304,21 @@ export class Ghost {
     else return [this.forced]; // The only valid remaining option is the forced evidence
   }
 
+  // Determines whether the ghost can have the specified speed and whether the acceleration flag matches or not.
+  // This does _not_ include algorithms to offset actual ghost speed-ups that are in effect.
+  public isSpeedPossible(speed: number, accuracy: number = 1.0, accelerate: boolean | null = null) {
+    const margin = 1 - (accuracy - 0.005); // be generous with rounding errors
+    return this.speed // acceleration setting must match
+      .filter(s => accelerate === null || accelerate === s.accelerate)
+      .some(s => Ghost.inRange(speed, margin, s.min, s.max));
+  }
+
   // Return all hunt abilities of this ghost that are current enabled
   protected getActiveHuntAbilities(filters: GhostFilters): HuntAbility[] {
     return this.hunts.filter(h => h.enabled !== filters.huntAbiliesFlipped.has(h.name));
   }
 
-  protected static speedInRange(filters: GhostFilters, min: number, max: number): boolean {
-    const value = filters.speedEstimation;
-    if (value == null) return true; // C: Can't say
-    const margin = 1 - (filters.config.ghostSpeedAccuracy - 0.005); // be generous with rounding errors
+  protected static inRange(value: number, margin: number, min: number, max: number): boolean {
     return value * (1 + margin) >= min && value * (1 - margin) <= max;
   }
 
