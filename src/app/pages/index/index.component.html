@@ -7,21 +7,13 @@
       <app-evidence-card
         [(filters)]="filters"
         [ghostsDisabled]="ghostsDisabled"
-        [evidenceDisabled]="evidenceDisabled"
-      ></app-evidence-card>
-      <app-behavior-card
-        [(filters)]="filters"
-        [ghostsDisabled]="ghostsExcluded"
-      >
-      </app-behavior-card>
+        [evidenceDisabled]="evidenceDisabled"></app-evidence-card>
+      <app-behavior-card [(filters)]="filters" [ghostsDisabled]="ghostsExcluded"> </app-behavior-card>
     </div>
     <div class="col-md-12 col-xl-7">
       <!-- <app-behavior-card></app-behavior-card> -->
       <app-threshold-card [(filters)]="filters"></app-threshold-card>
-      <app-speed-card
-        [(filters)]="filters"
-        [ghostsDisabled]="ghostsExcluded"
-      ></app-speed-card>
+      <app-speed-card [(filters)]="filters" [ghostsDisabled]="ghostsExcluded"></app-speed-card>
     </div>
   </div>
 
@@ -32,19 +24,10 @@
           Phasmophobia game version: 0.9.0.9
           <br />
           The code can be found at
-          <a
-            class="link-secondary"
-            href="https://github.com/notgnarfodolfus/phasmo"
-            >github</a
-          >.
+          <a class="link-secondary" href="https://github.com/notgnarfodolfus/phasmo">github</a>.
           <br />
           Data is scraped manually from
-          <a
-            class="link-secondary"
-            href="https://phasmophobia.fandom.com/wiki/Main_Page"
-          >
-            phasmophobia.fandom.com</a
-          >
+          <a class="link-secondary" href="https://phasmophobia.fandom.com/wiki/Main_Page"> phasmophobia.fandom.com</a>
         </p>
       </div>
     </div>
@@ -52,12 +35,9 @@
       <div class="text-center text-secondary">
         <p>
           This page is not endorsed by
-          <a class="link-secondary" href="https://www.kineticgames.co.uk/"
-            >Kinetic Games</a
-          >
-          and doesn't reflect the views or opinions of Kinetic Games or anyone
-          officially involved in producing or managing Phasmophobia. It is a
-          prototype, most likely incorrect and definitely incomplete.
+          <a class="link-secondary" href="https://www.kineticgames.co.uk/">Kinetic Games</a>
+          and doesn't reflect the views or opinions of Kinetic Games or anyone officially involved in producing or
+          managing Phasmophobia. It is a prototype, most likely incorrect and definitely incomplete.
         </p>
       </div>
     </div>

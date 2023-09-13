@@ -7,7 +7,6 @@ import { CheckBaseComponent } from '../check-base/check-base.component';
   styleUrls: ['./check-label.component.scss']
 })
 export class CheckLabelComponent extends CheckBaseComponent {
-
   public get width(): number {
     // Hack: Calculate circle image width depending on char count
     // Clamp between 50 and 100% for 4 to 9 chars

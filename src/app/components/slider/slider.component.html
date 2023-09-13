@@ -10,10 +10,7 @@
       (change)="onChange()"
       [min]="min"
       [max]="max"
-      [step]="step"
-    />
+      [step]="step" />
   </div>
-  <div class="text-end" [class.disabled]="disabled" style="min-width: 3em">
-    {{ value | number : format }}{{ unit }}
-  </div>
+  <div class="text-end" [class.disabled]="disabled" style="min-width: 3em">{{ value | number : format }}{{ unit }}</div>
 </div>

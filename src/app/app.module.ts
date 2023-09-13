@@ -34,13 +34,8 @@ import { BehaviorCardComponent } from './components/behavior-card/behavior-card.
     SpeedCardComponent,
     BehaviorCardComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    NgbModule
-  ],
+  imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, NgbModule],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

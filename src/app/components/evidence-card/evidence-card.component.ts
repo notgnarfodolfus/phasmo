@@ -1,6 +1,6 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Evidence, GhostFilters, GhostName } from "src/app/services/models";
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Evidence, GhostFilters, GhostName } from 'src/app/services/models';
 
 @Component({
   selector: 'app-evidence-card',
@@ -15,7 +15,6 @@ import { Evidence, GhostFilters, GhostName } from "src/app/services/models";
   ]
 })
 export class EvidenceCardComponent implements OnInit {
-
   public readonly evidenceOptions = [
     { title: 'All Evidence', value: 0 },
     { title: 'One Hidden (Nightmare)', value: 1 },
@@ -34,10 +33,14 @@ export class EvidenceCardComponent implements OnInit {
   public get title(): string {
     switch (this.evidenceHidden) {
       default:
-      case 0: return 'Evidence';
-      case 1: return 'Evidence (one hidden)';
-      case 2: return 'Evidence (two hidden)';
-      case 3: return 'Zero Evidence';
+      case 0:
+        return 'Evidence';
+      case 1:
+        return 'Evidence (one hidden)';
+      case 2:
+        return 'Evidence (two hidden)';
+      case 3:
+        return 'Zero Evidence';
     }
   }
 

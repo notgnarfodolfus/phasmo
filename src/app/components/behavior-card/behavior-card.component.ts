@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Tags } from "src/app/services/ghosts";
-import { GhostFilters, GhostName, Tag, TagData } from "src/app/services/models";
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { CheckState } from "../check/check-base/check-base.component";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Tags } from 'src/app/services/ghosts';
+import { GhostFilters, GhostName, Tag, TagData } from 'src/app/services/models';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CheckState } from '../check/check-base/check-base.component';
 
 @Component({
   selector: 'app-behavior-card',
@@ -17,7 +17,6 @@ import { CheckState } from "../check/check-base/check-base.component";
   ]
 })
 export class BehaviorCardComponent {
-
   @Input() public ghostsDisabled = new Set<GhostName>();
   @Input() public filters = new GhostFilters();
   @Output() public filtersChange = new EventEmitter<GhostFilters>();
@@ -71,9 +70,12 @@ export class BehaviorCardComponent {
   private oppositeState(state: CheckState): CheckState {
     switch (state) {
       default:
-      case CheckState.off: return CheckState.off;
-      case CheckState.checked: return CheckState.striked;
-      case CheckState.striked: return CheckState.checked;
+      case CheckState.off:
+        return CheckState.off;
+      case CheckState.checked:
+        return CheckState.striked;
+      case CheckState.striked:
+        return CheckState.checked;
     }
   }
 }

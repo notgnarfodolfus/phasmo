@@ -4,7 +4,6 @@
       [label]="opt.title"
       [locked]="opt.value === selected && opt.value === default"
       [state]="getState(opt.value)"
-      (stateChange)="setState(opt.value, $event)"
-    ></app-check-box>
+      (stateChange)="setState(opt.value, $event)"></app-check-box>
   </div>
 </div>

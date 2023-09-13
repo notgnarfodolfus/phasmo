@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
-import { Ghosts } from "src/app/services/ghosts";
-import { Evidence, GhostFilters, GhostName } from "src/app/services/models";
+import { Component } from '@angular/core';
+import { Ghosts } from 'src/app/services/ghosts';
+import { Evidence, GhostFilters, GhostName } from 'src/app/services/models';
 
 @Component({
   selector: 'app-index',
@@ -8,7 +8,6 @@ import { Evidence, GhostFilters, GhostName } from "src/app/services/models";
   styleUrls: ['./index.component.scss']
 })
 export class IndexPageComponent {
-
   private _filters = new GhostFilters();
 
   public ghostsDisabled = new Set<GhostName>();

@@ -12,7 +12,6 @@ export enum CheckState {
   styleUrls: ['./check-base.component.scss']
 })
 export abstract class CheckBaseComponent {
-
   public readonly CheckState = CheckState;
 
   @Input() public label?: string = '\xa0'; // nbsp - arguably a stupid hack, but helps to keep the element height
@@ -26,9 +25,15 @@ export abstract class CheckBaseComponent {
     if (this.locked || this.disabled) return;
     switch (this.state) {
       default:
-      case CheckState.off: this.state = CheckState.checked; break;
-      case CheckState.checked: this.state = this.strikeable ? CheckState.striked : CheckState.off; break;
-      case CheckState.striked: this.state = CheckState.off; break;
+      case CheckState.off:
+        this.state = CheckState.checked;
+        break;
+      case CheckState.checked:
+        this.state = this.strikeable ? CheckState.striked : CheckState.off;
+        break;
+      case CheckState.striked:
+        this.state = CheckState.off;
+        break;
     }
     this.stateChange.emit(this.state);
   }

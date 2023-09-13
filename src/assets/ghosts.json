@@ -1,11 +1,7 @@
 {
   "Banshee": {
     "order": 5,
-    "evidence": [
-      "DotsProjector",
-      "Ultraviolett",
-      "GhostOrb"
-    ],
+    "evidence": ["DotsProjector", "Ultraviolett", "GhostOrb"],
     "threshold": 50,
     "hunts": [
       {
@@ -25,11 +21,7 @@
   },
   "Demon": {
     "order": 10,
-    "evidence": [
-      "Ultraviolett",
-      "Freezing",
-      "GhostWriting"
-    ],
+    "evidence": ["Ultraviolett", "Freezing", "GhostWriting"],
     "threshold": 70,
     "hunts": [
       {
@@ -39,18 +31,11 @@
         "enabled": true
       }
     ],
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Deogen": {
     "order": 23,
-    "evidence": [
-      "DotsProjector",
-      "GhostWriting",
-      "SpiritBox"
-    ],
+    "evidence": ["DotsProjector", "GhostWriting", "SpiritBox"],
     "threshold": 40,
     "speed": [
       {
@@ -63,33 +48,17 @@
       }
     ],
     "speedInfo": "Always finds player, 3m/s when far (>2.5m), 0.4m/s when close",
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints",
-      "ability_analog_dots"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints", "ability_analog_dots"]
   },
   "Goryo": {
     "order": 15,
-    "evidence": [
-      "DotsProjector",
-      "EmfLevel5",
-      "Ultraviolett"
-    ],
+    "evidence": ["DotsProjector", "EmfLevel5", "Ultraviolett"],
     "forced": "DotsProjector",
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints",
-      "ability_digital_dots"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints", "ability_digital_dots"]
   },
   "Hantu": {
     "order": 14,
-    "evidence": [
-      "Ultraviolett",
-      "Freezing",
-      "GhostOrb"
-    ],
+    "evidence": ["Ultraviolett", "Freezing", "GhostOrb"],
     "forced": "Freezing",
     "speed": {
       "min": 1.4,
@@ -97,18 +66,11 @@
       "accelerate": false
     },
     "speedInfo": "Fast in colder environments (1.4 to 2.7 m/s)",
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Jinn": {
     "order": 6,
-    "evidence": [
-      "EmfLevel5",
-      "Ultraviolett",
-      "Freezing"
-    ],
+    "evidence": ["EmfLevel5", "Ultraviolett", "Freezing"],
     "speed": [
       {
         "value": 1.7,
@@ -121,18 +83,11 @@
       }
     ],
     "speedInfo": "Normal speed, exception: 2.5m/s when fuse box on, sees player and 3+ meters away",
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Mare": {
     "order": 7,
-    "evidence": [
-      "GhostOrb",
-      "GhostWriting",
-      "SpiritBox"
-    ],
+    "evidence": ["GhostOrb", "GhostWriting", "SpiritBox"],
     "threshold": 60,
     "hunts": [
       {
@@ -142,19 +97,11 @@
         "prevent": true
       }
     ],
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Mimic": {
     "order": 21,
-    "evidence": [
-      "Ultraviolett",
-      "Freezing",
-      "GhostOrb",
-      "SpiritBox"
-    ],
+    "evidence": ["Ultraviolett", "Freezing", "GhostOrb", "SpiritBox"],
     "forced": "GhostOrb",
     "speed": [
       {
@@ -194,18 +141,11 @@
         "enabled": true
       }
     ],
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Moroi": {
     "order": 22,
-    "evidence": [
-      "Freezing",
-      "GhostWriting",
-      "SpiritBox"
-    ],
+    "evidence": ["Freezing", "GhostWriting", "SpiritBox"],
     "speed": {
       "min": 1.5,
       "max": 2.25,
@@ -213,54 +153,27 @@
     },
     "speedInfo": "Faster when average sanity is below 45% (1.5m/s to 2.25m/s), accelerates in LoS",
     "forced": "SpiritBox",
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Myling": {
     "order": 16,
-    "evidence": [
-      "EmfLevel5",
-      "Ultraviolett",
-      "GhostWriting"
-    ],
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "evidence": ["EmfLevel5", "Ultraviolett", "GhostWriting"],
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Obake": {
     "order": 20,
-    "evidence": [
-      "EmfLevel5",
-      "Ultraviolett",
-      "GhostOrb"
-    ],
+    "evidence": ["EmfLevel5", "Ultraviolett", "GhostOrb"],
     "forced": "Ultraviolett",
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Oni": {
     "order": 12,
-    "evidence": [
-      "DotsProjector",
-      "EmfLevel5",
-      "Freezing"
-    ],
-    "tags": [
-      "ability_footprints"
-    ]
+    "evidence": ["DotsProjector", "EmfLevel5", "Freezing"],
+    "tags": ["ability_footprints"]
   },
   "Onryo": {
     "order": 17,
-    "evidence": [
-      "Freezing",
-      "GhostOrb",
-      "SpiritBox"
-    ],
+    "evidence": ["Freezing", "GhostOrb", "SpiritBox"],
     "threshold": 60,
     "hunts": [
       {
@@ -277,18 +190,11 @@
         "enabled": false
       }
     ],
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Phantom": {
     "order": 3,
-    "evidence": [
-      "DotsProjector",
-      "Ultraviolett",
-      "SpiritBox"
-    ],
+    "evidence": ["DotsProjector", "Ultraviolett", "SpiritBox"],
     "tags": [
       "ability_mist_event",
       "ability_footprints",
@@ -299,23 +205,12 @@
   },
   "Poltergeist": {
     "order": 4,
-    "evidence": [
-      "Ultraviolett",
-      "GhostWriting",
-      "SpiritBox"
-    ],
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "evidence": ["Ultraviolett", "GhostWriting", "SpiritBox"],
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Raiju": {
     "order": 19,
-    "evidence": [
-      "DotsProjector",
-      "EmfLevel5",
-      "GhostOrb"
-    ],
+    "evidence": ["DotsProjector", "EmfLevel5", "GhostOrb"],
     "speed": [
       {
         "value": 1.7,
@@ -337,19 +232,11 @@
         "enabled": true
       }
     ],
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints",
-      "ability_analog_dots"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints", "ability_analog_dots"]
   },
   "Revenant": {
     "order": 8,
-    "evidence": [
-      "Freezing",
-      "GhostOrb",
-      "GhostWriting"
-    ],
+    "evidence": ["Freezing", "GhostOrb", "GhostWriting"],
     "speed": [
       {
         "min": 1.0,
@@ -361,18 +248,11 @@
       }
     ],
     "speedInfo": "Roams at 1m/s, instantly chases players at 3m/s, slows over time (2.7s) when not in LoS",
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Shade": {
     "order": 9,
-    "evidence": [
-      "EmfLevel5",
-      "Freezing",
-      "GhostWriting"
-    ],
+    "evidence": ["EmfLevel5", "Freezing", "GhostWriting"],
     "threshold": 35,
     "hunts": [
       {
@@ -383,30 +263,16 @@
         "prevent": true
       }
     ],
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Spirit": {
     "order": 1,
-    "evidence": [
-      "EmfLevel5",
-      "GhostWriting",
-      "SpiritBox"
-    ],
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "evidence": ["EmfLevel5", "GhostWriting", "SpiritBox"],
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Thaye": {
     "order": 24,
-    "evidence": [
-      "DotsProjector",
-      "GhostOrb",
-      "GhostWriting"
-    ],
+    "evidence": ["DotsProjector", "GhostOrb", "GhostWriting"],
     "threshold": 75,
     "hunts": [
       {
@@ -423,19 +289,11 @@
       "accelerate": false
     },
     "speedInfo": "Initially 2.75m/s, gradually slows down to 1m/s when aging",
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints",
-      "ability_analog_dots"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints", "ability_analog_dots"]
   },
   "Twins": {
     "order": 18,
-    "evidence": [
-      "EmfLevel5",
-      "Freezing",
-      "SpiritBox"
-    ],
+    "evidence": ["EmfLevel5", "Freezing", "SpiritBox"],
     "speed": [
       {
         "value": 1.5,
@@ -447,30 +305,16 @@
       }
     ],
     "speedInfo": "Fast twin: 1.9m/s, slow twin: 1.5m/s, both accelerate in LoS",
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Wraith": {
     "order": 2,
-    "evidence": [
-      "DotsProjector",
-      "EmfLevel5",
-      "SpiritBox"
-    ],
-    "tags": [
-      "ability_mist_event",
-      "ability_teleport"
-    ]
+    "evidence": ["DotsProjector", "EmfLevel5", "SpiritBox"],
+    "tags": ["ability_mist_event", "ability_teleport"]
   },
   "Yokai": {
     "order": 13,
-    "evidence": [
-      "DotsProjector",
-      "GhostOrb",
-      "SpiritBox"
-    ],
+    "evidence": ["DotsProjector", "GhostOrb", "SpiritBox"],
     "threshold": 50,
     "hunts": [
       {
@@ -480,23 +324,11 @@
         "enabled": true
       }
     ],
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints",
-      "ability_analog_dots"
-    ]
+    "tags": ["ability_mist_event", "ability_footprints", "ability_analog_dots"]
   },
   "Yurei": {
     "order": 11,
-    "evidence": [
-      "DotsProjector",
-      "Freezing",
-      "GhostOrb"
-    ],
-    "tags": [
-      "ability_mist_event",
-      "ability_footprints",
-      "ability_analog_dots"
-    ]
+    "evidence": ["DotsProjector", "Freezing", "GhostOrb"],
+    "tags": ["ability_mist_event", "ability_footprints", "ability_analog_dots"]
   }
 }

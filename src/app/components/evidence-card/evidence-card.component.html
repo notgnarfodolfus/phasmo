@@ -7,9 +7,7 @@
           <img class="config-icon" src="assets/img/cog.png" height="24px" />
         </span>
       </div>
-      <h3 class="card-title mb-0 mx-2">
-        {{ title }}
-      </h3>
+      <h3 class="card-title mb-0 mx-2">{{ title }}</h3>
       <div class="mx-2 ms-auto">
         <span class="clickable m-1" (click)="reset()">
           <img class="reset-icon" src="assets/img/rotate.png" height="24px" />
@@ -21,11 +19,7 @@
     <div *ngIf="showConfig" [@moveIn]="'open'">
       <hr />
       <div class="row">
-        <app-check-box-choice
-          [options]="evidenceOptions"
-          [default]="0"
-          [(selected)]="evidenceHidden"
-        >
+        <app-check-box-choice [options]="evidenceOptions" [default]="0" [(selected)]="evidenceHidden">
         </app-check-box-choice>
       </div>
     </div>
@@ -37,8 +31,7 @@
         [(selected)]="filters.evidenceSelected"
         [(eliminated)]="filters.evidenceEliminated"
         [disabled]="evidenceDisabled"
-        (change)="onChange()"
-      >
+        (change)="onChange()">
       </app-evidence-select>
     </div>
 
@@ -48,8 +41,7 @@
       [(selected)]="filters.ghostSelected"
       [(eliminated)]="filters.ghostEliminated"
       [disabled]="ghostsDisabled"
-      (change)="onChange()"
-    >
+      (change)="onChange()">
     </app-ghost-select>
   </div>
 </div>

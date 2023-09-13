@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
-import { CheckState } from "../check/check-base/check-base.component";
-import { GhostFilters, GhostName, GhostSpeed } from "src/app/services/models";
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { Ghosts } from "src/app/services/ghosts";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { CheckState } from '../check/check-base/check-base.component';
+import { GhostFilters, GhostName, GhostSpeed } from 'src/app/services/models';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Ghosts } from 'src/app/services/ghosts';
 
 @Component({
   selector: 'app-speed-card',
@@ -17,7 +17,6 @@ import { Ghosts } from "src/app/services/ghosts";
   ]
 })
 export class SpeedCardComponent implements OnInit, OnChanges {
-
   public readonly CheckState = CheckState;
 
   public readonly speedOptions = [
@@ -50,7 +49,7 @@ export class SpeedCardComponent implements OnInit, OnChanges {
   public stepLabelEntries: number[] = []; // Step, step, step
   public stepLabelActive: number = -1;
 
-  public tips: { ghost: string, description: string }[] = [];
+  public tips: { ghost: string; description: string }[] = [];
 
   private audio: HTMLAudioElement[] = [];
   private buffers: number = 16;
@@ -66,7 +65,7 @@ export class SpeedCardComponent implements OnInit, OnChanges {
   }
 
   public get speedAccelerationMult(): number {
-    return 1 + (0.65 * this.ghostSpeedAccelerate / 13.0);
+    return 1 + (0.65 * this.ghostSpeedAccelerate) / 13.0;
   }
 
   public get showAccelerateSlider(): boolean {
@@ -82,12 +81,17 @@ export class SpeedCardComponent implements OnInit, OnChanges {
   }
 
   public get frequency(): number {
-    return this.ghostSpeedBase * this.multStepsPerSecond * this.speedAccelerationMult * (this.ghostSpeedPercent ?? 100.0) / 100.0;
+    return (
+      (this.ghostSpeedBase * this.multStepsPerSecond * this.speedAccelerationMult * (this.ghostSpeedPercent ?? 100.0)) /
+      100.0
+    );
   }
 
   public ngOnInit(): void {
     this.filters.config.ghostSpeedAccuracy;
-    this.stepLabelEntries = Array(4).fill(0).map((_, i) => i);
+    this.stepLabelEntries = Array(4)
+      .fill(0)
+      .map((_, i) => i);
     this.audio = Array.from({ length: this.buffers }).map(() => new Audio('assets/sound/step.wav'));
     this.audio.forEach(a => a.load());
   }
@@ -102,9 +106,10 @@ export class SpeedCardComponent implements OnInit, OnChanges {
   }
 
   public onChange(reloadAudio: boolean) {
-    const acc = this.accelerateState === CheckState.checked ? (1.0 / this.speedAccelerationMult) : 1.0;
+    const acc = this.accelerateState === CheckState.checked ? 1.0 / this.speedAccelerationMult : 1.0;
     this.filters.speedEstimation = this.filterState === CheckState.checked ? this.ghostSpeedBase * acc : null;
-    this.filters.speedLoSAcceleration = this.accelerateState === CheckState.off ? null : (this.accelerateState === CheckState.checked);
+    this.filters.speedLoSAcceleration =
+      this.accelerateState === CheckState.off ? null : this.accelerateState === CheckState.checked;
     if (reloadAudio) {
       this.ensure();
     }
@@ -121,7 +126,9 @@ export class SpeedCardComponent implements OnInit, OnChanges {
     this.tips = Object.values(Ghosts)
       .filter(g => g.speedInfo)
       .filter(g => !this.ghostsDisabled.has(g.name))
-      .map(g => { return { ghost: g.name, description: g.speedInfo! } });
+      .map(g => {
+        return { ghost: g.name, description: g.speedInfo! };
+      });
   }
 
   private ensure() {
@@ -151,7 +158,7 @@ export class SpeedCardComponent implements OnInit, OnChanges {
     if (this.muteState !== CheckState.checked) {
       this.audio[this.counter++ % this.buffers].play();
     }
-    this.stepLabelActive = ((this.stepLabelActive + 1) % this.stepLabelEntries.length);
+    this.stepLabelActive = (this.stepLabelActive + 1) % this.stepLabelEntries.length;
   }
 
   private static isNormalSpeed(s: GhostSpeed) {

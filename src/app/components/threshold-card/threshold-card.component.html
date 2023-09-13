@@ -14,10 +14,7 @@
     <div *ngIf="showConfig" [@moveIn]="'open'">
       <hr />
       <div>
-        <app-check-box
-          label="Show Tips"
-          [(state)]="showTipsState"
-        ></app-check-box>
+        <app-check-box label="Show Tips" [(state)]="showTipsState"></app-check-box>
       </div>
     </div>
 
@@ -28,11 +25,7 @@
       <div class="col-10">
         <div class="row">
           <div class="col-auto" *ngFor="let a of abilities">
-            <app-check-box
-              [label]="a.name"
-              [state]="getState(a)"
-              (stateChange)="setState(a, $event)"
-            ></app-check-box>
+            <app-check-box [label]="a.name" [state]="getState(a)" (stateChange)="setState(a, $event)"></app-check-box>
           </div>
         </div>
       </div>
@@ -47,8 +40,7 @@
           [min]="0"
           [max]="100"
           [step]="5"
-          unit="%"
-        >
+          unit="%">
         </app-slider>
       </div>
     </div>

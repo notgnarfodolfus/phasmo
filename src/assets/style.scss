@@ -34,15 +34,16 @@ $font-family-base: 'Lazy Dog';
   }
 }
 
-
 // Form input range
 
 $form-range-track-bg: black;
-$form-range-track-height: .15rem;
+$form-range-track-height: 0.15rem;
 $form-range-track-border-radius: 1rem;
 $form-range-thumb-width: 0.75rem;
 $form-range-thumb-height: 0.75rem;
 $form-range-thumb-bg: black;
 $form-range-thumb-active-bg: black;
-$form-range-thumb-box-shadow: 0 .1rem .25rem rgba(black, .1);
-$form-range-thumb-focus-box-shadow: 0 0 0 1px black, 0 0 0 1px black;
+$form-range-thumb-box-shadow: 0 0.1rem 0.25rem rgba(black, 0.1);
+$form-range-thumb-focus-box-shadow:
+  0 0 0 1px black,
+  0 0 0 1px black;

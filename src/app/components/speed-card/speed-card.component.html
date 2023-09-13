@@ -8,12 +8,8 @@
         </span>
       </div>
       <h3 class="card-title mb-0 mx-2">
-        <ng-container *ngIf="ghostSpeedPercent === 100">
-          Ghost Speed
-        </ng-container>
-        <ng-container *ngIf="ghostSpeedPercent !== 100">
-          Ghost Speed ({{ ghostSpeedPercent }} %)
-        </ng-container>
+        <ng-container *ngIf="ghostSpeedPercent === 100"> Ghost Speed </ng-container>
+        <ng-container *ngIf="ghostSpeedPercent !== 100"> Ghost Speed ({{ ghostSpeedPercent }} %) </ng-container>
       </h3>
       <div class="mx-2 ms-auto">
         <span class="clickable m-1" (click)="reset()">
@@ -30,16 +26,12 @@
           [options]="speedOptions"
           [default]="100"
           [(selected)]="ghostSpeedPercent"
-          (selectedChange)="onChange(true)"
-        >
+          (selectedChange)="onChange(true)">
         </app-check-box-choice>
       </div>
       <div class="row">
         <div class="col">
-          <app-check-box
-            label="Show Tips"
-            [(state)]="showTipsState"
-          ></app-check-box>
+          <app-check-box label="Show Tips" [(state)]="showTipsState"></app-check-box>
         </div>
       </div>
       <div class="row">
@@ -52,8 +44,7 @@
             [max]="100"
             [step]="1"
             format="1.0"
-            unit="%"
-          >
+            unit="%">
           </app-slider>
         </div>
       </div>
@@ -68,13 +59,9 @@
           label="Speeds up when seeing Player"
           [(state)]="accelerateState"
           [strikeable]="true"
-          (stateChange)="onChange(false)"
-        ></app-check-box>
+          (stateChange)="onChange(false)"></app-check-box>
       </div>
-      <div
-        class="col-auto mt-1"
-        *ngIf="showAccelerateSlider && ghostSpeedAccelerate > 0"
-      >
+      <div class="col-auto mt-1" *ngIf="showAccelerateSlider && ghostSpeedAccelerate > 0">
         (+{{ speedAccelerationMult * 100 - 100 | number : "1.0" }} %)
       </div>
     </div>
@@ -89,8 +76,7 @@
           [max]="13.0"
           [step]="0.1"
           format="1.1"
-          unit="sec"
-        >
+          unit="sec">
         </app-slider>
       </div>
     </div>
@@ -102,8 +88,7 @@
         <app-check-box
           label="Filter ghosts by speed"
           [(state)]="filterState"
-          (stateChange)="onChange(false)"
-        ></app-check-box>
+          (stateChange)="onChange(false)"></app-check-box>
       </div>
     </div>
     <div class="row">
@@ -117,8 +102,7 @@
           [max]="3.7"
           [step]="0.05"
           format="1.1"
-          unit="m/s"
-        >
+          unit="m/s">
         </app-slider>
       </div>
     </div>
@@ -127,26 +111,17 @@
     <div class="row">
       <div class="col-2 fw-bold">Metronome</div>
       <div class="col-auto">
-        <app-check-box
-          label="Play"
-          [(state)]="playState"
-          (stateChange)="onChange(true)"
-        ></app-check-box>
+        <app-check-box label="Play" [(state)]="playState" (stateChange)="onChange(true)"></app-check-box>
       </div>
       <div class="col-auto">
         <app-check-box
           label="Mute"
           [(state)]="muteState"
           [disabled]="playState === CheckState.off"
-          (stateChange)="onChange(true)"
-        ></app-check-box>
+          (stateChange)="onChange(true)"></app-check-box>
       </div>
     </div>
-    <div
-      class="row"
-      *ngIf="playState === CheckState.checked"
-      [@moveIn]="'open'"
-    >
+    <div class="row" *ngIf="playState === CheckState.checked" [@moveIn]="'open'">
       <div class="col-2"></div>
       <div class="col" *ngFor="let o of stepLabelEntries">
         <div class="step" [class.active]="o === stepLabelActive">Step</div>
@@ -154,7 +129,7 @@
     </div>
 
     <!-- Tips -->
-    <div *ngIf="showTips"  [@moveIn]="'open'">
+    <div *ngIf="showTips" [@moveIn]="'open'">
       <hr />
       <div class="row" *ngFor="let t of tips">
         <div class="col-2 text-end">{{ t.ghost }}</div>

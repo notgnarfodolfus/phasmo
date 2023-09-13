@@ -3,8 +3,7 @@
   [class.disabled]="disabled"
   [class.clickable]="!disabled && !locked"
   [class.striked]="state === CheckState.striked"
-  (click)="toggle()"
->
+  (click)="toggle()">
   <img class="align-self-center me image" [src]="checkboxImage" />
   <div class="align-self-center mx-2 text-nowrap" *ngIf="label">
     <span class="align-middle text-nowrap">{{ label }}</span>

@@ -40,7 +40,6 @@ export type Tag = string;
 export type HuntAbilityName = string;
 
 export class GhostFilters {
-
   // Optional ghost speed estimation in m/s, cleaned of difficulty setting mulipliers (mapped to 100%)
   public speedEstimation: number | null;
   public speedLoSAcceleration: boolean | null;
@@ -78,7 +77,6 @@ export class GhostFilters {
 }
 
 export interface GhostFilterConfig {
-
   evidenceHidden: number;
   ghostSpeedAccuracy: number; // % allowed difference to actual speed
 }
@@ -96,31 +94,31 @@ export interface GhostModel {
   threshold?: number;
   hunts?: HuntAbilityModel[];
   tags?: string[];
-};
+}
 
 /**
-* For serialization.
-*/
+ * For serialization.
+ */
 export interface TagModel {
-  name: string
+  name: string;
   description?: string;
   opposite?: string;
-};
+}
 
 /**
-* For serialization.
-*/
+ * For serialization.
+ */
 export interface SpeedModel {
   condition?: string;
   accelerate?: boolean;
   value?: number;
   min?: number;
   max?: number;
-};
+}
 
 /**
  * Optional ghost abilitiy that can trigger or prevent a hunt.
- * Ghosts that have such abilities are Demon, Mare, Onryo, Raiju, Shade (prevent), 
+ * Ghosts that have such abilities are Demon, Mare, Onryo, Raiju, Shade (prevent),
  */
 export interface HuntAbilityModel {
   name: string;
@@ -133,10 +131,9 @@ export interface HuntAbilityModel {
 
 /**
  * Optional ghost abilitiy that can trigger or prevent a hunt.
- * Ghosts that have such abilities are Demon, Mare, Onryo, Raiju, Shade (prevent), 
+ * Ghosts that have such abilities are Demon, Mare, Onryo, Raiju, Shade (prevent),
  */
 export class HuntAbility {
-
   public readonly name: HuntAbilityName; // condition to trigger the hunt ability
   public readonly description: string;
   public readonly threshold: number; // sanity required
@@ -155,7 +152,6 @@ export class HuntAbility {
 }
 
 export class GhostSpeed {
-
   public readonly condition: Tag | null;
   public readonly accelerate: boolean; // Default LoS acceleration
   public readonly min: number;
@@ -170,7 +166,6 @@ export class GhostSpeed {
 }
 
 export class TagData {
-
   public readonly key: Tag;
   public readonly name: string;
   public readonly description: string | null;
@@ -190,7 +185,6 @@ export class TagData {
  * Overriding classes have to be registered in the GhostImplementations lookup in ghosts.ts to be generated correctly!
  */
 export class Ghost {
-
   public readonly name: GhostName;
   public readonly order: number; // In game number for sorting
   public readonly evidence: Evidence[];
@@ -239,7 +233,7 @@ export class Ghost {
 
   // Does the selected evidence not match the ghost evidence?
   public isEvidenceMismatch(filters: GhostFilters): boolean {
-    const total = (filters.evidenceSelected.size + filters.config.evidenceHidden);
+    const total = filters.evidenceSelected.size + filters.config.evidenceHidden;
     if (total > this.evidence.length) return true; // More evidence selected than expected
     return [...filters.evidenceSelected].some(s => !this.evidence.includes(s)); // Mismatch?
   }
@@ -247,7 +241,10 @@ export class Ghost {
   // Was the forced evidence eliminated or cannot be selected anymore?
   public isForcedEvidenceMismatch(filters: GhostFilters): boolean {
     if (this.forced == null || filters.evidenceSelected.has(this.forced)) return false; // This is fine
-    return filters.evidenceEliminated.has(this.forced) || filters.evidenceSelected.size + filters.config.evidenceHidden > this.evidence.length;
+    return (
+      filters.evidenceEliminated.has(this.forced) ||
+      filters.evidenceSelected.size + filters.config.evidenceHidden > this.evidence.length
+    );
   }
 
   // Has any required evidence of this ghost been eliminated?
@@ -296,8 +293,7 @@ export class Ghost {
 
   protected static speedInRange(filters: GhostFilters, min: number, max: number): boolean {
     const value = filters.speedEstimation;
-    if (value == null)
-      return true; // C: Can't say
+    if (value == null) return true; // C: Can't say
     const margin = 1 - (filters.config.ghostSpeedAccuracy - 0.005); // be generous with rounding errors
     return value * (1 + margin) >= min && value * (1 - margin) <= max;
   }

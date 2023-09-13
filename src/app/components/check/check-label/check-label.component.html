@@ -1,16 +1,8 @@
-<div
-  class="outer"
-  [class.disabled]="disabled"
-  [class.clickable]="!disabled && !locked"
-  (click)="toggle()"
->
+<div class="outer" [class.disabled]="disabled" [class.clickable]="!disabled && !locked" (click)="toggle()">
   <img
     class="image"
     [class.hidden]="state !== CheckState.checked"
     [style.width.%]="width"
-    src="assets/img/select.png"
-  />
-  <div class="overlay px-3" [class.striked]="state === CheckState.striked">
-    {{ label }}
-  </div>
+    src="assets/img/select.png" />
+  <div class="overlay px-3" [class.striked]="state === CheckState.striked">{{ label }}</div>
 </div>

@@ -8,7 +8,6 @@ import { CheckState } from '../check/check-base/check-base.component';
   styleUrls: ['./evidence-select.component.scss']
 })
 export class EvidenceSelectComponent implements OnInit {
-
   @Input() public selected: Set<Evidence> = new Set<Evidence>();
   @Input() public eliminated: Set<Evidence> = new Set<Evidence>();
   @Input() public disabled: Set<Evidence> = new Set<Evidence>();

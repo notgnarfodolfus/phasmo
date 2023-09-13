@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Ghosts } from "src/app/services/ghosts";
-import { CheckState } from "../check/check-base/check-base.component";
-import { GhostFilters, GhostName, HuntAbility } from "src/app/services/models";
-import { animate, state, style, transition, trigger } from "@angular/animations";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Ghosts } from 'src/app/services/ghosts';
+import { CheckState } from '../check/check-base/check-base.component';
+import { GhostFilters, GhostName, HuntAbility } from 'src/app/services/models';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-threshold-card',
@@ -17,7 +17,6 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
   ]
 })
 export class ThresholdCardComponent implements OnInit {
-
   @Input() public filters = new GhostFilters();
   @Output() public filtersChange = new EventEmitter<GhostFilters>();
 
@@ -29,8 +28,7 @@ export class ThresholdCardComponent implements OnInit {
 
   // For tips
   public get activeAbilities(): HuntAbility[] {
-    return Object.values(this.abilityByName)
-      .filter(a => this.isChecked(a));
+    return Object.values(this.abilityByName).filter(a => this.isChecked(a));
   }
 
   public get showTips() {
@@ -38,13 +36,17 @@ export class ThresholdCardComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.abilities = Object.values(Ghosts).flatMap(g => g.hunts).sort((a, b) => (b.enabled ? 1 : 0) - (a.enabled ? 1 : 0));
+    this.abilities = Object.values(Ghosts)
+      .flatMap(g => g.hunts)
+      .sort((a, b) => (b.enabled ? 1 : 0) - (a.enabled ? 1 : 0));
     this.abilityByName = {};
     this.abilityToGhosts = {};
-    Object.values(Ghosts).forEach(g => g.hunts.forEach(h => {
-      this.abilityByName[h.name] = h;
-      this.abilityToGhosts[h.name] = g.name;
-    }));
+    Object.values(Ghosts).forEach(g =>
+      g.hunts.forEach(h => {
+        this.abilityByName[h.name] = h;
+        this.abilityToGhosts[h.name] = g.name;
+      })
+    );
   }
 
   public onChange() {

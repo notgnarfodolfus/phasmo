@@ -9,7 +9,6 @@ import { CheckState } from '../check/check-base/check-base.component';
   styleUrls: ['./ghost-select.component.scss']
 })
 export class GhostSelectComponent implements OnInit {
-
   @Input() public selected: GhostName | null = null;
   @Input() public eliminated: Set<GhostName> = new Set<GhostName>();
   @Input() public disabled: Set<GhostName> = new Set<GhostName>();
@@ -21,7 +20,9 @@ export class GhostSelectComponent implements OnInit {
   public ghosts: GhostName[] = [];
 
   public ngOnInit(): void {
-    this.ghosts = Object.values(Ghosts).sort((a, b) => a.order - b.order).map(g => g.name);
+    this.ghosts = Object.values(Ghosts)
+      .sort((a, b) => a.order - b.order)
+      .map(g => g.name);
   }
 
   public getState(ghost: GhostName): CheckState {

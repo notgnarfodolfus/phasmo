@@ -7,9 +7,8 @@ import { CheckState } from '../check-base/check-base.component';
   styleUrls: ['./check-box-choice.component.scss']
 })
 export class CheckBoxChoiceComponent<T> implements OnInit {
-
-  @Input() public col: string = "col";
-  @Input() public options: { title: string, value: T }[] = [];
+  @Input() public col: string = 'col';
+  @Input() public options: { title: string; value: T }[] = [];
   @Input() public selected: T | null = null;
   @Input() public default: T | null = null;
   @Output() public selectedChange = new EventEmitter<T | null>();
@@ -28,8 +27,7 @@ export class CheckBoxChoiceComponent<T> implements OnInit {
     if (state === CheckState.off && opt === this.selected && opt !== this.default) {
       this.selected = this.default;
       this.selectedChange.emit(this.selected);
-    }
-    else if (state === CheckState.checked && opt !== this.selected) {
+    } else if (state === CheckState.checked && opt !== this.selected) {
       this.selected = opt;
       this.selectedChange.emit(this.selected);
     }
