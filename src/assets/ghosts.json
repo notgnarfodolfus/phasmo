@@ -178,7 +178,7 @@
     "hunts": [
       {
         "name": "Lit flame nearby",
-        "description": "Burning flames substitue crucifixes and are blown out to prevent a hunt",
+        "description": "Burning flames substitute crucifixes and are blown out to prevent a hunt",
         "threshold": -1,
         "enabled": false,
         "prevent": true
@@ -227,7 +227,7 @@
     "hunts": [
       {
         "name": "Electronics",
-        "description": "Hunts at 65% when close to active electornic equipment (instead of 50%)",
+        "description": "Hunts at 65% when close to active electronic equipment (instead of 50%)",
         "threshold": 65,
         "enabled": true
       }
