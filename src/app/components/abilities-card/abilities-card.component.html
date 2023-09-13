@@ -19,7 +19,7 @@
     </div>
 
     <!-- Tips -->
-    <div *ngIf="showTips && tipTags.length > 0" [@moveIn]="'open'">
+    <div *ngIf="showTips" [@moveIn]="'open'">
       <hr />
       <div class="row" *ngFor="let t of tipTags">
         <div class="col-4 description text-end">{{ t.name }}</div>

@@ -33,7 +33,7 @@
     </div>
 
     <!-- Tips -->
-    <ng-container *ngIf="showTips && activeAbilities.length > 0">
+    <ng-container *ngIf="showTips">
       <hr />
       <div class="row" *ngFor="let a of activeAbilities" [@moveIn]="'open'">
         <div class="col-3 text-end">{{ abilityToGhosts[a.name] }}</div>

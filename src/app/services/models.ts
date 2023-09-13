@@ -69,15 +69,36 @@ export class GhostFilters {
     this.huntAbiliesFlipped = new Set<Evidence>();
     this.tagsSelected = new Set<Tag>();
     this.tagsEliminated = new Set<Tag>();
-    this.config = {
-      evidenceHidden: 0,
-      ghostSpeedAccuracy: 0.95
-    };
+    this.config = loadConfig();
   }
 }
 
+export function saveConfig(config: GhostFilterConfig) {
+  sessionStorage.setItem('config', JSON.stringify(config));
+}
+
+export function loadConfig(): GhostFilterConfig {
+  const def: GhostFilterConfig = {
+    showTips: false,
+    evidenceHidden: 0,
+    ghostSpeedPercent: 100,
+    ghostSpeedAccuracy: 0.95
+  };
+  try {
+    const json = sessionStorage.getItem('config');
+    if (json) {
+      return Object.assign({}, def, JSON.parse(json));
+    }
+  } catch (err) {
+    console.error('Failed to load config', err);
+  }
+  return def;
+}
+
 export interface GhostFilterConfig {
+  showTips: boolean;
   evidenceHidden: number;
+  ghostSpeedPercent: number;
   ghostSpeedAccuracy: number; // % allowed difference to actual speed
 }
 

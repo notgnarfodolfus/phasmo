@@ -20,13 +20,16 @@ export class AbilitiesCardComponent implements OnChanges {
   @Input() public filters = new GhostFilters();
   @Output() public filtersChange = new EventEmitter<GhostFilters>();
 
-  @Input() public showTips: boolean = false;
   @Input() public ghostsDisabled = new Set<GhostName>();
 
   public readonly CheckState = CheckState;
 
   public readonly tags: TagData[] = Object.values(Tags);
   public enabledTags: Set<string> = new Set<string>();
+
+  public get showTips(): boolean {
+    return this.filters.config.showTips && this.tipTags.length > 0;
+  }
 
   public get tipTags(): TagData[] {
     return this.tags

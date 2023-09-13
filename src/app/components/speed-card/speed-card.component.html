@@ -8,8 +8,8 @@
         </span>
       </div>
       <h3 class="card-title mb-0 mx-2">
-        <ng-container *ngIf="ghostSpeedPercent === 100"> Ghost Speed </ng-container>
-        <ng-container *ngIf="ghostSpeedPercent !== 100"> Ghost Speed ({{ ghostSpeedPercent }} %) </ng-container>
+        <ng-container *ngIf="speedPercent === 100"> Ghost Speed </ng-container>
+        <ng-container *ngIf="speedPercent !== 100"> Ghost Speed ({{ speedPercent }} %) </ng-container>
       </h3>
       <div class="mx-2 ms-auto">
         <span class="clickable m-1" (click)="reset()">
@@ -25,7 +25,7 @@
         <app-check-box-choice
           [options]="speedOptions"
           [default]="100"
-          [(selected)]="ghostSpeedPercent"
+          [(selected)]="speedPercent"
           (selectedChange)="onChange(true)">
         </app-check-box-choice>
       </div>
@@ -124,7 +124,7 @@
     </div>
 
     <!-- Tips -->
-    <div *ngIf="showTips && tips.length > 0" [@moveIn]="'open'">
+    <div *ngIf="showTips" [@moveIn]="'open'">
       <hr />
       <div class="row" *ngFor="let t of tips">
         <div class="col-2 text-end">{{ t.ghost }}</div>

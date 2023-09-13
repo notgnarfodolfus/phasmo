@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Evidence, GhostFilters, GhostName } from 'src/app/services/models';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Evidence, GhostFilters, GhostName, saveConfig } from 'src/app/services/models';
 import { CheckState } from '../check/check-base/check-base.component';
 
 @Component({
@@ -15,16 +15,13 @@ import { CheckState } from '../check/check-base/check-base.component';
     ])
   ]
 })
-export class EvidenceCardComponent implements OnInit {
+export class EvidenceCardComponent {
   public readonly evidenceOptions = [
     { title: 'All Evidence', value: 0 },
     { title: 'One Hidden (Nightmare)', value: 1 },
     { title: 'Two Hidden (Insanity)', value: 2 },
     { title: 'No Evidence (Custom)', value: 3 }
   ];
-
-  @Input() public showTips: boolean = false;
-  @Output() public showTipsChange = new EventEmitter<boolean>();
 
   @Input() public filters = new GhostFilters();
   @Output() public filtersChange = new EventEmitter<GhostFilters>();
@@ -53,26 +50,19 @@ export class EvidenceCardComponent implements OnInit {
   }
 
   public set evidenceHidden(value: number | null) {
-    sessionStorage.setItem('evidence_hidden', '' + value ?? 0);
     this.filters.config.evidenceHidden = value ?? 0;
+    saveConfig(this.filters.config);
     this.onChange();
   }
 
   public get showTipsState(): CheckState {
-    return this.showTips ? CheckState.checked : CheckState.off;
+    return this.filters.config.showTips ? CheckState.checked : CheckState.off;
   }
 
   public set showTipsState(state: CheckState) {
-    this.showTips = state === CheckState.checked;
-    this.showTipsChange.emit(this.showTips);
-  }
-
-  public ngOnInit(): void {
-    const hidden = sessionStorage.getItem('evidence_hidden');
-    if (hidden?.length == 1) {
-      this.filters.config.evidenceHidden = parseInt(hidden);
-      this.onChange();
-    }
+    this.filters.config.showTips = state === CheckState.checked;
+    saveConfig(this.filters.config);
+    this.onChange();
   }
 
   public reset() {

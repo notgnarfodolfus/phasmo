@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CheckState } from '../check/check-base/check-base.component';
-import { GhostFilters, GhostName, GhostSpeed } from 'src/app/services/models';
+import { GhostFilters, GhostName, saveConfig } from 'src/app/services/models';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Ghosts } from 'src/app/services/ghosts';
 
@@ -31,7 +31,6 @@ export class SpeedCardComponent implements OnInit, OnChanges {
   // But on my machine that seems to be a bit to fast.
   private multStepsPerSecond: number = 1.14;
 
-  @Input() public showTips: boolean = false;
   @Input() public ghostsDisabled = new Set<GhostName>();
   @Input() public filters = new GhostFilters();
   @Output() public filtersChange = new EventEmitter<GhostFilters>();
@@ -44,7 +43,6 @@ export class SpeedCardComponent implements OnInit, OnChanges {
 
   public ghostSpeedBase: number = 1.7;
   public ghostSpeedAccelerate: number = 0;
-  public ghostSpeedPercent: number | null = 100; // Ghost speed percent depending on difficulty, cannot be null (we just need it for type safety)
 
   public stepLabelEntries: number[] = []; // Step, step, step
   public stepLabelActive: number = -1;
@@ -56,12 +54,22 @@ export class SpeedCardComponent implements OnInit, OnChanges {
   private counter: number = 0;
   private interval: any;
 
+  public get speedPercent(): number {
+    return this.filters.config.ghostSpeedPercent;
+  }
+
+  public set speedPercent(value: number | null) {
+    this.filters.config.ghostSpeedPercent = value ?? 100;
+    saveConfig(this.filters.config);
+  }
+
   public get accuracyPercent(): number {
     return this.filters.config.ghostSpeedAccuracy * 100;
   }
 
   public set accuracyPercent(value: number) {
     this.filters.config.ghostSpeedAccuracy = value / 100.0;
+    saveConfig(this.filters.config);
   }
 
   public get speedAccelerationMult(): number {
@@ -77,14 +85,14 @@ export class SpeedCardComponent implements OnInit, OnChanges {
   }
 
   public get frequency(): number {
-    return (
-      (this.ghostSpeedBase * this.multStepsPerSecond * this.speedAccelerationMult * (this.ghostSpeedPercent ?? 100.0)) /
-      100.0
-    );
+    return this.ghostSpeedBase * this.multStepsPerSecond * this.speedAccelerationMult * (this.speedPercent / 100.0);
+  }
+
+  public get showTips(): boolean {
+    return this.filters.config.showTips && this.tips.length > 0;
   }
 
   public ngOnInit(): void {
-    this.filters.config.ghostSpeedAccuracy;
     this.stepLabelEntries = Array(4)
       .fill(0)
       .map((_, i) => i);
@@ -101,7 +109,7 @@ export class SpeedCardComponent implements OnInit, OnChanges {
     this.onChange(true);
   }
 
-  public onChange(reloadAudio: boolean) {
+  public onChange(reloadAudio: boolean): void {
     const acc = this.accelerateState === CheckState.checked ? 1.0 / this.speedAccelerationMult : 1.0;
     this.filters.speedEstimation = this.filterState === CheckState.checked ? this.ghostSpeedBase * acc : null;
     this.filters.speedLoSAcceleration =
