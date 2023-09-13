@@ -28,7 +28,7 @@ export enum GhostName {
 export enum Evidence {
   EmfLevel5 = 'EMF Level 5',
   DotsProjector = 'D.O.T.S Projector',
-  Ultraviolett = 'Ultraviolett',
+  Ultraviolet = 'Ultraviolet',
   GhostOrb = 'Ghost Orb',
   GhostWriting = 'Ghost Writing',
   SpiritBox = 'Spirit Box',

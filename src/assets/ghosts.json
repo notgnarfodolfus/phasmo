@@ -1,7 +1,7 @@
 {
   "Banshee": {
     "order": 5,
-    "evidence": ["DotsProjector", "Ultraviolett", "GhostOrb"],
+    "evidence": ["DotsProjector", "Ultraviolet", "GhostOrb"],
     "threshold": 50,
     "hunts": [
       {
@@ -21,7 +21,7 @@
   },
   "Demon": {
     "order": 10,
-    "evidence": ["Ultraviolett", "Freezing", "GhostWriting"],
+    "evidence": ["Ultraviolet", "Freezing", "GhostWriting"],
     "threshold": 70,
     "hunts": [
       {
@@ -52,13 +52,13 @@
   },
   "Goryo": {
     "order": 15,
-    "evidence": ["DotsProjector", "EmfLevel5", "Ultraviolett"],
+    "evidence": ["DotsProjector", "EmfLevel5", "Ultraviolet"],
     "forced": "DotsProjector",
     "tags": ["ability_mist_event", "ability_footprints", "ability_digital_dots"]
   },
   "Hantu": {
     "order": 14,
-    "evidence": ["Ultraviolett", "Freezing", "GhostOrb"],
+    "evidence": ["Ultraviolet", "Freezing", "GhostOrb"],
     "forced": "Freezing",
     "speed": {
       "min": 1.4,
@@ -70,7 +70,7 @@
   },
   "Jinn": {
     "order": 6,
-    "evidence": ["EmfLevel5", "Ultraviolett", "Freezing"],
+    "evidence": ["EmfLevel5", "Ultraviolet", "Freezing"],
     "speed": [
       {
         "value": 1.7,
@@ -101,7 +101,7 @@
   },
   "Mimic": {
     "order": 21,
-    "evidence": ["Ultraviolett", "Freezing", "GhostOrb", "SpiritBox"],
+    "evidence": ["Ultraviolet", "Freezing", "GhostOrb", "SpiritBox"],
     "forced": "GhostOrb",
     "speed": [
       {
@@ -157,13 +157,13 @@
   },
   "Myling": {
     "order": 16,
-    "evidence": ["EmfLevel5", "Ultraviolett", "GhostWriting"],
+    "evidence": ["EmfLevel5", "Ultraviolet", "GhostWriting"],
     "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Obake": {
     "order": 20,
-    "evidence": ["EmfLevel5", "Ultraviolett", "GhostOrb"],
-    "forced": "Ultraviolett",
+    "evidence": ["EmfLevel5", "Ultraviolet", "GhostOrb"],
+    "forced": "Ultraviolet",
     "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Oni": {
@@ -194,7 +194,7 @@
   },
   "Phantom": {
     "order": 3,
-    "evidence": ["DotsProjector", "Ultraviolett", "SpiritBox"],
+    "evidence": ["DotsProjector", "Ultraviolet", "SpiritBox"],
     "tags": [
       "ability_mist_event",
       "ability_footprints",
@@ -205,7 +205,7 @@
   },
   "Poltergeist": {
     "order": 4,
-    "evidence": ["Ultraviolett", "GhostWriting", "SpiritBox"],
+    "evidence": ["Ultraviolet", "GhostWriting", "SpiritBox"],
     "tags": ["ability_mist_event", "ability_footprints"]
   },
   "Raiju": {
