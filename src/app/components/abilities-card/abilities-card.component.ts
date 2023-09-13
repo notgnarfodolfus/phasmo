@@ -5,9 +5,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { CheckState } from '../check/check-base/check-base.component';
 
 @Component({
-  selector: 'app-behavior-card',
-  templateUrl: './behavior-card.component.html',
-  styleUrls: ['./behavior-card.component.scss'],
+  selector: 'app-abilities-card',
+  templateUrl: './abilities-card.component.html',
+  styleUrls: ['./abilities-card.component.scss'],
   animations: [
     trigger('moveIn', [
       state('open', style({ opacity: 1, height: '*' })),
@@ -16,7 +16,7 @@ import { CheckState } from '../check/check-base/check-base.component';
     ])
   ]
 })
-export class BehaviorCardComponent {
+export class AbilitiesCardComponent {
   @Input() public filters = new GhostFilters();
   @Output() public filtersChange = new EventEmitter<GhostFilters>();
 

@@ -16,7 +16,7 @@ import { EvidenceSelectComponent } from './components/evidence-select/evidence-s
 import { EvidenceCardComponent } from './components/evidence-card/evidence-card.component';
 import { ThresholdCardComponent } from './components/threshold-card/threshold-card.component';
 import { SpeedCardComponent } from './components/speed-card/speed-card.component';
-import { BehaviorCardComponent } from './components/behavior-card/behavior-card.component';
+import { AbilitiesCardComponent } from './components/abilities-card/abilities-card.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { BehaviorCardComponent } from './components/behavior-card/behavior-card.
     EvidenceCardComponent,
     ThresholdCardComponent,
     SpeedCardComponent,
-    BehaviorCardComponent
+    AbilitiesCardComponent
   ],
   imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, NgbModule],
   providers: [],
