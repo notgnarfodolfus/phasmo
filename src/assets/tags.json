@@ -19,9 +19,9 @@
     "name": "Camera Shyness",
     "description": "Phantoms disappear when photographed during ghost events"
   },
-  "ability_banshee_screem": {
+  "ability_banshee_scream": {
     "name": "Banshee Scream",
-    "description": "Banshees have a 33% chance to convert Parabolic Microphone \"Whispers\" into screems"
+    "description": "Banshees have a 33% chance to convert Parabolic Microphone \"Whispers\" into screams"
   },
   "ability_digital_dots": {
     "name": "Digital D.O.T.S.",
