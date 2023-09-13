@@ -126,9 +126,9 @@
     <!-- Tips -->
     <div *ngIf="showTips" [@moveIn]="'open'">
       <hr />
-      <div class="row" *ngFor="let t of tips">
+      <div class="row description" *ngFor="let t of tips">
         <div class="col-2 text-end">{{ t.ghost }}</div>
-        <div class="col-10 description">{{ t.description }}</div>
+        <div class="col-10">{{ t.description }}</div>
       </div>
     </div>
   </div>

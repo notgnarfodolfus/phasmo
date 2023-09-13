@@ -21,9 +21,9 @@
     <!-- Tips -->
     <div *ngIf="showTips" [@moveIn]="'open'">
       <hr />
-      <div class="row" *ngFor="let t of tipTags">
-        <div class="col-4 description text-end">{{ t.name }}</div>
-        <div class="col-8 description">{{ t.description }}</div>
+      <div class="row description" *ngFor="let t of tipTags">
+        <div class="col-4 text-end">{{ t.name }}</div>
+        <div class="col-8">{{ t.description }}</div>
       </div>
     </div>
   </div>

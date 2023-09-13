@@ -20,6 +20,11 @@ $font-family-base: 'Lazy Dog';
   background-repeat: repeat;
 }
 
+.description {
+  line-height: 1em;
+  margin-top: 0.3em;
+}
+
 .disabled {
   filter: opacity(35%);
 }
@@ -33,6 +38,14 @@ $font-family-base: 'Lazy Dog';
     }
   }
 }
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1500px
+);
 
 // Form input range
 

@@ -35,9 +35,9 @@
     <!-- Tips -->
     <ng-container *ngIf="showTips">
       <hr />
-      <div class="row" *ngFor="let a of activeAbilities" [@moveIn]="'open'">
+      <div class="row description" *ngFor="let a of activeAbilities" [@moveIn]="'open'">
         <div class="col-3 text-end">{{ abilityToGhosts[a.name] }}</div>
-        <div class="col-9 description">{{ a.description }}</div>
+        <div class="col-9">{{ a.description }}</div>
       </div>
     </ng-container>
   </div>
