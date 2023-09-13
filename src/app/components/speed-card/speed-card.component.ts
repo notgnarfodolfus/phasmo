@@ -106,6 +106,9 @@ export class SpeedCardComponent implements OnInit, OnChanges {
     this.playState = CheckState.off;
     this.muteState = CheckState.off;
     this.ghostSpeedBase = 1.7;
+    this.filters.config.ghostSpeedAccuracy = 0.95;
+    this.filters.config.ghostSpeedPercent = 100;
+    saveConfig(this.filters.config);
     this.onChange(true);
   }
 
