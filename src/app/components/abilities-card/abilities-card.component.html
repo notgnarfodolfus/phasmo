@@ -12,6 +12,7 @@
         <app-check-box
           [label]="tag.name"
           [strikeable]="true"
+          [disabled]="!enabledTags.has(tag.key) && getState(tag) === CheckState.off"
           [state]="getState(tag)"
           (stateChange)="setState(tag, $event)"></app-check-box>
       </div>
